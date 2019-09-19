@@ -13,7 +13,20 @@ class Manager: Driver, Writer {
 
     }
 }
+class SeniorManager0(val driver: Driver, val writer: Writer): Driver  , Writer  {
+    override fun write() {
+        writer.write()
+    }
 
+    override fun drive() {
+        driver.drive()
+    }
+
+}
+
+
+
+//接口代理，功能同类SeniorManager0
 class SeniorManager(val driver: Driver, val writer: Writer): Driver by driver, Writer by writer
 
 class CarDriver: Driver {
@@ -43,4 +56,6 @@ fun main(args: Array<String>) {
     val seniorManager = SeniorManager(driver, writer)
     seniorManager.drive()
     seniorManager.write()
+
+
 }

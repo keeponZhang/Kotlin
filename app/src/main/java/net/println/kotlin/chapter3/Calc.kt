@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
             val op = splits[1]
             val arg2 = splits[2].toDouble()
             println("$arg1 $op $arg2 = ${Operator(op)(arg1, arg2)}")
+            println("$arg1 $op $arg2 = ${Operator(op).invoke(arg1, arg2)}")
         }catch (e: NumberFormatException){
             println("您确定输入的是数字吗？")
         }catch (e: IllegalArgumentException){
@@ -34,6 +35,7 @@ fun main(args: Array<String>) {
 }
 
 class Operator(op: String) {
+    //类型是lambda表达式，需要被初始化，具体是怎样的，是构造函数参数决定的
     val opFun: (left: Double, right: Double) -> Double
 
     init {

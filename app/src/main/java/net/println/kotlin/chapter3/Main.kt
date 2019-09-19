@@ -62,10 +62,17 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
 //    println(sum(3,4))
 //    println(sum.invoke(3,4))
 //
-     println(sum)
+//     println(sum)
     // println(sum)打印结果：Function2<java.lang.Integer, java.lang.Integer, java.lang.Integer>
+    //其实意思就是Int, Int) -> Int 传两个参数返回一个参数
+
 //    println(int2Long)
-//    println(::printUsage is ()-> Unit)
+    // println(int2Long)打印结果：Function1<java.lang.Integer, java.lang.Long>
+    //其实意思就是（Int) -> Long 传一个参数返回一个参数
+
+    println(::printUsage)
+    //function printUsage (Kotlin reflection is not available)
+    println(::printUsage is ()-> Unit)
 }
 
 fun checkArgs(args: Array<String>) {

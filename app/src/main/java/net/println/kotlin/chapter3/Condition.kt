@@ -13,7 +13,9 @@ private const val DEBUG = 1
 private const val USER = 0
 
 fun main(args: Array<String>) {
+    //分支表达式
     val mode = if(args.isNotEmpty() && args[0] == "1"){
+        println("返回值是分支的最后一句表达式")
         DEBUG
     }else{
         USER
@@ -24,6 +26,7 @@ fun main(args: Array<String>) {
     println("请输入密码：")
     val passwd = readLine()
 
+    //分支语句
     if(mode == DEBUG && username == ADMIN_USER && passwd == ADMIN_PASSWD) {
         println("管理员登录成功")
     }else if(username == USERNAME && passwd == PASSWORD){

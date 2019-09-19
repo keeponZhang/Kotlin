@@ -6,15 +6,32 @@ import java.util.*
  * Created by benny on 4/4/17.
  */
 class Overloads{
-    @JvmOverloads
+    @JvmOverloads //给java用
     fun a(int: Int = 0): Int{
         return int
+    }
+
+    //下面两个可以简写成上面
+//    fun a(int: Int ): Int{
+//        return int
+//    }
+//    fun a(): Int{
+//        return 0
+//    }
+
+
+    fun a(str: String): Int{
+        return str.length
     }
 }
 
 fun main(args: Array<String>) {
     val overloads = Overloads()
-    overloads.a(3)
+    //有默认参数可以什么都不传
+    println(overloads.a())
+    println(overloads.a(3))
+    println( overloads.a("keepon"))
+
 
     val integerList = ArrayList<Int>()
     integerList.add(13)

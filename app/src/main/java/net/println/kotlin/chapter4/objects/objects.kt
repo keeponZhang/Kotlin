@@ -15,6 +15,7 @@ interface OnExternalDriverMountListener{
 
 abstract class Player
 
+//只有一个实例
 object MusicPlayer: Player(), OnExternalDriverMountListener{
     override fun onMount(driver: Driver) {
 

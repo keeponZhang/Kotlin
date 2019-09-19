@@ -12,7 +12,9 @@ interface B{
 }
 
 interface C{
-    fun x(): Int = 0
+    //相当于已经有了默认实现
+//    fun x(): String = "keepon"
+    fun x(): Int = 0;
 }
 
 class D(var y: Int = 0): A(), B, C{

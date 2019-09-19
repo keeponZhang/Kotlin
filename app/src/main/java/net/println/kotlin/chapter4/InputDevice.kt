@@ -21,7 +21,10 @@ abstract class USBMouse(val name: String): USBInputDevice, OpticalMouse{
     }
 }
 
-class LogitechMouse: USBMouse("罗技鼠标"){
+class LogitechMouse: USBMouse("罗技鼠标") {
+
+}
+class Name{
 
 }
 

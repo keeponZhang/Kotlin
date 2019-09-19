@@ -5,17 +5,19 @@ package net.println.kotlin.chapter3
  */
 fun main(args: Array<String>) {
 
-    var x = 5
-    while(x > 0){
-        println(x)
-        x--
-    }
+//    var x = 5
+//    while(x > 0){
+//        println(x)
+//        x--
+//    }
+//
+//    do{
+//        println(x)
+//        x--
+//    }while (x > 0)
 
-    do{
-        println(x)
-        x--
-    }while (x > 0)
 
+    //for语句
 //    for (arg in args){
 //        println(arg)
 //    }
@@ -28,14 +30,14 @@ fun main(args: Array<String>) {
 //        println("${indexedValue.index} -> ${indexedValue.value}")
 //    }
 //
-//    val list = MyIntList()
-//    list.add(1)
-//    list.add(2)
-//    list.add(3)
-//
-//    for(i in list){
-//        println(i)
-//    }
+    val list = MyIntList()
+    list.add(1)
+    list.add(2)
+    list.add(3)
+
+    for(i in list){
+        println(i)
+    }
 }
 
 class MyIterator(val iterator: Iterator<Int>){

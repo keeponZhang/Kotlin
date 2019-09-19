@@ -12,6 +12,7 @@ fun main(args: Array<String>) {
         args[0].toInt() -> println("x == args[0]")
     }
 
+    //when也可以用来代替if语句
     val mode = when{
         args.isNotEmpty() && args[0] == "1" -> 1
         else -> 0
