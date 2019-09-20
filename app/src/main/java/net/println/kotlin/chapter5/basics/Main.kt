@@ -3,6 +3,11 @@ package net.println.kotlin.chapter5.basics
 /**
  * Created by benny on 4/15/17.
  */
+//函数引用
+//1.Hello::world
+//2.::world2  有默认的参数，就是调用它的那个实例
+//3val pdfPrinter = PdfPrinter();
+// pdfPrinter::println
 fun main(args: Array<String>) {
     //函数引用
     args.forEach(::println)
