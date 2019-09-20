@@ -6,6 +6,7 @@ import net.println.kotlin.chapter4.annotations.PoKo
  * Created by benny on 4/4/17.
  */
 @PoKo
+//加了data会默认给我们生成toString方法，编译成final class ，没有无参构造函数
 data class Country(val id: Int, val name: String)
 
 class ComponentX{
@@ -29,12 +30,20 @@ class ComponentX{
 fun main(args: Array<String>) {
     val china = Country(0, "中国")
     println(china)
+    //component1就是第一个参数，component2就是第二个参数
     println(china.component1())
     println(china.component2())
+
+    //id会用component1来赋值
     val (id, name) = china
     println(id)
     println(name)
+//
 
+    //这种写法跟上面的是一样的，因为 args.withIndex()返回的是data class IndexedValue
+//    for ((index, value) in args.withIndex()) {
+//        println(index)
+//    }
 
     val componentX = ComponentX()
     val (a, b, c, d) = componentX

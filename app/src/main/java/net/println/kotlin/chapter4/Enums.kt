@@ -22,6 +22,7 @@ fun main(args: Array<String>) {
     println(LogLevel.valueOf("ERROR"))
 }
 
+//原理
 class LogLevel2 protected constructor(){
     companion object{
         val VERBOSE = LogLevel2()

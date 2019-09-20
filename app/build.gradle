@@ -3,7 +3,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-noarg'
+apply plugin: 'kotlin-allopen'
 
+noArg{
+    annotation("net.println.kotlin.chapter4.annotations.PoKo")
+}
+
+allOpen{
+    annotation("net.println.kotlin.chapter4.annotations.PoKo")
+}
 android {
     compileSdkVersion 28
     defaultConfig {
