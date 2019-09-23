@@ -19,6 +19,11 @@ public class BoxImpl2 implements BoxIf2 {
         return null;
     }
 
+    @Override
+    public String get2(Integer key) {
+        return null;
+    }
+
     public String get(Object key) {
         return null;
     }

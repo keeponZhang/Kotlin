@@ -7,8 +7,9 @@ import java.util.Map;
  */
 public interface BoxIf2 extends Map<Integer, String> {
 
-//    String get(int key);
+    String get(int key);
 
+    String get(Integer key);
     String get2(Integer key);
 
 }

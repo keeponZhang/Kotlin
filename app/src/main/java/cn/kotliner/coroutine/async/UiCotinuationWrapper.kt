@@ -6,6 +6,7 @@ import kotlin.coroutines.experimental.Continuation
 /**
  * Created by benny on 5/29/17.
  */
+//可以在这里进行线程切换
 class UiCotinuationWrapper<T>(val continuation: Continuation<T>): Continuation<T>{
     override val context = continuation.context
 

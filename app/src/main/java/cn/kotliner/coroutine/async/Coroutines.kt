@@ -1,9 +1,11 @@
 package cn.kotliner.coroutine.async
 
+import cn.kotliner.coroutine.basic.BaseContinuation
 import cn.kotliner.coroutine.common.HttpError
 import cn.kotliner.coroutine.common.HttpException
 import cn.kotliner.coroutine.common.HttpService
 import cn.kotliner.coroutine.common.log
+import javax.swing.SwingUtilities
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.EmptyCoroutineContext
 import kotlin.coroutines.experimental.startCoroutine
@@ -17,6 +19,12 @@ fun 我要开始协程啦(context: CoroutineContext = EmptyCoroutineContext, blo
     //被suspend修饰的lambda表达式才有startCoroutine方法
     block.startCoroutine(ContextContinuation( context + AsyncContext()))
 }
+
+fun 我要开始协程啦0(block: suspend ()-> Unit){
+    block.startCoroutine(BaseContinuation())
+}
+
+
 
 suspend fun <T> 我要开始耗时操作了(block: CoroutineContext.() -> T)
         = suspendCoroutine<T> {
@@ -45,4 +53,64 @@ fun 我要开始加载图片啦(url: String): ByteArray {
     } else {
         throw HttpException(responseBody.code())
     }
+}
+
+suspend fun 我要开始加载图片啦0(url: String) = suspendCoroutine<ByteArray> {
+    continuation ->
+    log("耗时操作，下载图片原始0")
+    AsyncTask(){
+        try {
+            val responseBody = HttpService.service.getLogo(url).execute()
+            if(responseBody.isSuccessful){
+                //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
+                responseBody.body()?.byteStream()?.readBytes()?.let(continuation::resume)
+            }else{
+                continuation.resumeWithException(HttpException(responseBody.code()))
+            }
+        } catch(e: Exception) {
+            continuation.resumeWithException(e)
+        }
+    }.execute()
+
+}
+suspend fun 我要开始加载图片啦Uicontinuation(url: String) = suspendCoroutine<ByteArray> {
+    continuation ->
+    log("耗时操作，下载图片原始0")
+    val uiCotinuationWrapper = UiCotinuationWrapper(continuation)
+    AsyncTask(){
+        try {
+            val responseBody = HttpService.service.getLogo(url).execute()
+            if(responseBody.isSuccessful){
+                //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
+                responseBody.body()?.byteStream()?.readBytes()?.let{
+                    uiCotinuationWrapper.resume(it)
+                }
+            }else{
+                uiCotinuationWrapper.resumeWithException(HttpException(responseBody.code()))
+            }
+        } catch(e: Exception) {
+            uiCotinuationWrapper.resumeWithException(e)
+        }
+    }.execute()
+
+}
+suspend fun 我要开始加载图片啦1(url: String) = suspendCoroutine<ByteArray> {
+    continuation ->
+    log("耗时操作，下载图片原始0")
+    AsyncTask(){
+        try {
+            val responseBody = HttpService.service.getLogo(url).execute()
+            if(responseBody.isSuccessful){
+                //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
+                responseBody.body()?.byteStream()?.readBytes()?.let{
+                    SwingUtilities.invokeLater { continuation.resume(it) }
+                }
+            }else{
+                continuation.resumeWithException(HttpException(responseBody.code()))
+            }
+        } catch(e: Exception) {
+            continuation.resumeWithException(e)
+        }
+    }.execute()
+
 }
