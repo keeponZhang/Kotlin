@@ -9,6 +9,12 @@ fun main(args: Array<String>) {
     val child: Child? = parent as? Child
     println(child)
 
+    val child2:Parent = Child()
+    if(child2 is Child){
+        child2.name
+    }
+
+
     val string: String? = "Hello"
     if(string != null)
         println(string.length)

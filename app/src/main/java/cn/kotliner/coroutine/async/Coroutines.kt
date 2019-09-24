@@ -17,10 +17,15 @@ import kotlin.coroutines.experimental.suspendCoroutine
 //协程 suspend 修饰
 fun 我要开始协程啦(context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
-    block.startCoroutine(ContextContinuation( context + AsyncContext()))
+    //可以组合多个context
+    block.startCoroutine(ContextContinuation( context+ AsyncContext()))
+}
+fun 我要开始协程啦OnlyAsyncContext(context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit) {
+    //被suspend修饰的lambda表达式才有startCoroutine方法
+    block.startCoroutine(ContextContinuation(  AsyncContext()))
 }
 
-fun 我要开始协程啦0(block: suspend ()-> Unit){
+fun 我要开始协程啦BaseContinuation(block: suspend ()-> Unit){
     block.startCoroutine(BaseContinuation())
 }
 
@@ -32,6 +37,7 @@ suspend fun <T> 我要开始耗时操作了(block: CoroutineContext.() -> T)
     log("我要开始耗时操作了 异步任务开始前")
     AsyncTask {
         try {
+            //这样写的好处是已经给block传入了默认的输入参数，block里面只需要处理返回值，就是返回T
             continuation.resume(block(continuation.context))
         } catch(e: Exception) {
             continuation.resumeWithException(e)
@@ -55,12 +61,13 @@ fun 我要开始加载图片啦(url: String): ByteArray {
     }
 }
 
-suspend fun 我要开始加载图片啦0(url: String) = suspendCoroutine<ByteArray> {
+suspend fun 我要开始加载图片啦不切换线程(url: String) = suspendCoroutine<ByteArray> {
     continuation ->
     log("耗时操作，下载图片原始0")
     AsyncTask(){
         try {
             val responseBody = HttpService.service.getLogo(url).execute()
+            log("耗时操作，下载图片ing")
             if(responseBody.isSuccessful){
                 //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
                 responseBody.body()?.byteStream()?.readBytes()?.let(continuation::resume)
@@ -80,6 +87,7 @@ suspend fun 我要开始加载图片啦Uicontinuation(url: String) = suspendCoro
     AsyncTask(){
         try {
             val responseBody = HttpService.service.getLogo(url).execute()
+            log("耗时操作，下载图片ing")
             if(responseBody.isSuccessful){
                 //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
                 responseBody.body()?.byteStream()?.readBytes()?.let{
@@ -94,12 +102,13 @@ suspend fun 我要开始加载图片啦Uicontinuation(url: String) = suspendCoro
     }.execute()
 
 }
-suspend fun 我要开始加载图片啦1(url: String) = suspendCoroutine<ByteArray> {
+suspend fun 我要开始加载图片啦切换线程(url: String) = suspendCoroutine<ByteArray> {
     continuation ->
     log("耗时操作，下载图片原始0")
     AsyncTask(){
         try {
             val responseBody = HttpService.service.getLogo(url).execute()
+            log("耗时操作，下载图片ing")
             if(responseBody.isSuccessful){
                 //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
                 responseBody.body()?.byteStream()?.readBytes()?.let{
