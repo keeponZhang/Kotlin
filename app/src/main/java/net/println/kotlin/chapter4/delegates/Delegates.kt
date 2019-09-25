@@ -11,6 +11,7 @@ class Delegates{
         "HelloWorld"
     }
     val x = X()
+
     val hello2 by x
 
     //用var修饰，是可读可写，需要getValue和setValue方法
