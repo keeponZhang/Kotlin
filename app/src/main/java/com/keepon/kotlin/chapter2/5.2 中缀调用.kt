@@ -10,7 +10,11 @@ package com.keepon.kotlin.chapter2
 //中缀调用。
 //1 to "One"
 
-class Person(val name:String,val isMarrayied:Any)
+class Person(val name:String,val isMarrayied:Any){
+    fun testDiff3(){
+        println("testDiff3")
+    }
+}
 infix  fun String.create(isMarried:Any) = Person(this,isMarried)
 fun main(args: Array<String>) {
     val married:Person = "keepon" create true

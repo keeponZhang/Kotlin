@@ -1,5 +1,7 @@
 package com.keepon2.kotlin.chapter1
 
+import com.keepon.kotlin.chapter2.Person
+
 /**
  * createBy	 keepon
  */
@@ -9,7 +11,11 @@ package com.keepon2.kotlin.chapter1
 //3 kotlin不区分导入的是类还是函数，而且，它允许使用import关键字导入任何种类的声明，可以直接导入顶层函数的名称，也可以在包名称后加上.*来导入特定包中定义的所有声明。
 //4 在Java中，要把类放到和包结构相匹配的文件与目录结构中，而在kotlin中，可以把多个package声明不相同的类放在同一个文件夹中。
 //
-
+fun main(args: Array<String>) {
+    testDiff1()
+    val pesron = Person("test3",false)
+    pesron.testDiff3()
+}
 
 
 
