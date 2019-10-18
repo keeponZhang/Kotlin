@@ -22,7 +22,19 @@ class MaNong(age: Int): Person(age){
 
     //覆写方法，override必须有
     override fun work() {
-        println("我是码农，我在写代码")
+        println("我是码农，我在写代码， 年龄=$age")
+    }
+}
+class MaNong2(override  var age: Int): Person(age){
+    //两种重写父类属性的方法
+    init {
+        age = 28
+    }
+
+
+    //覆写方法，override必须有
+    override fun work() {
+        println("我是码农2，我在写代码 年龄=$age")
     }
 }
 
@@ -59,20 +71,24 @@ class Doctor3(age: Int, var name:String ): Person(age){
 fun main(args: Array<String>) {
     val person: Person = MaNong(23)
     person.work()
-    println(person.age)
+    println("MaNong.age  ${person.age}")
 
-    val person2 : Person = Doctor(24)
-    person2.work()
-    println(person2.age)
-    if(person2 is Doctor){
-        println( person2.name)
-    }
-    val person3 : Person = Doctor3(24,"keepon")
-    person3.work()
-    println(person3.age)
+    val person4: Person = MaNong2(23)
+    person4.work()
+    println("MaNong2.age  ${person4.age}")
 
-    if(person3 is Doctor3){
-        println("person3.name ${person3.name}" )
-    }
+//    val person2 : Person = Doctor(24)
+//    person2.work()
+//    println(person2.age)
+//    if(person2 is Doctor){
+//        println( person2.name)
+//    }
+//    val person3 : Person = Doctor3(24,"keepon")
+//    person3.work()
+//    println(person3.age)
+//
+//    if(person3 is Doctor3){
+//        println("person3.name ${person3.name}" )
+//    }
 
 }
