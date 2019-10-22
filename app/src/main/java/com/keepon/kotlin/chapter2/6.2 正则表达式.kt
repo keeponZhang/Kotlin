@@ -8,7 +8,7 @@ fun  parsePath(path:String){
     val fullName = path.substringAfterLast("/")
     val  fileName = fullName.substringBeforeLast(".")
     val extention = fullName.substringAfterLast(".")
-    println("Dir:$directory,fileName:$fileName,ext:$extention")
+    println("Dir:$directory,fullName:$fullName,fileName:$fileName,ext:$extention")
 }
 //下面是使用正则表达式的做法：
 
@@ -34,9 +34,9 @@ fun  parsePath3(path:String){
 }
 
 fun main(args: Array<String>) {
-    parsePath("/User/you/kotlinbook/chapter.doc")
+//    parsePath("/User/you/kotlinbook/chapter.doc")
     parsePath2("/User/you/kotlinbook/chapter.doc")
-    parsePath3("/User/you/kotlinbook/chapter.doc")
+//    parsePath3("/User/you/kotlinbook/chapter.doc")
 }
 
 

@@ -3,6 +3,7 @@ package com.keepon.kotlin.chapter2
 /**
  * createBy	 keepon
  */
+//String表示是String类的拓展函数
 fun String.lastChar():Char {
     println("this表示调用者 $this")
     //this表示调用者

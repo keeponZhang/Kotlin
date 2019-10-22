@@ -13,6 +13,7 @@ val String.lastChar:Char
 
 var StringBuilder.lastChar:Char
     get()= get(length -1)
+    //value只是一个参数名称，可以任意命名
     set(value:Char){
         this.setCharAt(length-1,value)
     }
