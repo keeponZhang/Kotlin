@@ -7,6 +7,7 @@ public class JavaCallKotlin {
     public void JavaCallKotlin(){
         //java调用顶层函数
         _3_3_顶层函数Kt.kotlinFunc();
+        _3_3_顶层函数Kt.DINGCENGFUN();
 
         //java调用顶层属性
         _3_3_顶层属性Kt.getKotlinVal();

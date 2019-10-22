@@ -7,6 +7,7 @@ package com.keepon.kotlin.chapter1
 class Rectangle(val height:Int,var width:Int){
     //这里用var修饰会报错
     val  isSquare:Boolean
+        //get() = 函数体
         get() = height==width
 
 }

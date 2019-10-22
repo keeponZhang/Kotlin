@@ -7,15 +7,15 @@ package com.keepon.kotlin.chapter1
 //它可以创建出一个Set，并且会包含所有指定为函数实参的对象，只要两个set中包含一样的条目，它们就是相等的，集合的条目顺序并不重要。作者：泽毛
 //
 fun mix(c1:Color,c2:Color)=
-        when(setOf(c1,c2)){
-            setOf(Color.RED,Color.YELLOW)->Color.ORANGE
-            setOf(Color.YELLOW,Color.BLUE)->Color.GREEN
-            setOf(Color.BLUE,Color.VIOLET)->Color.INGIGO
+        when(linkedSetOf(c1,c2)){
+            linkedSetOf(Color.RED,Color.YELLOW)->Color.ORANGE
+            linkedSetOf(Color.YELLOW,Color.BLUE)->Color.GREEN
+            linkedSetOf(Color.BLUE,Color.VIOLET)->Color.INGIGO
             else -> throw Exception("Dirty color")
         }
 
 fun main(args: Array<String>) {
-    println(mix(Color.BLUE,Color.YELLOW))
+    println(mix(Color.BLUE,Color.VIOLET))
 }
 
 
