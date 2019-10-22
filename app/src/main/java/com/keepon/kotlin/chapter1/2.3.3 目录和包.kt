@@ -12,7 +12,8 @@ import com.keepon.kotlin.chapter2.Person
 //4 在Java中，要把类放到和包结构相匹配的文件与目录结构中，而在kotlin中，可以把多个package声明不相同的类放在同一个文件夹中。
 //
 fun main(args: Array<String>) {
-    testDiff1()
+    testDiff14()
+    //Person看出2的不同
     val pesron = Person("test3",false)
     pesron.testDiff3()
 }
