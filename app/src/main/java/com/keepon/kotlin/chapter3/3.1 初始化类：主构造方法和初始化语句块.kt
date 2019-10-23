@@ -6,9 +6,13 @@ package com.keepon.kotlin.chapter3
 //上面这段被括号围起来的语句块就叫做 主构造方法，它有两个目的：
 //表明构造方法的参数。
 //定义使用这些参数初始化的属性，也就是nikename。
-open class User ( open val nickName:String)
+open class User (  open val nickName:String)
 //下面这个会报错
 //class User3 public (val nickName:String)
+
+//这里有可见性修饰符，不能取消constructor关键字，不然会报错
+open class UserXiushi internal constructor(  open val nickName:String)
+
 
 //constructor：用来开始一个主构造方法和从构造方法的声明。
 class User2 internal constructor( nickName:String){
