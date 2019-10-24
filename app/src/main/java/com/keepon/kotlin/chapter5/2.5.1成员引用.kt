@@ -16,6 +16,7 @@ val getAge2 = Person :: getAge2
 fun test2(){
     val people = listOf<Person>(Person("alice",22), Person("keeon",22))
     people.maxBy(Person :: age)
+    people.maxBy(getAge2)
 }
 
 

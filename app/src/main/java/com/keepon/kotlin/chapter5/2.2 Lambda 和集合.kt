@@ -8,6 +8,11 @@ data class Person(val name:String,val age:Int){
        return age;
     }
 }
+data class Person2(val name:String,val age:Int){
+    fun getAge2():Int{
+        return age;
+    }
+}
 
 fun main(args: Array<String>) {
     val personlist = listOf<Person>(Person("alice",22), Person("keeon",22))
