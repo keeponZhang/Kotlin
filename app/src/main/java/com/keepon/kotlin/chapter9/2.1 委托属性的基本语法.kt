@@ -16,7 +16,7 @@ class Delegate {
 
     //代理对象一定要有getValue方法
     operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
-//        println("getValue: $thisRef -> ${property.name}")
+        println("getValue: $thisRef -> ${property.name}")
         return "keepon"
     }
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String){

@@ -19,14 +19,16 @@ fun main(args: Array<String>) {
     println(person?.name)
     println(person?.age)
 
-    //会传入person对象
-    findPerson().let { person ->
-        println(person?.name)
-        println(person?.age)
-        person?.work()
+    //let会把调用者穿进去，这里会传入person对象
+    //这里写了问号，lambda表达式里面的问号就不用写了
+    findPerson()?.let { person ->
+        println(person.name)
+        println(person.age)
+        person.work()
     }
 
-    //apply会创建一个拓展函数
+    //apply会创建一个拓展函数，这里不用调用person.work，直接调用work就行
+//    T.() -> Unit，相当于调用者内部调用这个lambda表达式，所以可以直接访问属性
     findPerson()?.apply {
         println(name)
         println(age)
