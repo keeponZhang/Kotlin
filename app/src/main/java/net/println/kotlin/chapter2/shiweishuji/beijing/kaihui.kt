@@ -1,5 +1,6 @@
 package net.println.kotlin.chapter2.市委书记.北京
 
+//导包配合as，下面可以用别名
 import net.println.kotlin.chapter2.市委书记.上海.市委书记 as 茶水大王
 import net.println.kotlin.chapter2.市委书记.天津.市委书记 as 围棋高手
 

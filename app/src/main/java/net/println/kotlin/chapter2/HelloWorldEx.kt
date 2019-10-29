@@ -19,8 +19,10 @@ fun main(args: Array<String>) {
     println("hello world from nullable type: " + nullableHelloWorld)
     println("hello world from Array: " + helloWorldArray.joinToString(""))
     println("hello world from CharArray: " + String(helloWorldCharArray))
+    //HelloWorld::class.java 等同于 java的HelloWorld.class
     println("class name hello world: " + HelloWorld::class.java.simpleName)
     println("class name hello world: " + HelloWorld::class.java.name)
+    //String 也可以slice
     println("part of the class name of HelloWorld: "
             + HelloWorld::class.java.simpleName.slice(0 until helloWorldLength)) // [0, 11)
     println("the length of hello world is : " + helloWorldLength)

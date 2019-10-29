@@ -6,8 +6,10 @@ package net.println.kotlin.chapter2
 fun main(args: Array<String>) {
     val parent: Parent = Parent()
 
+//    val child: Child? = parent as Child
+    //as 转换失败会异常，as? 转换失败会返回null
     val child: Child? = parent as? Child
-    println(child)
+    println("child = $child")
 
     val child2:Parent = Child()
     if(child2 is Child){

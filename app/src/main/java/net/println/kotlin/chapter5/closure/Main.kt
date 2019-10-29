@@ -13,6 +13,7 @@ val string = "HelloWorld"
 
 
 //()->Unit 表示返回输入为空，返回值为空，下面的匿名函数正好符合
+//函数的返回值是一个函数
 fun makeFun(): ()->Unit{
     var count = 0
     return fun(){
@@ -47,7 +48,10 @@ fun fibonacci(): Iterable<Long>{
                 return result
             }
 
-            override fun hasNext() = true
+            override fun hasNext():Boolean{
+                println("hasNext")
+               return true
+            }
 
         }
     }
@@ -65,14 +69,16 @@ fun main(args: Array<String>) {
 //    println( fibonacci0())
 //    println( fibonacci0())
 
-//    for(i in fibonacci()){
-//        if(i > 100)break
-//        println( i)
-//    }
+    //会调用Iterator的hasNext和next方法
+    for(i in fibonacci()){
+        if(i > 100)break
+        println( i)
+    }
 
-   val add5 = add(5)
-    println(add5(2))
-    println(add5(1))
+    //返回的还是一个函数
+//   val add5 = add(5)
+//    println(add5(2))
+//    println(add5(1))
 }
 
 fun add1(x: Int) = fun(y: Int) = x + y
@@ -80,6 +86,7 @@ fun add1(x: Int) = fun(y: Int) = x + y
 ///等同于add1
 fun add(x: Int): (Int)-> Int{
 
+    //类可以定义在函数中
     data class Person(val name: String, val age: Int)
 
     return fun(y: Int): Int{

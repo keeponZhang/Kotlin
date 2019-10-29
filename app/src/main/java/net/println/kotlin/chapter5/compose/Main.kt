@@ -11,12 +11,15 @@ val multiplyBy2 = {i : Int -> i * 2} // f(x)
 fun main(args: Array<String>) {
     println(multiplyBy2(add5(8))) // (5 + 8) * 2
 
+    //andThen 后面的后执行
     val add5AndMultiplyBy2 = add5 andThen multiplyBy2
     //multiplyBy2跟返回的add5ComposeMultiplyBy2都是函数类型，add5ComposeMultiplyBy2这个函数类型调用add5ComposeMultiplyBy2(8)表示p1传入的是8
-    println(add5AndMultiplyBy2(8)) // m(x) = f(g(x))
+    println("add5AndMultiplyBy2(8) ="+add5AndMultiplyBy2(8)) // m(x) = f(g(x))
 
+
+    //compose 后面的先执行
     val add5ComposeMultiplyBy2 = add5 compose  multiplyBy2
-    println(add5ComposeMultiplyBy2(8)) // m(x) = g(f(x))
+    println("add5ComposeMultiplyBy2(8) ="+add5ComposeMultiplyBy2(8)) // m(x) = g(f(x))
 }
 
 //P1 P2为参数值 R为返回值
@@ -33,9 +36,11 @@ fun main(args: Array<String>) {
 //怎么确认andThen前面的泛型类型，其实指的就是调用者的
 infix fun <P1, P2, R> Function1<P1, P2>.andThen(function: Function1<P2, R>): Function1<P1,R>{
     //这里p1是闭包输入参数8
+    //fun(p1: P1): R 表示输入是P1,返回值是R 这里是匿名函数
     return fun(p1: P1): R{
         //this 表示调用者,这里this是指代add5，function指代multiplyBy2
         println("this $this  p1 $p1")
+        //this.invoke(p1) == add5(p1) == add5(8)
         return function.invoke(this.invoke(p1))
     }
 }
