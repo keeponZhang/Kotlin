@@ -18,11 +18,11 @@ class HolderInt : Holder<Int> {
     }
 }
 
-fun main(args: Array<String>) {
-    val t = HolderInt()
-    t.setValue(2)
-    println("value=${t.getValue()}")
-}
+//fun main(args: Array<String>) {
+//    val t = HolderInt()
+//    t.setValue(2)
+//    println("value=${t.getValue()}")
+//}
 
 
 

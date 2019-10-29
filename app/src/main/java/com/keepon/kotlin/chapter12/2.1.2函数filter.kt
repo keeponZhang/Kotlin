@@ -3,13 +3,14 @@ package com.keepon.kotlin.chapter12
 /**
  * createBy	 keepon
  */
-//下面再来看filter的例子
-fun main(args: Array<String>) {
-    val authors = listOf("first", "second")
-    val readers = mutableListOf("first", "third")
-    println(readers.filter { it !in authors })
-}
+var test = ""
 
+//下面再来看filter的例子
+//fun main(args: Array<String>) {
+//    val authors = listOf("first", "second")
+//    val readers = mutableListOf("first", "third")
+//    println(readers.filter { it !in authors })
+//}
 
 //其中filter的定义为：
 //fun <T> List<T>.filter(predicate : (T) -> Boolean) : List<T>

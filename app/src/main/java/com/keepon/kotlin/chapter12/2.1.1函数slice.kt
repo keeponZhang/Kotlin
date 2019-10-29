@@ -8,6 +8,7 @@ package com.keepon.kotlin.chapter12
 
 //接收者和返回类型都用到了函数的类型形参T，它们的类型都是List<T>，当在一个具体的列表上调用这个函数时，可以显示地指定类型实参，也可以让编译器自动推导出类型：
 
+
 fun main(args: Array<String>) {
     val letters = ('a'..'z').toList()
     //显示地指定类型实参。
