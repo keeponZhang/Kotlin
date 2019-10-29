@@ -6,7 +6,7 @@ package net.println.kotlin.chapter5.tailrecursive
 data class ListNode(val value: Int, var next: ListNode? = null)
 
 //尾递归加入tailrec，编译器会做优化，变成迭代
-  fun findListNode(head: ListNode?, value: Int): ListNode?{
+ tailrec fun findListNode(head: ListNode?, value: Int): ListNode?{
     //head?: 表示head为空时，执行下一行
     head?: return  null
     if(head.value == value) return head

@@ -20,6 +20,7 @@ val minLong: Long = Long.MIN_VALUE
 val aFloat: Float = 2.0F
 val anotherFloat: Float = 1E3f
 val maxFloat: Float = Float.MAX_VALUE
+val posMinFloat: Float = Float.MIN_VALUE
 val minFloat: Float = -Float.MAX_VALUE
 
 val aDouble: Double = 3.0
@@ -35,30 +36,32 @@ val maxByte: Byte = Byte.MAX_VALUE
 val minByte: Byte = Byte.MIN_VALUE
 
 fun main(args: Array<String>) {
-    println(anotherInt)
-    println(moreInt)
+    println("anotherInt $anotherInt")
+    println("moreInt $moreInt")
 
-    println(maxInt)
+    println("maxInt $maxInt")
     println(Math.pow(2.0, 31.0) - 1)
-    println(minInt)
+    println("minInt $minInt")
     println( - Math.pow(2.0, 31.0))
 
-    println(maxLong)
+    println("maxLong $maxLong")
     println(Math.pow(2.0, 63.0) - 1)
-    println(minLong)
+    println("minLong $minLong")
     println(- Math.pow(2.0, 63.0))
 
-    println(aFloat)
-    println(anotherFloat)
-    println(maxFloat)
-    println(minFloat)
+    println("aFloat $aFloat")
+    println("anotherFloat $anotherFloat")
+    println("maxFloat $maxFloat")
+    println("posMinFloat $posMinFloat")
+    //posMinFloat 1.4E-45 为小于1的正数
+    println(" nav minFloat $minFloat")
 
-    println(maxDouble)
-    println(minDouble)
+    println("maxDouble $maxDouble")
+    println("minDouble $minDouble")
 
-    println(maxShort)
-    println(minShort)
+    println("maxShort $maxShort")
+    println("minShort $minShort")
 
-    println(maxByte)
-    println(minByte)
+    println("maxByte $maxByte")
+    println("minByte $minByte")
 }
