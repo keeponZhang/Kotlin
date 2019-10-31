@@ -7,6 +7,7 @@ import kotlin.reflect.KProperty
  */
 class Delegates{
     //by后面这个lazy其实就是代理，要求代理对象有getValue方法
+    //lazy代理只覆写了getValue方法，所以这里不能用var
     val hello by lazy {
         "HelloWorld"
     }
