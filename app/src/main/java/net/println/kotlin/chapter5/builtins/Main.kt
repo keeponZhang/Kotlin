@@ -54,27 +54,27 @@ fun main(args: Array<String>) {
 //    destination.forEach {
 //        println("添加到集合再遍历 $it")
 //    }
-    var flatList0 = list
-            .flatMap {it->
-        println("it == $it")
-        it
-    }
+//    var flatList0 = list
+//            .flatMap {it->
+//        println("it == $it")
+//        it
+//    }
+//
+//    println("flatList0 $flatList0")
+//    var destination = ArrayList<Int>(8)
+//    for (element in list) {
+//        val list = element
+//        destination.addAll(list)
+//    }
+//    println("destination  $destination")
 
-    println("flatList0 $flatList0")
-    var destination = ArrayList<Int>(8)
-    for (element in list) {
-        val list = element
-        destination.addAll(list)
-    }
-    println("destination  $destination")
 
-
-    flatList0.forEach(::println)
+//    flatList0.forEach(::println)
 //    //IntRange 实现了Iterable接口
-    var flatList = list.flatMap {
-        intRange -> intRange.map { item -> "No $item" }
-    }
-    flatList.forEach(::println)
+//    var flatList = list.flatMap {
+//        intRange -> intRange.map { item -> "No $item" }
+//    }
+//    flatList.forEach(::println)
 
 
 //    var sum = list.flatMap {
@@ -86,13 +86,13 @@ fun main(args: Array<String>) {
 //    val factorial = factorial(5)
 //    println("5的阶乘 == $factorial")
 //
-    (0..5).map {item->factorial(item) }.forEach{
-        println("it $it")
-    }
+//    (0..5).map {item->factorial(item) }.forEach{
+//        println("it $it")
+//    }
 //    等同于list.forEach(::println)原理
-    (0..5).map(::factorial).forEach{
-        println("it $it")
-    }
+//    (0..5).map(::factorial).forEach{
+//        println("it $it")
+//    }
 
 //
 //    (0..5).map {item->factorial(item) }.reduce { acc, i ->
@@ -115,18 +115,27 @@ fun main(args: Array<String>) {
 //    println("takeWhile ${takeWhile.size}")
 //
 //
-//    println("准备用fold啦..................")
-//    (0..5).map {item->factorial(item) }.fold(5){acc, i ->
-//        println("folder 5 acc = $acc    i = $i")
-//        acc+i
+//    (0..5).map {item->factorial(item) }.forEach{
+//        println(it)
 //    }
+//    1  1    2   6  24  120
+
+
+
+
+
+//    println("准备用fold啦..................")
+    (0..5).map {item->factorial(item) }.fold(5){acc, i ->
+        println("folder  acc = $acc    i = $i")
+        acc+i
+    }
 //
 //    println("准备用fold2 StringBuilder append啦..................")
 //    println((0..5).fold(StringBuilder()){ acc, i ->
 //        println("StringBuilder folder 5 acc = $acc    i = $i")
 //        acc.append(i).append(",")
 //    })
-    println((0..5).joinToString())
+//    println((0..5).joinToString())
 }
 fun factorial(n:Int):Int{
     if(n == 0) return 1
