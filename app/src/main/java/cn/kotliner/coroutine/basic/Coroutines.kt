@@ -3,8 +3,11 @@ package cn.kotliner.coroutine.basic
 import cn.kotliner.coroutine.common.HttpException
 import cn.kotliner.coroutine.common.HttpService
 import cn.kotliner.coroutine.common.log
-import kotlin.coroutines.experimental.startCoroutine
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.startCoroutine
+import kotlin.coroutines.suspendCoroutine
+
 
 /**
  * Created by benny on 5/29/17.

@@ -24,6 +24,7 @@ class X{
 
     //只代理string类型
     operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+        //thisRef 被代理的属性的拥有者
         println("getValue: $thisRef -> ${property.name}")
         return value?: "null"
     }
