@@ -7,12 +7,12 @@ import cn.kotliner.coroutine.async.我要开始协程啦
 import cn.kotliner.coroutine.async.我要开始耗时操作了
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
-import kotlin.coroutines.ContinuationInterceptor
+import kotlin.coroutines.experimental.ContinuationInterceptor
 
 /**
  * Created by benny on 5/20/17.
  */
- const val LOGO_URL = "http://www.imooc.com/static/img/index/logo.png?t=1.1"
+const val LOGO_URL = "http://www.imooc.com/static/img/index/logo.png?t=1.1"
 
 fun main(args: Array<String>) {
     val frame = MainWindow()
@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
                     //这里表示lambda表达式传入的参数是CoroutineContext，返回的是ByteArray类型
                     //可以调用this[DownloadContext]
                     println("this[ContinuationInterceptor] " + this[ContinuationInterceptor])
-                    println("this[MYKey] " + this[AsyncContext2]?.test)
+//                    println("this[MYKey] " + this[AsyncContext2]?.test)
                     我要开始加载图片啦(this[DownloadContext]!!.url)
                 }
 
@@ -47,14 +47,6 @@ fun main(args: Array<String>) {
         }
         log("协程之后")
     }
-
-
-
-
-
-
-
-
 }
 
 

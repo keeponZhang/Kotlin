@@ -11,6 +11,6 @@ private val pool by lazy {
 }
 
 //val block: ()-> Unit这里是构造函数参数
-class AsyncTask(val block: ()-> Unit){
+class AsyncTask(val block: () -> Unit) {
     fun execute() = pool.execute(block)
 }

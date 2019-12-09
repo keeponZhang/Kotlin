@@ -11,6 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.swing.SwingUtilities
 import kotlin.coroutines.*
+import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.experimental.EmptyCoroutineContext
+import kotlin.coroutines.experimental.startCoroutine
+import kotlin.coroutines.experimental.suspendCoroutine
 
 /**
  * Created by benny on 5/29/17.
@@ -19,7 +23,7 @@ import kotlin.coroutines.*
 fun 我要开始协程啦(context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     //可以组合多个context
-    block.startCoroutine(ContextContinuation(context + AsyncContext() + AsyncContext2()))
+    block.startCoroutine(ContextContinuation(context + AsyncContext()))
 }
 
 fun 我要开始协程啦OnlyAsyncContext(
