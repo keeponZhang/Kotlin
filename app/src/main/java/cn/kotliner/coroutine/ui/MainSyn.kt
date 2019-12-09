@@ -30,30 +30,5 @@ fun main(args: Array<String>) {
         log("basic协程之后")
     }
 
-//    frame.onButtonClick {
-//        HttpService.service.getLogo(LOGO_URL)
-//                .enqueue(object : Callback<ResponseBody> {
-//                    override fun onResponse(
-//                            call: Call<ResponseBody>,
-//                            response: Response<ResponseBody>) {
-//                        if (response.isSuccessful) {
-//                            val imageData = response.body()?.byteStream()?.readBytes()
-//                            if (imageData == null) {
-//                                throw HttpException(HttpError.HTTP_ERROR_NO_DATA)
-//                            } else {
-//                                SwingUtilities.invokeLater {
-//                                    frame.setLogo(imageData)
-//                                }
-//                            }
-//                        } else {
-//                            throw HttpException(response.code())
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                        throw HttpException(HttpError.HTTP_ERROR_UNKNOWN)
-//                    }
-//
-//                })
-//    }
+
 }

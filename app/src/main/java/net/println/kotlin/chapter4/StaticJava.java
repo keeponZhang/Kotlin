@@ -7,7 +7,7 @@ public class StaticJava {
     public static void main(String... args) {
         Latitude latitude = Latitude.ofDouble(3.0);
         //会报错，因为没有 @JvmStatic
-       //Latitude.ofLatitude(3.0);
+       // Latitude.ofLatitude(latitude);
 
         System.out.println(Latitude.TAG);
     }

@@ -10,7 +10,6 @@ import kotlin.coroutines.EmptyCoroutineContext
  */
 class BaseContinuation: Continuation<Unit> {
     override fun resumeWith(result: Result<Unit>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override val context: CoroutineContext = EmptyCoroutineContext
