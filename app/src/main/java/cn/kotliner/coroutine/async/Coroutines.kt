@@ -11,8 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.swing.SwingUtilities
 import kotlin.coroutines.*
+import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.EmptyCoroutineContext
+import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
 import kotlin.coroutines.experimental.startCoroutine
 import kotlin.coroutines.experimental.suspendCoroutine
 
@@ -49,6 +51,34 @@ suspend fun <T> 我要开始耗时操作了(block: CoroutineContext.() -> T) = s
         }
     }.execute()
 }
+
+// continuation: Continuation<T> 其实跟continuation，因为会进行类型推导
+suspend fun <T> 我要开始耗时操作了2(block: CoroutineContext.() -> T) =
+    suspendCoroutineOrReturn<T> { continuation: Continuation<T> ->
+        log("我要开始耗时操作了 异步任务开始前")
+        AsyncTask {
+            try {
+                //这样写的好处是已经给block传入了默认的输入参数，block里面只需要处理返回值，就是返回T
+                continuation.resume(block(continuation.context))
+            } catch (e: Exception) {
+                continuation.resumeWithException(e)
+            }
+        }.execute()
+    }
+
+
+suspend fun <T> 我要开始耗时操作了3(block: CoroutineContext.() -> T) =
+    suspendCoroutineOrReturn<T> { continuation ->
+        log("我要开始耗时操作了 异步任务开始前")
+        AsyncTask {
+            try {
+                //这样写的好处是已经给block传入了默认的输入参数，block里面只需要处理返回值，就是返回T
+                continuation.resume(block(continuation.context))
+            } catch (e: Exception) {
+                continuation.resumeWithException(e)
+            }
+        }.execute()
+    }
 
 //注意，这只是个普通方法，没有用suspend修饰，要与basic包类的Coroutines.kt的我要开始加载图片啦 方法区分开来
 fun 我要开始加载图片啦(url: String): ByteArray {
