@@ -5,6 +5,7 @@ class Rectangle(val height: Int, val width: Int) {
         get() {
             return height == width
         }
+//    var isSquare2 : Boolean  var必须初始化赋值
 }
 
 fun main(args: Array<String>) {
