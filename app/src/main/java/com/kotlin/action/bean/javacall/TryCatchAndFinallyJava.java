@@ -1,23 +1,19 @@
-package ch02.ex5_1_TryCatchAndFinally
+package com.kotlin.action.bean.javacall;
 
-import java.io.BufferedReader
-import java.io.StringReader
+import java.io.BufferedReader;
+import java.io.IOException;
 
-fun readNumber(reader: BufferedReader): Int? {  //明式地指定这个函数可 能抛出的异常
-    try {
-        val line = reader.readLine()
-        return Integer.parseInt(line)
-    } catch (e: NumberFormatException) {
-        return null
-    } finally {
-        reader.close()
+public class TryCatchAndFinallyJava {
+    public int readNumber(BufferedReader reader) throws IOException {  //明式地指定这个函数可 能抛出的异常
+        try {
+            String line = reader.readLine();
+            return Integer.parseInt(line);
+        } catch (NumberFormatException e) {
+            return -1;
+        } finally {
+            reader.close();
+        }
     }
-}
-
-fun main(args: Array<String>) {
-    val reader = BufferedReader(StringReader("239"))
-    println(readNumber(reader))
-}
 
 
 //和Java 最大的区别就是throws 子句没有出现在代码中：如果用Java 来写这
@@ -35,3 +31,4 @@ fun main(args: Array<String>) {
 //BufferedReader.close 可能抛出需要处理的受检异常IOException 。如果流
 //关闭失败，大多数程序都不会采取什么有意义的行动，所以捕获来自close 方法
 //的异常所需的代码就是冗余的样板代码。
+}
