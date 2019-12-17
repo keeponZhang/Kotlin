@@ -1,4 +1,6 @@
-package ch03.exUtilityFunctionsAsExtensions3_3_3_4
+@file : JvmName("StringFunctions")
+
+package ch03.ex3_3_5_UtilityFunctionsAsExtensions4
 
 @JvmOverloads
 fun <T> Collection<T>.joinToString(
