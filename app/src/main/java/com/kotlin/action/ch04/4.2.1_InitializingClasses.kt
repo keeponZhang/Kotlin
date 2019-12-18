@@ -1,5 +1,6 @@
 package ch04.ex2_1_InitializingClasses
 
+//这段被括号围起来的语句块就叫作主构造方法
 class User(val nickname: String,
            val isSubscribed: Boolean = true)
 

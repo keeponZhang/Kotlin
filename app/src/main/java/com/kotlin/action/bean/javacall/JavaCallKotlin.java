@@ -1,7 +1,9 @@
 package com.kotlin.action.bean.javacall;
 
 import com.kotlin.action.bean.Animal;
+import com.kotlin.action.bean.Button;
 import com.kotlin.action.bean.Dog;
+import com.kotlin.action.bean.interfaces.State;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,19 @@ public class JavaCallKotlin {
         // test3();
         // test4();
         // test5();
-        test6();
+        // test6();
+        // test7();
+        test8();
+    }
+
+    private static void test8() {
+        Button button = new Button();
+        State currentState = button.getCurrentState();
+    }
+
+    private static void test7() {
+        System.out.println("12.345-6.A".split(".").length); //0 这里点号（．）是表示任何字符的正则表达式。
+        System.out.println("12.345-6.A".split("34").length);
     }
 
     private static void test6() {

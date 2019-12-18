@@ -6,7 +6,7 @@ fun User.validateBeforeSave() {
     fun validate(value: String, fieldName: String) {
         if (value.isEmpty()) {
             throw IllegalArgumentException(
-               "Can't save user $id: empty $fieldName")
+               "Can't save user $id: empty $fieldName")  //属性需要是公有的
         }
     }
 

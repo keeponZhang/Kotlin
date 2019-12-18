@@ -14,5 +14,6 @@ class Button : View {
 
     override fun restoreState(state: State) { /*...*/ }
 
+//    Kotlin 中没有显式修饰符的嵌套类与Java 中的static 嵌套类是一样的
     class ButtonState : State { /*...*/ }
 }
