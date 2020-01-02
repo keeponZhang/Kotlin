@@ -5,6 +5,11 @@ import com.kotlin.action.bean.Button;
 import com.kotlin.action.bean.Dog;
 import com.kotlin.action.bean.interfaces.State;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ch02.ex2_2_CustomAccessors.Rectangle;
@@ -32,8 +37,40 @@ public class JavaCallKotlin {
 
     private static void test8() {
         Button button = new Button();
+        State state = button.restorState();
+        try {
+            setSharedSerializable("keepon0", state);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         State currentState = button.getCurrentState();
+        //java.io.NotSerializableException: com.kotlin.action.bean.Button
+        try {
+            setSharedSerializable("keepon", currentState);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+
+    public static void setSharedSerializable(String key, Serializable value) throws IOException {
+        File f = new File("D:/test");
+        if(!f.exists()){
+            f.mkdir();
+        }
+        File file = new File(f,key);
+        if(!file.exists()){
+            file.createNewFile();
+        }
+        setSerializableObject((File)f, value);
+    }
+    public static void setSerializableObject(File file, Object value) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(value);
+        out.flush();
+        out.close();
+    }
+
 
     private static void test7() {
         System.out.println("12.345-6.A".split(".").length); //0 这里点号（．）是表示任何字符的正则表达式。

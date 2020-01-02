@@ -2,7 +2,7 @@ package ch04.ex2_1_InitializingClasses
 
 //这段被括号围起来的语句块就叫作主构造方法
 class User(
-    val nickname: String,  //。如果属性用相应的构造方法参数来初始化
+    val nickname: String,  //如果属性用相应的构造方法参数来初始化
     val isSubscribed: Boolean = true
 )
 

@@ -12,11 +12,15 @@ public class Button implements View {
 
     @Override
     public State restorState() {
-        return null;
+        return new ButtonState2();
     }
 
     //内部类持有外部类的引用  ,Button是不可序列化的，所以会破坏ButtonState的序列化
     public class ButtonState implements State{
+
+    }
+
+    public static  class ButtonState2 implements State{
 
     }
 }

@@ -54,5 +54,25 @@ package com.kotlin.action.ch04.book.可见性修饰符默认为public
 
 
 
+//Katlin 的可见性修饰符和Java
+//Kotlin 中的public 、protect ed 和private 修饰符在编译成Java 字节
+//码时会被保留。你从Java 代码使用这些Kotlin 声明时就如同他们在Java 中声明
+//了同样的可见性。唯一的例外是private 类：在这种情况下它会被编译成包私
+//有声明（在Java 中你不能把类声明为private ）。
+//但是，你可能会问， internal 修饰符将会发生什么？ Java 中并没有直接
+//与之类似的东西。包私有可见性是一个完全不同的东西：一个模块通常会由多
+//个包组成，并且不同模决可能会包含来自同一个包的声明。因此internal 修
+//饰符在字节码中会变成public 。
+//这些Kotlin声明和它们Java 翻版（或者说它们的字节码呈现）的对应关
+//系解释了为什么有时你能从Java 代码中访问一些你不能从Kotlin 中访问的东西。
+//例如，可以从另一个模块的Java 代码中访问internal 类或顶层声明，抑或从
+//同一个包的Java 代码中访问一个protected 的成员（与你在Java 中做的相似）。
+//但是注意类的internal 成员的名字会被破坏。从技术上讲， internal
+//成员也是可以在Java 中使用的，但是它们在Java 代码中看起来很难看。当你从
+//另一个模块继承类时，可以帮助避免在重写时出现出乎意料的冲突，并且避免
+//意外使用internal 类。
 
 
+//另一个Kotlin 与Java 之间可见性规则的区别就是在Kotlin 中一个外部类不能看
+//到其内部（或者嵌套）类中的private 成员。让我们接下来讨论Kotlin 中的内部
+//和嵌套类井看一个例子。

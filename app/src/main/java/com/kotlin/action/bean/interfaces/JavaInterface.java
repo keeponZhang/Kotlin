@@ -8,6 +8,6 @@ public interface JavaInterface {
     default void interfaceTest(){
         System.out.println("JavaInterface interfaceTest ");
     }
-    //java 接口是可以有属性的
+    //java 接口是可以有属性的，但是是final类型的，kotlin与有属性，子类必须重写改属性
     public final boolean istest = true;
 }
