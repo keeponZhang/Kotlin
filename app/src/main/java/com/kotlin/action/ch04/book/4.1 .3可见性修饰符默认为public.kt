@@ -27,3 +27,32 @@ package com.kotlin.action.ch04.book.可见性修饰符默认为public
 //同一个包中访问一个protected 的成员，但是Kotlin 不允许这样做。在Kotlin 中
 //可见性规则非常简单， protected 成员只在类和它的子类中可见。同样还要注意
 //的是类的扩展函数不能访问它的private 和protected 成员。
+
+
+
+//下面这个是重点
+//在Java 中，可以从同一个包中访问一个protected 的成员，但是Kotlin 不允许这样做。在Kotlin 中
+//可见性规则非常简单， protected 成员只在类和它的子类中可见
+
+
+//java访问控制权限（yes代表可以访问）
+// 	        private	default(默认）	 protected	public
+//同一类	     yes	 yes	          yes	    yes
+//同一包中的类	 		 yes              yes	     yes
+//子类	 	 	                         yes	     yes
+//其他包中的类	 	 	 	                        yes
+
+
+
+//kotlin修饰符          类成员          类成员顶层声明
+//public （默认）       所有地方可见     所有地方可见
+//internal            模块中可见          模块中可见
+//protected            子类中可见
+//private              类中可见         文件中可见
+
+
+
+
+
+
+
