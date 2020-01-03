@@ -7,6 +7,7 @@ fun main(args: Array<String>) {
     val latitude = Latitude.ofDouble(3.0)
     val latitude2 = Latitude.ofLatitude(latitude)
 
+
     //静态成员考虑用包级函数，变量替代
 //    val a = minOf(args[0].toInt(), args[1].toInt())
     println(Latitude.TAG)
