@@ -1,5 +1,7 @@
 package ch05.ex2_4_2_FlatMapFlatten1
 
+import java.util.function.BooleanSupplier
+
 class Book(val title: String, val authors: List<String>)
 
 fun main(args: Array<String>) {

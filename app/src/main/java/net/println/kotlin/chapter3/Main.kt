@@ -73,6 +73,7 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
     //其实意思就是（Int) -> Long 传一个参数返回一个参数
 
     //因为这个是具名函数，所以需要加两个冒号来调用
+    //如果是类函数，要加类名 Person::age
     println(::printUsage)
     //function printUsage (Kotlin reflection is not available)
     println(::printUsage is ()-> Unit)

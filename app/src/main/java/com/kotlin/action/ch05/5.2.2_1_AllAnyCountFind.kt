@@ -6,5 +6,7 @@ val canBeInClub27 = { p: Person -> p.age <= 27 }
 
 fun main(args: Array<String>) {
     val people = listOf(Person("Alice", 27), Person("Bob", 31))
+    //有一个不符合就返回false
     println(people.all(canBeInClub27))
+
 }

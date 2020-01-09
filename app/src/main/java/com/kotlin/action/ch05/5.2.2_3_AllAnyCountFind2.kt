@@ -7,4 +7,6 @@ val canBeInClub27 = { p: Person -> p.age <= 27 }
 fun main(args: Array<String>) {
     val people = listOf(Person("Alice", 27), Person("Bob", 31))
     println(people.find(canBeInClub27))
+    println(people.filter(canBeInClub27).size)
+    println(people.count(canBeInClub27))
 }
