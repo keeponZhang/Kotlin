@@ -21,6 +21,8 @@ import ch03.ex3_3_5_UtilityFunctionsAsExtensions4.StringFunctions;
 import ch03.ex3_strings._3_3_ExtensionsKt;
 import ch03.exUtilityFunctionsAsExtensions3_3_3_4._3_3_3_4_UtilityFunctionsAsExtensions3Kt;
 import ch04.ex4_1_1_ObjectDeclarations.CaseInsensitiveFileComparator;
+import ch06.ex2_1_PrimitiveTypes.NullableStringPrinter;
+import ch06.ex2_1_PrimitiveTypes.StringPrinter;
 
 /**
  * createBy keepon
@@ -37,7 +39,17 @@ public class JavaCallKotlin {
         // test8();
         //  test9();
         // test10();
-        test11();
+        // test11();
+        test12();
+    }
+
+    private static void test12() {
+        //java 调用kotlin方法，要注意kotlin是否非空，调用时，kotlin如果是非空类型，转换成java会加上@NotNull注解
+        StringPrinter stringPrinter = new StringPrinter("keepon");
+        NullableStringPrinter nullableStringPrinter = new NullableStringPrinter();
+        //这里会报错，生成的字节码会加上@NotNull的注解
+        nullableStringPrinter.process(null);
+        stringPrinter.process(null);
     }
 
     private static void test11() {
