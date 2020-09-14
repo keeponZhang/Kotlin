@@ -7,6 +7,7 @@ fun readNumber(reader: BufferedReader) {
     val number = try {
         Integer.parseInt(reader.readLine())
     } catch (e: NumberFormatException) {
+//        抛异常直接返回了
         return
     }
 

@@ -3,7 +3,7 @@ package ch02.ex3_3_UsingWhenWithArbitraryObjects
 import ch02.colors.Color
 import ch02.colors.Color.*
 
-//在“ when ”结构中使用任意对象
+//在“when ”结构中使用任意对象
 fun mix(c1: Color, c2: Color) =
     when (setOf(c1, c2)) {
         setOf(RED, YELLOW) -> ORANGE

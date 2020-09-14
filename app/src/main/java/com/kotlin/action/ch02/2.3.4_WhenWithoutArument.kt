@@ -4,6 +4,8 @@ import ch02.colors.Color
 import ch02.colors.Color.*
 
 fun mixOptimized(c1: Color, c2: Color) =
+    //使用不带参数的“when ”
+//  如果没有给when 表达式提供参数，分支条件就是任意的布尔表达式。
     when {
         (c1 == RED && c2 == YELLOW) ||
         (c1 == YELLOW && c2 == RED) ->

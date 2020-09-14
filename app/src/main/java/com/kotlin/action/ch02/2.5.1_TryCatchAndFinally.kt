@@ -3,7 +3,7 @@ package ch02.ex5_1_TryCatchAndFinally
 import java.io.BufferedReader
 import java.io.StringReader
 
-fun readNumber(reader: BufferedReader): Int? {  //明式地指定这个函数可 能抛出的异常
+fun readNumber(reader: BufferedReader): Int? {  //明式地指定这个函数可能抛出的异常
     try {
         val line = reader.readLine()
         return Integer.parseInt(line)

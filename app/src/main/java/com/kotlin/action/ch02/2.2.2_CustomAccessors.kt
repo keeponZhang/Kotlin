@@ -1,6 +1,7 @@
 package ch02.ex2_2_CustomAccessors
 
 class Rectangle(val height: Int, val width: Int) {
+    //自定义访问器：声明属性的getter,属性下一行写get()
     val isSquare: Boolean
         get() {
             return height == width
