@@ -1,7 +1,7 @@
 package ch03.ParsePath
 
 fun parsePath(path: String) {
-//    使用扩展函数来处理字符串
+//  使用扩展函数来处理字符串
     val directory = path.substringBeforeLast("/")
     val fullName = path.substringAfterLast("/")
 

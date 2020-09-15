@@ -9,17 +9,17 @@ fun main(args: Array<String>) {
 
 //中缀调用可以与只有一个参数的函数一起使用，无论是普通的函数还是扩展函
 //数。要允许使用中缀符号调用函数，需要使用infix修饰符来标记它。
-//下面是一个简单的to 函数的声明：
+//下面是一个简单的to函数的声明：
 //public infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
 //to 函数会返回一个Pair 类型的对象，Pair是Kotlin标准库中的类，不出所料，
-//它会用来表示一对元素。Pair 和to 的声明都用到了泛型，简单起见，这里我们省
+//它会用来表示一对元素。Pair 和to的声明都用到了泛型，简单起见，这里我们省
 //略了泛型。
-//注意，可以直接用Pair 的内容来初始化两个变量：  这个功能称为解构声明
-//val( number, name) = 1 to "one"
+//注意，可以直接用Pair的内容来初始化两个变量：这个功能称为解构声明
+//val(number,name) = 1 to "one"
 
-//解构声明特征不止用于pair。例如，还可以使用map的key和value 内容来
+//解构声明特征不止用于pair。例如，还可以使用map的key和value内容来
 //初始化两个变量。
-//这也适用于循环，正如你在使用withindex函数的joinToString 实现中
+//这也适用于循环，正如你在使用withindex函数的joinToString实现中
 //看到的：
 //for((index, element) in collection.withindex())
 //println("$index: $element")

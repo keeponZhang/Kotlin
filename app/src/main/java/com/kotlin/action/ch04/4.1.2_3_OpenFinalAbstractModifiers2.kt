@@ -15,7 +15,7 @@ open class Animator : Animated() {
             "not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override final fun stopAnimating() {  //如果没有使用final 表明，亟写的成员默认是开放的
+    override final fun stopAnimating() {  //如果没有使用final表明，重写的成员默认是开放的
         println("重写stopAnimating")
     }
 }

@@ -1,5 +1,6 @@
 package ch03.exUtilityFunctionsAsExtensions3_3_3_4
 
+//如果用＠JvmOverloads注解了joinToString，编译器就会生成如下的重载函数：
 @JvmOverloads
 fun <T> Collection<T>.joinToString(
     separator: String = ", ",
