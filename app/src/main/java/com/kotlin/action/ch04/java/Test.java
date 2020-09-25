@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import ch04.ex2_1_InitializingClasses.User;
+import ch04.ex4_2_2_CompanionObjects3.Person6;
+import ch04.ex4_2_2_CompanionObjects3._4_4_2_2_CompanionObjects3Kt;
 
 /**
  * createBy keepon
@@ -42,5 +44,16 @@ class Test {
         // oin.close();
 
 
+        // StaticTest staticTest = new StaticTest();
+        //不能访问外部类的私有属性
+        // staticTest.outerAge;
+
+        //静态内部类是属于外部类的，而不是属于外部类对象
+        StaticTest.Inner inner = new StaticTest.Inner();
+        //不能访问静态内部类的私有属性
+        // inner.innerAge
+
+        Person6.fromJSON6("");
+        Person6.
     }
 }

@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     val bob = Client("keepon",211)
     //使用自动生成的toString
     println(bob)
-
+    bob.copy("2")
     val bob2 = Client("keepon2",212)
     //使用自动生成的equals
     println(bob==bob2)

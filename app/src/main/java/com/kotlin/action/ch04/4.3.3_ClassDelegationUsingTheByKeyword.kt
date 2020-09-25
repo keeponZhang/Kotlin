@@ -5,8 +5,9 @@ import java.util.HashSet
 //这里有个默认参数，所以构造的时候可以不传
 class CountingSet<T>(
         val innerSet: MutableCollection<T> = HashSet<T>()
-) : MutableCollection<T> by innerSet {    //Kotlin将委托作为一个语言级别的功能做了头等支持。无论什么时候实现一个接口，你都可以使用by
-// 关键字将接口的实现委托到另一个对象
+) : MutableCollection<T> by innerSet {
+//Kotlin将委托作为一个语言级别的功能做了头等支持。无论什么时候实现一个接口，你都可以使用by
+//关键字将接口的实现委托到另一个对象
 
 
     var objectsAdded = 0
