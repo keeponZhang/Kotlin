@@ -1,6 +1,5 @@
 package ch04.ex2_1_InitializingClasses
 
-import kotlin.jvm.internal.DefaultConstructorMarker
 
 //这段被括号围起来的语句块就叫作主构造方法
 class User(
@@ -32,7 +31,7 @@ fun main(args: Array<String>) {
 //    val alice =
 //        User("Alice", false, 2, null as DefaultConstructorMarker?)
     val alice = User("Alice")
-    println(alice.isSubscribed )
+    println(alice.isSubscribed)
     val bob = User("Bob", false)
     println(bob.isSubscribed)
     val carol = User("Carol", isSubscribed = false)

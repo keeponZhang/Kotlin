@@ -36,12 +36,14 @@ fun findTheOldest3(people: List<Person>) {
 }
 
 fun Person.isAdult() = age >= 21
+
 //可以一样引用拓展函数
 val predicate = Person::isAdult
 
 fun findTheOldest4(people: List<Person>) {
     //成员引用
     people.maxBy(Person::age)
+    people.maxBy { it.age }
     println(people)
 }
 

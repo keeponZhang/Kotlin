@@ -74,8 +74,8 @@ public class JavaCallKotlin {
     private static void test10() {
         ch04.ex4_2_2_CompanionObjects2.Person.Loader.fromJson("keepon");
         //JvmStatic注解的才
-        ch04.ex4_2_2_CompanionObjects2.Person2.fromJSON2("");
-        ch04.ex4_2_2_CompanionObjects2.Person2.fromJSON3("");
+        // ch04.ex4_2_2_CompanionObjects2. Person.fromJSON("");
+        // ch04.ex4_2_2_CompanionObjects2_2.Person4.fromJSON4("");
     }
 
     private static void test9() {

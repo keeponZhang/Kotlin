@@ -54,6 +54,6 @@ class Test {
         // inner.innerAge
 
         Person6.fromJSON6("");
-        Person6.
+        // Person6.
     }
 }
