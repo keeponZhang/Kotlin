@@ -15,6 +15,7 @@ fun alphabet() = with(StringBuilder()) {
 //let是
 fun let() {
     val nullEmail = "keepon"
+    //后面的block是普通的lambda表达式
     nullEmail?.let { it -> sendEmailTo(it) }
 }
 

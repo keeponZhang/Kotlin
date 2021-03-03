@@ -16,6 +16,7 @@ fun alphabet2() = StringBuilder().run {
     append("\nNow I know the alphabet2!")
     println("")
 }.toString()
+
 //apply返回this，run是返回block里面的
 fun alphabet3() = StringBuilder().apply {
     for (letter in 'A'..'Z') {
@@ -24,6 +25,19 @@ fun alphabet3() = StringBuilder().apply {
     append("\nNow I know the alphabet2!")
     println("")
 }.toString()
+
+fun alphabet4() = StringBuilder().run2 {
+    for (letter in 'A'..'Z') {
+        append(letter)
+    }
+    append("\nNow I know the alphabet2!")
+    println("")
+}.toString()
+//注意，lambda表达式也是一种参数类型
+//T.不能省略，表示是T的拓展函数，那他里面自然就可以调用T的方法，不然那只是普通的lambda表达式
+public inline fun <T, R> T.run2(block: T.() -> R): R {
+    return block()
+}
 
 fun main(args: Array<String>) {
     println(alphabet())
