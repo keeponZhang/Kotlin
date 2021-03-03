@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 //    下面，我们再来看一下如果通过let解决上面的问题，let函数做的事情就是把一个调用它的对象变成lambda表达式的参数，
 //    如果结合安全调用语法，它能有效地把调用let函数的可空对象，转变成非空类型：
     //其实把调用这作为参数传进去，这里就是nullEmail2
-    nullEmail2?.let { it -> sendEmailTo(it) }
+    nullEmail?.let { it -> sendEmailTo(it) }
     nullEmail2?.let { nullEmail2 -> sendEmailTo(nullEmail2) }
     //let函数只在nullEmail的值非空时才被调用，所以就能在lambda中把nullEmail当做非空的实参来使用。
 }

@@ -3,8 +3,8 @@ package ch02.person
 //从Java到Kotlin的转换过程中public修饰符消失了。在Kotlin中，
 //public是默认的可见性，所以你能省略它。
 class Person(
-    val name: String,
-    var isMarried: Boolean
+        val name: String,
+        var isMarried: Boolean
 )
 
 fun main(args: Array<String>) {

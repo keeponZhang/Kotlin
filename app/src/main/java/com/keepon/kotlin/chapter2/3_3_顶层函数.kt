@@ -10,9 +10,12 @@ package com.keepon.kotlin.chapter2
 fun kotlinFunc(){
     println("这是顶层函数")
 }
-
+//public static final void kotlinFunc 顶层函数生成静态final函数
 //修改被调用的方法名
 @JvmName("DINGCENGFUN")
 fun kotlinFunc2(){
     println("这是顶层函数2")
+}
+fun main(args: Array<String>) {
+    kotlinFunc2()
 }

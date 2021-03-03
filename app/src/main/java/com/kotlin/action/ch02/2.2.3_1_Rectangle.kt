@@ -2,7 +2,8 @@ package geometry.shapes
 
 import java.util.Random
 
-class Rectangle(val height: Int, val width: Int) {
+//加了priviate，不会生成对应的get方法
+class Rectangle(private val height: Int, val width: Int) {
     val isSquare: Boolean
         get() = height == width
 }
