@@ -46,5 +46,25 @@
       <option name="name" value="E:\developSoftWare\androidSdk\extras\google\m2repository" />
       <option name="url" value="file:/E:/developSoftWare/androidSdk/extras/google/m2repository/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="http://repo.yypm.com:8181/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="D:\AS2.3\sdk\extras\google\m2repository" />
+      <option name="name" value="D:\AS2.3\sdk\extras\google\m2repository" />
+      <option name="url" value="file:/D:/AS2.3/sdk/extras/google/m2repository/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="D:\AS2.3\sdk\extras\android\m2repository" />
+      <option name="name" value="D:\AS2.3\sdk\extras\android\m2repository" />
+      <option name="url" value="file:/D:/AS2.3/sdk/extras/android/m2repository/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="D:\AS2.3\sdk\extras\m2repository" />
+      <option name="name" value="D:\AS2.3\sdk\extras\m2repository" />
+      <option name="url" value="file:/D:/AS2.3/sdk/extras/m2repository/" />
+    </remote-repository>
   </component>
 </project>
