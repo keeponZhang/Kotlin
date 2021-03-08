@@ -14,6 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookDao(): BookDao
 
+    //生成静态内部类，并且生成单列,单单object会生成单例
     companion object {
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
