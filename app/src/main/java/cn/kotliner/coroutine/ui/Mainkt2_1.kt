@@ -5,7 +5,6 @@ import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation
 import cn.kotliner.coroutine.common.log
 import cn.kotliner.coroutine.ui.LOGO_URL
 import cn.kotliner.coroutine.ui.MainWindow
-import java.lang.RuntimeException
 import javax.swing.JFrame
 
 /**
@@ -48,7 +47,9 @@ fun main(args: Array<String>) {
 //            throw RuntimeException("keepon")
             try {
                 //获取后还是在线程池
-               val imageData = 我要开始加载图片啦不切换线程异步2_1(LOGO_URL)
+                test2()
+                test()
+                val imageData = 我要开始加载图片啦不切换线程异步2_1(LOGO_URL)
                 log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
                 frame.setLogo(imageData)
             } catch (e: Exception) {
@@ -58,5 +59,9 @@ fun main(args: Array<String>) {
         log("协程之后")
     }
 }
+
+//suspend的函数默认会多生成一个参数Continuation，并把外层的Continuation传入
+suspend fun test() {}
+fun test2() {}
 
 

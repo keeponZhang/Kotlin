@@ -36,3 +36,11 @@ class Util {
         }
     }
 }
+
+fun main(args: Array<String>) {
+    test2 { str -> str + 1 }
+}
+
+fun test2(block: (String) -> String) {
+    block(3)
+}
