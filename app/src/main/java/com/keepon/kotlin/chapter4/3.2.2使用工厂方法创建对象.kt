@@ -8,6 +8,7 @@ package com.keepon.kotlin.chapter4
 fun getFaceBookName(accountId:Int)="fb$accountId"
 class User private constructor(val  nickName:String){
     companion object{
+        val test = "aa"
         fun newSubScribingUser(email:String):User{
             return User(email.substringBefore("@"))
         }

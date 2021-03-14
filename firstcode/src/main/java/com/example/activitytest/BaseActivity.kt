@@ -9,6 +9,8 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("BaseActivity", javaClass.simpleName)
+        AppCompatActivity::class.java.name
+        AppCompatActivity::class
         ActivityBox.addActivity(this)
     }
 
@@ -16,5 +18,4 @@ open class BaseActivity : AppCompatActivity() {
         super.onDestroy()
         ActivityBox.removeActivity(this)
     }
-
 }

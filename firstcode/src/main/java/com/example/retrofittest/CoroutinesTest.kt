@@ -10,6 +10,11 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun main() {
+    GlobalScope.launch {
+        println("codesrun in coroutine scope")
+
+    }
+    Thread.sleep(1000)
 //    val start = System.currentTimeMillis()
 //    runBlocking {
 //        repeat(100000) {
@@ -56,9 +61,9 @@ fun main() {
 //        println("cost ${end - start} milliseconds.")
 //    }
 
-    runBlocking {
-        getAppData()
-    }
+//    runBlocking {
+//        getAppData()
+//    }
 }
 
 suspend fun printDot() {

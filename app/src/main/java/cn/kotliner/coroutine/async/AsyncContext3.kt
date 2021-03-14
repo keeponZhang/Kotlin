@@ -11,13 +11,11 @@ import kotlin.coroutines.experimental.CoroutineContext
  * Created by benny on 5/29/17.
  */
 //使用伴生对象的特点,构造函数传一个对象
-class AsyncContext2 : AbstractCoroutineContextElement(MYKey), ContinuationInterceptor {
+class AsyncContext3 : AbstractCoroutineContextElement(ContinuationInterceptor), ContinuationInterceptor {
     val test = "keepon"
 
-    companion object MYKey : CoroutineContext.Key<AsyncContext2>
-
     override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> {
-        log("AsyncContext2 调用interceptContinuation啦啦啦")
+        log("AsyncContext3 调用interceptContinuation啦啦啦")
         return continuation
     }
 }

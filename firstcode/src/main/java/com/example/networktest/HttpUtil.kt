@@ -10,6 +10,7 @@ import kotlin.concurrent.thread
 
 object HttpUtil {
 
+    @JvmStatic
     fun sendHttpRequest(address: String, listener: HttpCallbackListener) {
         thread {
             var connection: HttpURLConnection? = null

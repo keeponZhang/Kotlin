@@ -1,5 +1,6 @@
 package cn.kotliner.coroutine.basic
 
+import cn.kotliner.coroutine.common.log
 import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.EmptyCoroutineContext
@@ -9,17 +10,12 @@ import kotlin.coroutines.experimental.EmptyCoroutineContext
  */
 class BaseContinuation : Continuation<Unit> {
     override fun resumeWithException(exception: Throwable) {
-        TODO(
-            "not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("BaseContinuation resumeWithException "+exception)
     }
 
     override fun resume(value: Unit) {
-        TODO(
-            "not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("BaseContinuation resume  " + value)
     }
 
     override val context: CoroutineContext = EmptyCoroutineContext
-
-
-
 }

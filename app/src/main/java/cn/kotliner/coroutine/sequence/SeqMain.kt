@@ -1,7 +1,9 @@
 package cn.kotliner.coroutine.sequence
 
 import cn.kotliner.coroutine.common.log
+import kotlin.coroutines.experimental.SequenceBuilder
 import kotlin.coroutines.experimental.buildSequence
+import kotlin.coroutines.experimental.intrinsics.createCoroutineUnchecked
 
 /**
  * Created by benny on 5/29/17.
@@ -12,8 +14,18 @@ fun main(args: Array<String>) {
         if (i > 100) break
     }
 }
-
+//
+//BuilderInference builderAction: suspend SequenceBuilder<T>.() -> Unit
+//BuilderInference builderAction: suspend (SequenceBuilder) -> Unit
 //val fibonacci = listOf(10,20)
+
+
+//public fun <T> buildIterator(@BuilderInference builderAction: suspend SequenceBuilder<T>.() -> Unit): Iterator<T> {
+//    val iterator = SequenceBuilderIterator<T>()
+//    iterator.nextStep = builderAction.createCoroutineUnchecked(receiver = iterator, completion = iterator)
+//    return iterator
+//iterator.nextStep被赋值Coroutine
+//}
 val fibonacci = buildSequence() {
     yield(1) //每次调用，把值赋值给nextValue,然后挂起
     var cur = 1
@@ -23,7 +35,7 @@ val fibonacci = buildSequence() {
 
     while (true) {
         try {
-            yield(next) //类似 我要开始耗时操作了 方法
+            yield(next) //类似 我要开始耗时操作了方法
         } catch (e: Exception) {
             log("Exception")
         }

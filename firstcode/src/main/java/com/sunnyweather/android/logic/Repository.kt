@@ -25,6 +25,7 @@ object Repository {
     fun refreshWeather(lng: String, lat: String, placeName: String) = fire(Dispatchers.IO) {
         coroutineScope {
             val deferredRealtime = async {
+                println()
                 SunnyWeatherNetwork.getRealtimeWeather(lng, lat)
             }
             val deferredDaily = async {

@@ -73,6 +73,7 @@ fun main(args: Array<String>) {
     println("main start")
     val str = ""
     //内联函数所引用的Lamda表达式是可以用return关键字进行函数返回的,是针对main函数哦，这点要注意
+    //还要注意一点，block真正的参数等被调用才会赋值，这里因为block(str),所以s就是str
     printString(str) { s ->
         println("lambda start")
         //return顺序不要求
