@@ -12,5 +12,6 @@ fun main(args: Array<String>) {
 //    println(name.length)
 
     val value: String? = "HelloWorld"
+    //便是空参数就抛异常
     println(value!!.length)
 }
