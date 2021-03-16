@@ -1,5 +1,7 @@
 package com.keepon.kotlin.chapter2
 
+import com.keepon.kotlin.chapter1.Rectangle
+
 /**
  * createBy	 keepon
  */
@@ -14,12 +16,13 @@ val list2 = listOf(1, 11, 22, 3)
 //hashMap
 val map = hashMapOf<Int, String>(1 to "one", 44 to "yellow")
 
+
 fun main(args: Array<String>) {
     println(set.javaClass)
     println(list.javaClass)
     println(list2.javaClass)
     println(map.javaClass)
-
+    val rectangle = Rectangle(10, 10)
 //    在这些集合对象上，我们除了可以使用Java当中定义的基本函数以外，还可以使用kotlin提供的扩展方法，例如下面的last和max
     //java中的标准方法
     println("list.get(0) ${list.get(0)}")

@@ -14,9 +14,9 @@ package com.keepon.kotlin.chapter3
 class User6(val name:String){
     var address:String = "unspecified"
     set(value:String){
-        println("""
-            Address was changed for $name:"$field" ->"$value".
-        """.trimIndent())
+//        println("""
+//            Address was changed for $name:"$field" ->"$value".
+//        """.trimIndent())
         //使用特殊的标识符来访问支持字段的值
         field = value
     }

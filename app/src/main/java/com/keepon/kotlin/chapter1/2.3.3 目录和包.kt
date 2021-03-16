@@ -14,7 +14,7 @@ import com.keepon.kotlin.chapter2.Person
 fun main(args: Array<String>) {
     testDiff14()
     //Person看出2的不同
-    val pesron = Person("test3",false)
+    val pesron = Person("test3", false)
     pesron.testDiff3()
 }
 

@@ -10,5 +10,6 @@ package com.keepon.kotlin.chapter2
 // 不会被当做正则表达式，我们可以使用扩展函数toRegex将字符串转换为正则表达式。
 
 fun main(args: Array<String>) {
-    println("12.234-5.A".split("\\.|-".toRegex()))
+//    println("12.234-5.A".split("\\.|-".toRegex()))
+    println("12.234-5.A".split("."))
 }

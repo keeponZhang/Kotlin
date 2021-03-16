@@ -5,6 +5,7 @@ package com.kotlin.action.ch04.java;
  */
 class Animal {
     protected String name;
+
 }
 //下面会报错，在java中，类不能用private修饰
 // private class Animal2 {

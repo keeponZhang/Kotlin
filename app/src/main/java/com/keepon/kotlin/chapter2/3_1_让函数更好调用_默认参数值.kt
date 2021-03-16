@@ -9,10 +9,13 @@ package com.keepon.kotlin.chapter2
 //以想要的顺序指定需要的参数
 
 
-fun <T> joinToString(collection:Collection<T>,sep:String=":",prefix:String="[",postfix:String="]"){
-    val  result = StringBuffer(prefix)
-    for ((index,element) in collection.withIndex()){
-        if(index>0){
+@JvmOverloads
+fun <T> joinToString(
+    collection: Collection<T>, sep: String = ":", prefix: String = "[", postfix: String = "]"
+) {
+    val result = StringBuffer(prefix)
+    for ((index, element) in collection.withIndex()) {
+        if (index > 0) {
             println("index $index  element $element")
             result.append(sep)
         }
@@ -23,6 +26,7 @@ fun <T> joinToString(collection:Collection<T>,sep:String=":",prefix:String="[",p
 }
 
 fun main(args: Array<String>) {
-    val list = listOf<Int>(1,2,3)
-    joinToString(list,",","{","}")
+    val list = listOf<Int>(1, 2, 3)
+    joinToString(list, ",", "{", "}")
+    joinToString(list, postfix = "}")
 }

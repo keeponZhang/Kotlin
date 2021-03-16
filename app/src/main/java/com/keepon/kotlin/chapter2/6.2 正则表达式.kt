@@ -16,6 +16,7 @@ fun  parsePath(path:String){
 //.模式从字符串的一开始就进行匹配，所以第一组(.+)包含最后一个斜线之前的子串，这和子串包含所有前面的斜线，因为它们匹配”任何字符“的模式。
 //第二组包含最后一个点之前的子串
 //第三组包含剩余部分
+// \表示转义
 fun  parsePath2(path:String){
    val regex = """(.+)/(.+)\.(.+)""".toRegex()
     val matchResult = regex.matchEntire(path)

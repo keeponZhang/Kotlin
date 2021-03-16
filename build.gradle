@@ -5,7 +5,7 @@ buildscript {
     ext.kotlin_version = '1.2.51'
 
     repositories {
-         maven {
+        maven {
             url "http://repo.yypm.com:8181/nexus/content/groups/public"
         }
         maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
@@ -27,7 +27,7 @@ buildscript {
 
 allprojects {
     repositories {
-         maven {
+        maven {
             url "http://repo.yypm.com:8181/nexus/content/groups/public"
         }
         maven {url "http://maven.aliyun.com/nexus/content/groups/public"}

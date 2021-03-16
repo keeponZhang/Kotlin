@@ -6,19 +6,19 @@ package com.keepon.kotlin.chapter1
 
 //在Java中，在检查完后还需要显示地加上类型转换。
 //在kotlin中，如果你检查过一个变量是某种类型，后面就不需要再转换它，可以把它当做你检查过的类型来使用。
-interface  Expr
-class Num(val value:Int):Expr
-class Sum(val left:Expr,val right:Expr):Expr
+interface Expr
+class Num(val value: Int) : Expr
+class Sum(val left: Expr, val right: Expr) : Expr
 
-fun cal(expr:Expr):Int =
-        when(expr){
-            is Num -> expr.value
-            is Sum ->cal(expr.left)+ cal(expr.right)
-            else ->0
-        }
+fun cal(expr: Expr): Int =
+    when (expr) {
+        is Num -> expr.value
+        is Sum -> cal(expr.left) + cal(expr.right)
+        else -> 0
+    }
 
 fun main(args: Array<String>) {
-    println(cal(Sum(Sum(Num(2),Num(3)),Num(4))))
+    println(cal(Sum(Sum(Num(2), Num(3)), Num(4))))
 }
 
 

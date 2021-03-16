@@ -1,5 +1,6 @@
 package ch04.ex4_2_2_CompanionObjects1
 
+
 fun getFacebookName(accountId: Int) = "fb:$accountId"
 
 //伴生对象可以访问类中的所有private成员，包括private 构造方法，它是实现工厂模式的理想选择。

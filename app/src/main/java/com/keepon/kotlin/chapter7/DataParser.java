@@ -2,6 +2,6 @@ package com.keepon.kotlin.chapter7;
 
 import java.util.List;
 
-interface DataParser<T> {
+public interface DataParser<T> {
     void parseData(String input, List<T> output, List<String> errors);
 }

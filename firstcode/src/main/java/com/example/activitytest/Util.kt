@@ -42,5 +42,5 @@ fun main(args: Array<String>) {
 }
 
 fun test2(block: (String) -> String) {
-    block(3)
+    block("3")
 }

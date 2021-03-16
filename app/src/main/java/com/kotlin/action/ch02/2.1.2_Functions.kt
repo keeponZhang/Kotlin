@@ -13,6 +13,7 @@ fun max(a: Int, b: Int): Int {
 //表达式函数体
 fun max1(a: Int, b: Int): Int = if (a > b) a else b
 
-fun main(args: Array<String>) {
+//因为只有一行可以这样省略
+fun main(args: Array<String>) =
     println(max(1, 2))
-}
+

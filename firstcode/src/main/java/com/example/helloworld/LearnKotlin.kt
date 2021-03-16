@@ -1,6 +1,6 @@
 package com.example.helloworld
 
-fun main() {
+fun main(args: Array<String>) {
 //    val student = Student("Jack", 19)
 //    doStudy(student)
 
@@ -45,6 +45,8 @@ fun main() {
 //    printParams(str = "world")
 }
 
+var test: String = "test"
+
 fun biggerValue(num1: Int, num2: Int) = if (num1 > num2) num1 else num2
 
 fun getScore(name: String) = when {
@@ -52,6 +54,7 @@ fun getScore(name: String) = when {
     name == "Jim" -> 77
     name == "Jack" -> 95
     name == "Lily" -> 100
+    name is CharSequence -> 111
     else -> 0
 }
 

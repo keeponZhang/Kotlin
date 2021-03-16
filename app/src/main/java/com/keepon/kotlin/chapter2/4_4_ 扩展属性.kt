@@ -8,6 +8,7 @@ package com.keepon.kotlin.chapter2
 //指定扩展属性的名字、类型
 //如果是var那么提供get()/set(value : T)方法，而如果是val属性，那么提供get()方法，其中T为属性的类型。
 
+//其实本质上也是拓展方法，会生成静态方法
 val String.lastChar:Char
    get() = get(length -1)
 

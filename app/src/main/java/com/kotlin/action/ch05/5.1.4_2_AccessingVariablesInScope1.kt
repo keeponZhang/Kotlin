@@ -23,6 +23,6 @@ fun printProblemCounts(responses: Collection<String>) {
 
 fun main(args: Array<String>) {
     val responses = listOf("200 OK", "418 I'm a teapot",
-                           "500 Internal Server Error")
+        "500 Internal Server Error")
     printProblemCounts(responses)
 }

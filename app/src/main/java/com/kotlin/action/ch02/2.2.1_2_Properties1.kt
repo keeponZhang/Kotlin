@@ -2,16 +2,17 @@ package ch02.person
 
 //从Java到Kotlin的转换过程中public修饰符消失了。在Kotlin中，
 //public是默认的可见性，所以你能省略它。
+//private不是影响属性，只会影响会不会生成方法，但是不会影响生成器的方法
 class Person(
-        val name: String,
-        var isMarried: Boolean
+    private val name: String,
+    var isMarried: Boolean
 )
 
 fun main(args: Array<String>) {
 //    调用构造方法不需要关键字new
     val person = Person("Bob", true)
 //    person.name = "keepon"
-    println(person.name)
+//    println(person.name)
     println(person.isMarried)
 }
 

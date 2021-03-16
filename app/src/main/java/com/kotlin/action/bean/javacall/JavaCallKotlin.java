@@ -23,6 +23,7 @@ import ch03.exUtilityFunctionsAsExtensions3_3_3_4._3_3_3_4_UtilityFunctionsAsExt
 import ch04.ex4_1_1_ObjectDeclarations.CaseInsensitiveFileComparator;
 import ch06.ex2_1_PrimitiveTypes.NullableStringPrinter;
 import ch06.ex2_1_PrimitiveTypes.StringPrinter;
+import ch07.ex1_2_1_CompoundAssignmentOperators.Point;
 
 /**
  * createBy keepon
@@ -45,11 +46,12 @@ public class JavaCallKotlin {
 
     private static void test12() {
         //java 调用kotlin方法，要注意kotlin是否非空，调用时，kotlin如果是非空类型，转换成java会加上@NotNull注解
-        StringPrinter stringPrinter = new StringPrinter("keepon");
-        NullableStringPrinter nullableStringPrinter = new NullableStringPrinter();
-        //这里会报错，生成的字节码会加上@NotNull的注解
-        nullableStringPrinter.process(null);
-        stringPrinter.process(null);
+        // StringPrinter stringPrinter = new StringPrinter("keepon");
+        // NullableStringPrinter nullableStringPrinter = new NullableStringPrinter();
+        // //这里会报错，生成的字节码会加上@NotNull的注解
+        // nullableStringPrinter.process(null);
+        // stringPrinter.process(null);
+        Point point = new Point(1, 2);
     }
 
     private static void test11() {

@@ -6,6 +6,7 @@ package com.keepon.kotlin.chapter2
 fun main(args: Array<String>) {
     val  list = listOf<Int>(1,3,4)
     joinToString(list)
+    kotlinFunc2()
 }
 
 

@@ -17,3 +17,17 @@ package com.keepon.kotlin.chapter3
 //final：不允许类被继承，或者不允许方法被重写。
 //abstract：声明抽象类，或者抽象类中的抽象方法。
 //当我们需要重写方法时，必须加上override修饰符。
+
+open class RichButton : Clickable {
+    fun disable() {}
+    open fun animate() {}
+    final override fun click() {
+        println()
+    }
+
+    override fun showOff2() {
+        TODO("Not yet implemented")
+    }
+}
+
+open class RichButton2
