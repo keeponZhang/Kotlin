@@ -3,9 +3,10 @@ package com.example.servicetest
 import android.content.Context
 import android.content.Intent
 
+//泛型实例化
 inline fun <reified T> getGenericType() = T::class.java
 
-fun main() {
+fun main(args: Array<String>) {
     val result1 = getGenericType<String>()
     val result2 = getGenericType<Int>()
     println("result1 is $result1")

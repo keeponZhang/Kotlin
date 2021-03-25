@@ -10,10 +10,8 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun main() {
-    GlobalScope.launch {
-        println("codesrun in coroutine scope")
-
-    }
+    test1()
+    test2()
     Thread.sleep(1000)
 //    val start = System.currentTimeMillis()
 //    runBlocking {
@@ -33,6 +31,9 @@ fun main() {
 //    }
 //    job.cancel()
 
+
+//    ，coroutineScope函数和runBlocking函数还有点类似，它可以保证其作用域内的所
+//    有代码和子协程在全部执行完之前，外部的协程会一直被挂起
 //    runBlocking {
 //        coroutineScope {
 //            launch {
@@ -66,14 +67,57 @@ fun main() {
 //    }
 }
 
+private fun test1() {
+    GlobalScope.launch {
+        println("codesrun in coroutine scope")
+
+    }
+}
+
+private fun test2() {
+    GlobalScope.launch {
+        println("codes run in coroutine scope")
+        delay(1500)
+        println("codes run in coroutine scope finished")
+
+    }
+}
+
+private fun test3() {
+    runBlocking {
+        println("codes run in coroutine scope")
+        delay(1500)
+        println("codes run in coroutine scope finished")
+
+    }
+}
+
+// = 号会报错
+//suspend fun printDot0() = {
+//    println(".")
+//    delay(1000)
+//}
+
 suspend fun printDot() {
+    println(".")
+    delay(1000)
+}
+
+//可以借用coroutineScope
+//虽然看上去coroutineScope函数和runBlocking函数的作用是有点类似的，但是
+//coroutineScope函数只会阻塞当前协程，既不影响其他协程，也不影响任何线程，因此是不
+//会造成任何性能上的问题的。而runBlocking函数由于会挂起外部线程，如果你恰好又在主线
+//程中当中调用它的话，那么就有可能会导致界面卡死的情况，所以不太推荐在实际项目中使
+//用。
+suspend fun printDot1() = coroutineScope {
     println(".")
     delay(1000)
 }
 
 suspend fun getAppData() {
     try {
-        val appList = ServiceCreator.create<AppService>().getAppData().await() // 这段代码想运行通过，需要将BASE_URL中的地址改成http://localhost/
+        val appList = ServiceCreator.create<AppService>().getAppData()
+            .await() // 这段代码想运行通过，需要将BASE_URL中的地址改成http://localhost/
         println(appList)
         // 对服务器响应的数据进行处理
     } catch (e: Exception) {

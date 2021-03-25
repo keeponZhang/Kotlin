@@ -1,6 +1,7 @@
 package com.sunnyweather.android.logic
 
 import androidx.lifecycle.liveData
+import androidx.work.ListenableWorker.Result.success
 import com.sunnyweather.android.logic.dao.PlaceDao
 import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.logic.model.Weather

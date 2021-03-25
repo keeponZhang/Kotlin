@@ -28,8 +28,9 @@ class JetpackActivity : AppCompatActivity() {
         lifecycle.addObserver(myObserver2)
         sp = getPreferences(Context.MODE_PRIVATE)
         val countReserved = sp.getInt("count_reserved", 0)
+        //这里应该是
         viewModel = ViewModelProviders.of(this, MainViewModelFactory(countReserved))
-                .get(MainViewModel::class.java)
+            .get(MainViewModel::class.java)
         plusOneBtn.setOnClickListener {
             viewModel.plusOne()
         }
@@ -43,23 +44,16 @@ class JetpackActivity : AppCompatActivity() {
 //        viewModel.counter.observe(this) { count ->
 //            infoText.text = count.toString()
 //        }
-        getUserBtn.setOnClickListener {
-            val userId = (0..10000).random().toString()
-            viewModel.getUser(userId)
-        }
-        viewModel.user.observe(this, Observer
-        { user ->
-            infoText.text = user.firstName
-        })
+
 
         getUserBtn2.setOnClickListener {
             val userId = (0..10000).random().toString()
             viewModel.getUser(userId)
         }
-        viewModel.user.observe(this, Observer
-        { user ->
-            infoText.text = user.firstName
-        })
+//        viewModel.user.observe(this, Observer
+//        { user ->
+//            infoText.text = user.firstName
+//        })
 
         val userDao = AppDatabase.getDatabase(this).userDao()
         val user1 = User("Tom", "Brady", 40)
@@ -69,6 +63,17 @@ class JetpackActivity : AppCompatActivity() {
                 user1.id = userDao.insertUser(user1)
                 user2.id = userDao.insertUser(user2)
             }
+        }
+        getUserBtn.setOnClickListener {
+            val userId = (0..10000).random().toString()
+            viewModel.getUser(userId)
+        }
+        showGetUser.setOnClickListener {
+            viewModel.user
+                .observe(this, Observer
+            { user ->
+                infoText.text = user.firstName
+            })
         }
         updateDataBtn.setOnClickListener {
             thread {

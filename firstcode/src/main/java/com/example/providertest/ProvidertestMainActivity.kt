@@ -18,6 +18,7 @@ class ProvidertestMainActivity : AppCompatActivity() {
         addData.setOnClickListener {
             // 添加数据
             val uri = Uri.parse("content://com.example.databasetest.provider/book")
+            //to是中缀表达是，这里是创造一个Pair
             val values = contentValuesOf("name" to "A Clash of Kings", "author" to "George Martin",
                     "pages" to 1040, "price" to 22.85)
             val newUri = contentResolver.insert(uri, values)

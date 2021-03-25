@@ -1,9 +1,9 @@
 package com.example.broadcastbestpractice
 
 inline fun printString(str: String, block: (String) -> Unit) {
-    println("printString begin")
+    println("!!!!!!printString begin!!!!!!!!!!")
     block(str)
-    println("printString end")
+    println("!!!!!!!printString end!!!!!!!!")
 }
 
 fun printString2(str: String, block: (String) -> Unit) {
@@ -75,7 +75,7 @@ fun main(args: Array<String>) {
     //内联函数所引用的Lamda表达式是可以用return关键字进行函数返回的,是针对main函数哦，这点要注意
     //还要注意一点，block真正的参数等被调用才会赋值，这里因为block(str),所以s就是str
     printString(str) { s ->
-        println("lambda start")
+        println("&&&&&lambda start&&&&&")
         //return顺序不要求
         //main函数返回
         if (s.isEmpty()) return
@@ -83,14 +83,14 @@ fun main(args: Array<String>) {
         if (s.length == 1) return@printString
 
         println(s)
-        println("lambda end")
+        println("&&&&&&&&lambda end&&&&&&")
     }
     println("main end")
 
     //printString2非内联函数，所以return那里会编译报错
     println("main2 start------")
-    val str1 = ""
-    printString2(str1) { s ->
+    val keepon = ""
+    printString2(keepon) { s ->
         println("lambda2 start")
         if (s.isEmpty()) ""
         println(s)
@@ -99,7 +99,7 @@ fun main(args: Array<String>) {
     println("main2 end-------")
 //使用了crossinline，block里面再用return就会编译不过
 //    runRunnable { if (str1.isEmpty()) return }
-    runRunnable { if (str1.isEmpty()) return@runRunnable }
+    runRunnable { if (keepon.isEmpty()) return@runRunnable }
 }
 
 fun plus(num1: Int, num2: Int): Int {
@@ -110,7 +110,8 @@ fun minus(num1: Int, num2: Int): Int {
     return num1 - num2
 }
 
-//表示函数类型是定义在StringBuilder类的，所以block自然可以调用StringBuilder的方法
+//表示函数类型是定义在StringBuilder类的，所以block自然可以调用StringBuilder的方法, StringBuilder.()这种限定类的block，会用
+// Fuc1代替，默认把调用者作为参数传入
 fun StringBuilder.build(block: StringBuilder.() -> Unit): StringBuilder {
     block()
     return this

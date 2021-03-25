@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import switchMapMy
 
 class MainViewModel(countReserved: Int) : ViewModel() {
 
@@ -33,11 +34,14 @@ class MainViewModel(countReserved: Int) : ViewModel() {
     }
 
     private val userIdLiveData = MutableLiveData<String>()
+
     //返回的relsutLiveData观察了两个（本来是一个，userIdLiveData改变之后就变成了2个），result
     // .addSource与最终观察的无关，只会影响onChanged的类型
-    val user: LiveData<User> = Transformations.switchMap(userIdLiveData) { userId ->
-        Repository.getUser(userId)
-    }
+    //(注意,user是MediatorLiveData，所以订阅逻辑需要去MediatorLiveData看，这个订阅会触发里面source的订阅）
+    val user: LiveData<User> = Transformations
+        .switchMap(userIdLiveData) { userId ->
+            Repository.getUser(userId)
+        }
 
     // Function{   O apply(I input);} I为输入类型，O为输出类型
     //Transformations.map()的原理比较简单，返回的LiveData是对mapFunction.apply(x)返回的结果

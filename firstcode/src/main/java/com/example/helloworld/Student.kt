@@ -21,9 +21,9 @@ class Student3 : Person {
     }
 }
 //
-class Student4 : Person2() {
-
-}
+//class Student4 : Person2() {
+//
+//}
 
 fun main() {
     val student2 = Student2()

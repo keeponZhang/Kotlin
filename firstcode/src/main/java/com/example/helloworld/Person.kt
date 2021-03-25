@@ -13,6 +13,7 @@ open class Person(val name: String, val age: Int) {
     }
 }
 
+
 //没有主构造函数，从构造函数可以不用调用主构造函数
 open class Person2 {
     //

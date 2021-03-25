@@ -10,16 +10,16 @@ package com.keepon.kotlin.chapter8
 
 //下面，我们定义一个Person类，让其根据年龄来比较大小：
 
-class Person(val name:String,val age:Int):Comparable<Person>{
+class Person(val name: String, val age: Int) : Comparable<Person> {
     override fun compareTo(other: Person): Int {
-        return compareValuesBy(this,other,Person::age)
+        return compareValuesBy(this, other, Person::age)
     }
 }
 
 fun main(args: Array<String>) {
-    val p1 = Person("alice",22)
-    val p2 = Person("keeon",14)
-    println(p1>p2)
+    val p1 = Person("alice", 22)
+    val p2 = Person("keeon", 14)
+    println(p1 > p2)
 }
 
 //在上面的例子中，我们用到了Kotlin标准库函数中的compareValuesBy函数来简洁地实现compareTo方法，这个函数 接收用来计算比较值的一系列回调，按顺序依次调用回调方法，两两一组分别做比较：

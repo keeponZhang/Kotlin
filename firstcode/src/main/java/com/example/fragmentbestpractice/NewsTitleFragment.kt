@@ -18,7 +18,7 @@ class NewsTitleFragment : Fragment() {
     private var isTwoPane = false
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.news_title_frag, container, false)
     }
@@ -36,7 +36,7 @@ class NewsTitleFragment : Fragment() {
         val newsList = ArrayList<News>()
         for (i in 1..50) {
             val news = News("This is news title $i",
-                    getRandomLengthString("This is news content $i. "))
+                getRandomLengthString("This is news content $i. "))
             newsList.add(news)
         }
         return newsList
@@ -48,13 +48,17 @@ class NewsTitleFragment : Fragment() {
     }
 
     private fun getRandomLengthString2(str: String): String {
+        //repeat混循环调用，传进index
+        repeat(2) {
+
+        }
         (1..20)
 //        str * (1..20).random()
         return str * 4
     }
 
     inner class NewsAdapter(val newsList: List<News>) :
-            RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+        RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val newsTitle: TextView = view.findViewById(R.id.newsTitle)
@@ -62,7 +66,7 @@ class NewsTitleFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
             val holder = ViewHolder(view)
             holder.itemView.setOnClickListener {
                 val news = newsList[holder.adapterPosition]
