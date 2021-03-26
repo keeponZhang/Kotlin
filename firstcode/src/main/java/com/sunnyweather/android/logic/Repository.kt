@@ -1,5 +1,6 @@
 package com.sunnyweather.android.logic
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import androidx.work.ListenableWorker.Result.success
 import com.sunnyweather.android.logic.dao.PlaceDao
@@ -61,7 +62,10 @@ object Repository {
             } catch (e: Exception) {
                 Result.failure<T>(e)
             }
+            Log.e("TAG", "Repository fire:" + Thread.currentThread().name);
+            //emit里面会切换线程withContext(coroutineContext) 
             emit(result)
+            Log.e("TAG", "Repository fire2:" + Thread.currentThread().name);
         }
 
 }

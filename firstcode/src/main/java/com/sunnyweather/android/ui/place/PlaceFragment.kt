@@ -2,6 +2,7 @@ package com.sunnyweather.android.ui.place
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,7 @@ class PlaceFragment : Fragment() {
             }
         }
         viewModel.placeLiveData.observe(this, Observer { result ->
+            Log.e("TAG", "PlaceFragment onActivityCreated:" +Thread.currentThread().name);
             val places = result.getOrNull()
             if (places != null) {
                 recyclerView.visibility = View.VISIBLE
