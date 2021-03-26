@@ -10,8 +10,10 @@ class PlaceViewModel : ViewModel() {
 
     val placeList = ArrayList<Place>()
 
+    //searchLiveData变化，placeLiveData会调用setValue方法，placeLiveData的观察者就能收到
     val placeLiveData = Transformations.switchMap(searchLiveData) { query ->
-        Repository.searchPlaces(query)
+        val searchPlaces = Repository.searchPlaces(query)
+        searchPlaces
     }
 
     fun searchPlaces(query: String) {

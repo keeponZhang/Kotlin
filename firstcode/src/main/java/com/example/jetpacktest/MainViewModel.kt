@@ -35,6 +35,7 @@ class MainViewModel(countReserved: Int) : ViewModel() {
 
     private val userIdLiveData = MutableLiveData<String>()
 
+// 注意，这个方法也很重要   activeStateChanged(boolean )，传true会发送更新事件，数据为data
     //返回的relsutLiveData观察了两个（本来是一个，userIdLiveData改变之后就变成了2个），result
     // .addSource与最终观察的无关，只会影响onChanged的类型
     //(注意,user是MediatorLiveData(可以观察不一样的)，所以订阅逻辑需要去MediatorLiveData看，这个订阅会触发里面source的订阅）
