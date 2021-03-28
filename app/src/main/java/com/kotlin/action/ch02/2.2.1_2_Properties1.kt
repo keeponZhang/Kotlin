@@ -4,8 +4,8 @@ package ch02.person
 //public是默认的可见性，所以你能省略它。
 //private不是影响属性，只会影响会不会生成方法，但是不会影响生成器的方法
 class Person(
-    private val name: String,
-    var isMarried: Boolean
+        val name: String,
+        var isMarried: Boolean
 )
 
 fun main(args: Array<String>) {

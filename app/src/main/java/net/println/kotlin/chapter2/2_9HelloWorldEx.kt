@@ -22,9 +22,9 @@ fun main(args: Array<String>) {
     //HelloWorld::class.java 等同于 java的HelloWorld.class
     println("class name hello world: " + HelloWorld::class.java.simpleName)
     println("class name hello world: " + HelloWorld::class.java.name)
+    println("the length of hello world is : " + helloWorldLength)
     //String 也可以slice
     println("part of the class name of HelloWorld: "
             + HelloWorld::class.java.simpleName.slice(0 until helloWorldLength)) // [0, 11)
-    println("the length of hello world is : " + helloWorldLength)
     println("the length of hello world is (long): " + helloWorldLengthLong)
 }

@@ -3,15 +3,26 @@ package net.println.kotlin.chapter4
 /**
  * Created by benny on 4/3/17.
  */
-//open val age age也可以被覆写
-abstract class Person(open val age: Int){
-    abstract fun work()
-}
-abstract class Person2(open val age: Int,open val name: String){
+//open val age age也可以被覆写，其实就是get方法可以覆写
+abstract class Person0(val age: Int) {
     abstract fun work()
 }
 
-class MaNong(age: Int): Person(age){
+class Keepon(age: Int) : Person0(age) {
+    override fun work() {
+
+    }
+}
+
+abstract class Person(open val age: Int) {
+    abstract fun work()
+}
+
+abstract class Person2(open val age: Int, open val name: String) {
+    abstract fun work()
+}
+
+class MaNong(age: Int) : Person(age) {
     //自定义的访问器：用val开头作为声明，紧跟着的是属性的名称和类型，接下来是get()关键字，最后是一个函数体
     override val age: Int
         get() = 21
@@ -25,7 +36,8 @@ class MaNong(age: Int): Person(age){
         println("我是码农，我在写代码， 年龄=$age")
     }
 }
-class MaNong2(override  var age: Int): Person(age){
+
+class MaNong2(override var age: Int) : Person(age) {
     //两种重写父类属性的方法
     init {
         age = 28
@@ -38,34 +50,35 @@ class MaNong2(override  var age: Int): Person(age){
     }
 }
 
-class Doctor(age: Int): Person(age){
+class Doctor(age: Int) : Person(age) {
     override fun work() {
         println("我是医生，我在给病人看病")
     }
+
     var name = "doctor"
 }
 
-class Doctor2(age: Int, name:String ): Person2(age,name){
+class Doctor2(age: Int, name: String) : Person2(age, name) {
     override fun work() {
         println("我是医生2，我在给病人看病")
     }
-    //override的要父类存在的
-   override val age :Int
-   get()=33
 
-    override val name :String
-        get()="doctor2"
+    //override的要父类存在的
+    override val age: Int
+        get() = 33
+
+    override val name: String
+        get() = "doctor2"
 }
 
-class Doctor3(age: Int, var name:String ): Person(age){
+class Doctor3(age: Int, var name: String) : Person(age) {
     override fun work() {
         println("我是医生3，我在给病人看病")
     }
+
     //override的要父类存在的
-    override val age :Int
-        get()=33
-
-
+    override val age: Int
+        get() = 33
 }
 
 fun main(args: Array<String>) {
@@ -90,5 +103,4 @@ fun main(args: Array<String>) {
 //    if(person3 is Doctor3){
 //        println("person3.name ${person3.name}" )
 //    }
-
 }

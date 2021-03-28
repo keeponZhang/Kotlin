@@ -3,11 +3,11 @@ package net.println.kotlin.chapter3
 /**
  * Created by benny on 3/5/17.
  */
+//加了const相当于编译器常量了
 const val FINAL_HELLO_WORLD: String = "HelloWorld"
 var helloWorld: String = FINAL_HELLO_WORLD
 
 val FINAL_HELLO_CHINA = "HelloChina"
-
 
 fun main(args: Array<String>) { // (Array<String>) -> Unit
 //    checkArgs(args)
@@ -17,6 +17,9 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
     //匿名函数调用
     println(int2Long(3))
     println(Sum(1, 3))
+    //相当于小括号调用
+    Sum.invoke(1, 3)
+    println(Sum2(2, 3))
     //调用invoke传入1和3和用小括号直接传入是一样的
 //    println(Sum.invoke(1, 3))
 
@@ -25,9 +28,9 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
 //    }
 
 
-//    args.forEach {
-//        println(" 收到的参数 $it")
-//    }
+    args.forEach {
+        println(" 收到的参数 $it")
+    }
 
 //    args.forEach { println(it) }
     //用两个冒号来引用函数名作为参数传给forEach,println接收一个参数，
@@ -53,10 +56,10 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
 //    }
 
     //加个标签，相当于大括号取个标签
-//    args.forEach ForEach@{
-//        if(it == "q") return@ForEach
-//        println(it)
-//    }
+    args.forEach ForEach@{
+        if (it == "q") return@ForEach
+        println(it)
+    }
 //
 //    println("The End")
 
@@ -76,7 +79,7 @@ fun main(args: Array<String>) { // (Array<String>) -> Unit
     //如果是类函数，要加类名 Person::age
     println(::printUsage)
     //function printUsage (Kotlin reflection is not available)
-    println(::printUsage is ()-> Unit)
+    println(::printUsage is () -> Unit)
 }
 
 fun checkArgs(args: Array<String>) {
@@ -85,6 +88,7 @@ fun checkArgs(args: Array<String>) {
         System.exit(-1)
     }
 }
+
 //具名函数
 fun printUsage() {
     println("请传入两个整型参数，例如 1 2") // (Any?) -> Unit
@@ -97,7 +101,10 @@ val Sum = { arg1: Int, arg2: Int ->
     println("$arg1 + $arg2 = ${arg1 + arg2}")
     arg1 + arg2
 }
-
+val Sum2 = fun(arg1: Int, arg2: Int) = {
+    println("$arg1 + $arg2 = ${arg1 + arg2}")
+    arg1 + arg2
+}
 
 // sum 与int2Long其实没什么区别，sum是lambda表达式
 //lambda表达式也是匿名函数，这里就是个匿名函数

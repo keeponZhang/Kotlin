@@ -1,13 +1,17 @@
 package net.println.kotlin.chapter4.overload
 
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by benny on 4/4/17.
  */
-class Overloads{
+class Overloads {
     @JvmOverloads //给java用
-    fun a(int: Int = 0): Int{
+    fun a(int: Int = 0): Int {
+        return int
+    }
+
+    fun b(int: Int = 0): Int {
         return int
     }
 
@@ -20,7 +24,7 @@ class Overloads{
 //    }
 
 
-    fun a(str: String): Int{
+    fun a(str: String): Int {
         return str.length
     }
 }
@@ -30,7 +34,8 @@ fun main(args: Array<String>) {
     //有默认参数可以什么都不传
     println(overloads.a())
     println(overloads.a(3))
-    println( overloads.a("keepon"))
+    println(overloads.a("keepon"))
+    println(overloads.b())
 
 
     val integerList = ArrayList<Int>()

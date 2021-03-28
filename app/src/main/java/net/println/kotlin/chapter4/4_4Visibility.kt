@@ -7,14 +7,13 @@ class House
 
 class Flower
 
-class Countyard{
+class Countyard {
     protected val house: House = House()
 
     private val flower: Flower = Flower()
-
 }
 
-class ForbiddenCity{
+class ForbiddenCity {
     internal val houses = arrayOf(House(), House())
 
     val flowers = arrayOf(Flower(), Flower())
@@ -24,5 +23,6 @@ fun main(args: Array<String>) {
     val countyard = Countyard()
     countyard
     val fc = ForbiddenCity()
+    fc.houses
     println(fc.flowers)
 }

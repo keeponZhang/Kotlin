@@ -28,17 +28,20 @@ fun main(args: Array<String>) {
 //    args.forEach(PdfPrinter::println)
 }
 
-class PdfPrinter{
-    fun println(any: Any){
+public fun CharSequence.isNotEmpty(): Boolean = length > 0
+
+class PdfPrinter {
+    fun println(any: Any) {
         kotlin.io.println(any)
     }
 }
-inline fun world2(){
+
+inline fun world2() {
     println("Hello World2.")
 }
-class Hello{
-    fun world(){
+
+class Hello {
+    fun world() {
         println("Hello World.")
     }
-
 }

@@ -31,5 +31,6 @@ class Latitude private constructor(val value: Double) {
 
         @JvmField
         val TAG: String = "Latitude"
+        val TAG2: String = "Latitude"
     }
 }

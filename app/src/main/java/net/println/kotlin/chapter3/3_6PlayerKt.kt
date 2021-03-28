@@ -3,7 +3,7 @@ package net.println.kotlin.chapter3
 /**
  * Created by benny on 3/19/17.
  */
-class PlayerKt {
+class `3_6PlayerKt` {
     enum class State {
         IDLE, BUFFERING, PLAYING, PAUSED
     }
@@ -13,7 +13,7 @@ class PlayerKt {
 
     fun pause() {
         when (state) {
-            PlayerKt.State.BUFFERING, PlayerKt.State.PLAYING -> doPause()
+            `3_6PlayerKt`.State.BUFFERING, `3_6PlayerKt`.State.PLAYING -> doPause()
             else -> {
 
             }
@@ -22,7 +22,7 @@ class PlayerKt {
 
     fun resume() {
         when (state) {
-            PlayerKt.State.PAUSED -> doResume()
+            `3_6PlayerKt`.State.PAUSED -> doResume()
         }//什么都不做
     }
 

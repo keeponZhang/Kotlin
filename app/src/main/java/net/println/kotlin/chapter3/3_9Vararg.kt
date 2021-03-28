@@ -17,7 +17,7 @@ fun main(vararg args: String) {
     hello(3.0, *array,string = "keepon")
 }
 
-//vararg变长参数   String = "Hello"
+//vararg变长参数(因为具名参数的存在，变长参数可以在任意的位置)   String = "Hello"
 fun hello(double: Double, vararg ints: Int, string: String = "Hello"){
     println(double)
     ints.forEach(::println)

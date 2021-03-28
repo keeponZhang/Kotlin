@@ -7,13 +7,12 @@ interface InputDevice {
     fun input(event: Any)
 }
 
-interface USBInputDevice: InputDevice
+interface USBInputDevice : InputDevice
 
-interface BLEInputDevice: InputDevice
+interface BLEInputDevice : InputDevice
 
-abstract class USBMouse(val name: String): USBInputDevice, OpticalMouse{
-    override fun input(event: Any){
-
+abstract class USBMouse(val name: String) : USBInputDevice, OpticalMouse {
+    override fun input(event: Any) {
     }
 
     override fun toString(): String {
@@ -21,44 +20,43 @@ abstract class USBMouse(val name: String): USBInputDevice, OpticalMouse{
     }
 }
 
-class LogitechMouse: USBMouse("罗技鼠标") {
-
-}
-class Name{
+class LogitechMouse : USBMouse("罗技鼠标") {
 
 }
 
-interface OpticalMouse{
+class Name {
 
 }
 
+interface OpticalMouse {
 
-class Computer{
+}
 
-    fun addUSBInputDevice(inputDevice: USBInputDevice){
+class Computer {
+
+    fun addUSBInputDevice(inputDevice: USBInputDevice) {
         //插入输入设备
         println("add usb input device: $inputDevice")
     }
 
-    fun addBLEInputDevice(inputDevice: BLEInputDevice){
+    fun addBLEInputDevice(inputDevice: BLEInputDevice) {
         //插入输入设备
         println("add ble input device: $inputDevice")
     }
 
-    fun addInputDevice(inputDevice: InputDevice){
-        when(inputDevice){
-            is BLEInputDevice ->{
+    fun addInputDevice(inputDevice: InputDevice) {
+        when (inputDevice) {
+            is BLEInputDevice -> {
                 addBLEInputDevice(inputDevice)
             }
-            is USBInputDevice ->{
+            is USBInputDevice -> {
                 addUSBInputDevice(inputDevice)
             }
-            else ->{
+            else -> {
                 throw IllegalArgumentException("输入设备类型不支持")
             }
         }
     }
-
 }
 
 fun main(args: Array<String>) {

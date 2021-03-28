@@ -1,6 +1,5 @@
 package com.kotlin.action.ch06;
 
-import android.support.annotation.NonNull;
 
 /* Java */
 public class Person {

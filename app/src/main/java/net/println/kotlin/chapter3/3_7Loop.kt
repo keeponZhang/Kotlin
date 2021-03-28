@@ -18,18 +18,18 @@ fun main(args: Array<String>) {
 
 
     //for语句
-//    for (arg in args){
-//        println(arg)
-//    }
+    for (arg in args){
+        println(arg)
+    }
 //
-//    for((index, value) in args.withIndex()){
-//        println("$index -> $value")
-//    }
+    for((index, value) in args.withIndex()){
+        println("$index -> $value")
+    }
 //
-//    for(indexedValue in args.withIndex()){
-//        println("${indexedValue.index} -> ${indexedValue.value}")
-//    }
-//
+    for(indexedValue in args.withIndex()){
+        println("${indexedValue.index} -> ${indexedValue.value}")
+    }
+
     val list = MyIntList()
     list.add(1)
     list.add(2)

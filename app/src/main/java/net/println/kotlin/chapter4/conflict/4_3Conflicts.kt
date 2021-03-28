@@ -18,7 +18,7 @@ interface C{
 }
 
 class D(var y: Int = 0): A(), B, C{
-
+    //子类必须覆写冲突方法
     override fun x(): Int {
         println("call x(): Int in D")
         if(y > 0){

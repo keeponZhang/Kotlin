@@ -30,5 +30,5 @@ fun main(args: Array<String>) {
 
 
     println("arrayOfChar.joinToString()="+arrayOfChar.joinToString())
-    println("arrayOfInt.slice(1..2)="+arrayOfInt.slice(1..2))
+    println("arrayOfInt.slice(1..3)="+arrayOfInt.slice(1..3))
 }

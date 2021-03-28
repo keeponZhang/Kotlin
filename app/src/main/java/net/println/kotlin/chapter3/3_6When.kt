@@ -5,7 +5,7 @@ package net.println.kotlin.chapter3
  */
 fun main(args: Array<String>) {
     val x = 5
-    when(x){
+    when (x) {
         is Int -> println("Hello $x")
         in 1..100 -> println("$x is in 1..100")
         !in 1..100 -> println("$x is not in 1..100")
@@ -13,7 +13,7 @@ fun main(args: Array<String>) {
     }
 
     //when也可以用来代替if语句
-    val mode = when{
+    val mode = when {
         args.isNotEmpty() && args[0] == "1" -> 1
         else -> 0
     }

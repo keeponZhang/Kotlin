@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
             println("请输入算式例如： 3 + 4")
             val input = readLine() ?: break
             val splits = input.trim().split(" ")
-            if(splits.size < 3){
+            if (splits.size < 3) {
                 throw IllegalArgumentException("参数个数不对")
             }
             val arg1 = splits[0].toDouble()
@@ -17,11 +17,11 @@ fun main(args: Array<String>) {
             val arg2 = splits[2].toDouble()
             println("$arg1 $op $arg2 = ${Operator(op)(arg1, arg2)}")
             println("$arg1 $op $arg2 = ${Operator(op).invoke(arg1, arg2)}")
-        }catch (e: NumberFormatException){
+        } catch (e: NumberFormatException) {
             println("您确定输入的是数字吗？")
-        }catch (e: IllegalArgumentException){
+        } catch (e: IllegalArgumentException) {
             println("您确定输入的是三个参数吗？或者您确定您的输入是用空格分隔的吗？")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             println("亲爱的用户，您的人品太差了，程序遇到了未知的异常，${e.message}")
         }
 
@@ -51,8 +51,8 @@ class Operator(op: String) {
         }
     }
 
+    //重写后可以括号调用
     operator fun invoke(left: Double, right: Double): Double {
         return opFun(left, right)
     }
-
 }
