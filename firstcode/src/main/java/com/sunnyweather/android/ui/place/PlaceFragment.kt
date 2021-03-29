@@ -24,7 +24,7 @@ class PlaceFragment : Fragment() {
     private lateinit var adapter: PlaceAdapter
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_place, container, false)
     }
@@ -58,7 +58,7 @@ class PlaceFragment : Fragment() {
             }
         }
         viewModel.placeLiveData.observe(this, Observer { result ->
-            Log.e("TAG", "PlaceFragment onActivityCreated:" +Thread.currentThread().name);
+            Log.e("TAG", "PlaceFragment onActivityCreated:" + Thread.currentThread().name);
             val places = result.getOrNull()
             if (places != null) {
                 recyclerView.visibility = View.VISIBLE

@@ -11,10 +11,11 @@ class PlaceViewModel : ViewModel() {
     val placeList = ArrayList<Place>()
 
     //searchLiveData变化，placeLiveData会调用setValue方法，placeLiveData的观察者就能收到
-    val placeLiveData = Transformations.switchMap(searchLiveData) { query ->
-        val searchPlaces = Repository.searchPlaces(query)
-        searchPlaces
-    }
+    val placeLiveData: LiveData<Result<List<Place>>> =
+        Transformations.switchMap(searchLiveData) { query ->
+            val searchPlaces = Repository.searchPlaces(query)
+            searchPlaces
+        }
 
     fun searchPlaces(query: String) {
         searchLiveData.value = query
@@ -25,5 +26,4 @@ class PlaceViewModel : ViewModel() {
     fun getSavedPlace() = Repository.getSavedPlace()
 
     fun isPlaceSaved() = Repository.isPlaceSaved()
-
 }

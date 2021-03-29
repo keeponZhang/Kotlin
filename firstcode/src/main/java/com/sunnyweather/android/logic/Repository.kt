@@ -58,6 +58,7 @@ object Repository {
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData<Result<T>>(context) {
             val result = try {
+                //这个block是有suspend的
                 block()
             } catch (e: Exception) {
                 Result.failure<T>(e)

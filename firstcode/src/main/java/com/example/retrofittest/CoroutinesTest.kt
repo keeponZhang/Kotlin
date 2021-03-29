@@ -10,42 +10,20 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun main() {
-    test1()
-    test2()
-    Thread.sleep(1000)
-//    val start = System.currentTimeMillis()
-//    runBlocking {
-//        repeat(100000) {
-//            launch {
-//                println(".")
-//            }
-//        }
-//    }
-//    val end = System.currentTimeMillis()
-//    println(end - start)
+//    test1()
+//    test2()
+//    test3()
+//    test4()
+//    test5()
+//    test6()
+
+
 //
-//    val job = Job()
-//    val scope = CoroutineScope(job)
-//    scope.launch {
-//        // do something
-//    }
-//    job.cancel()
-
-
-//    ，coroutineScope函数和runBlocking函数还有点类似，它可以保证其作用域内的所
-//    有代码和子协程在全部执行完之前，外部的协程会一直被挂起
-//    runBlocking {
-//        coroutineScope {
-//            launch {
-//                for (i in 1..10) {
-//                    println(i)
-//                    delay(1000)
-//                }
-//            }
-//        }
-//        println("coroutineScope finished")
-//    }
-//    println("runBlocking finished")
+    GlobalScope.launch {
+        test8()
+    }
+    test7()
+//    test9()
 
 //    runBlocking {
 //        val start = System.currentTimeMillis()
@@ -62,9 +40,36 @@ fun main() {
 //        println("cost ${end - start} milliseconds.")
 //    }
 
-//    runBlocking {
-//        getAppData()
-//    }
+    runBlocking {
+        getAppData()
+    }
+}
+
+private fun test7() {
+    // coroutineScope函数和runBlocking函数还有点类似，它可以保证其作用域内的所
+//    有代码和子协程在全部执行完之前，外部的协程会一直被挂起
+    runBlocking {
+        coroutineScope {
+            launch {
+                for (i in 1..10) {
+                    println(i)
+                    delay(1000)
+                }
+            }
+        }
+        println("coroutineScope finished")
+    }
+    println("runBlocking finished")
+}
+
+private fun test6() {
+    val job = Job()
+    val scope = CoroutineScope(job)
+    //launch的是拥有协程作用域的
+    scope.launch {
+        // do something
+    }
+    job.cancel()
 }
 
 private fun test1() {
@@ -92,6 +97,41 @@ private fun test3() {
     }
 }
 
+private fun test4() {
+    runBlocking {
+        launch {
+            println("launch1")
+            delay(1000)
+            println("launch1 finished")
+        }
+        launch {
+            println("launch2")
+            delay(1000)
+            println("launch2 finished")
+        }
+    }
+}
+
+private fun test5() {
+    val start = System.currentTimeMillis()
+    runBlocking {
+        repeat(100000) {
+            launch {
+                println(".")
+            }
+        }
+    }
+    val end = System.currentTimeMillis()
+    println(end - start)
+}
+
+private fun test9() {
+    runBlocking { printDot() }
+}
+
+private suspend fun test8() {
+    printDot1()
+}
 // = 号会报错
 //suspend fun printDot0() = {
 //    println(".")
@@ -99,8 +139,13 @@ private fun test3() {
 //}
 
 suspend fun printDot() {
-    println(".")
+    println("printDot")
     delay(1000)
+    println("printDot.end")
+    //不能调用launche函数
+//    launch{
+//
+//    }
 }
 
 //可以借用coroutineScope
@@ -110,8 +155,10 @@ suspend fun printDot() {
 //程中当中调用它的话，那么就有可能会导致界面卡死的情况，所以不太推荐在实际项目中使
 //用。
 suspend fun printDot1() = coroutineScope {
-    println(".")
-    delay(1000)
+    println("printDot1.")
+    delay(5000)
+    println("printDot1.end")
+    launch { }
 }
 
 suspend fun getAppData() {
