@@ -23,25 +23,45 @@ fun main() {
         test8()
     }
     test7()
-//    test9()
-
-//    runBlocking {
-//        val start = System.currentTimeMillis()
-//        val deferred1 = async {
-//            delay(1000)
-//            5 + 5
-//        }
-//        val deferred2 = async {
-//            delay(1000)
-//            4 + 6
-//        }
-//        println("result is ${deferred1.await() + deferred2.await()}.")
-//        val end = System.currentTimeMillis()
-//        println("cost ${end - start} milliseconds.")
-//    }
+    test9()
+//
+    test10()
 
     runBlocking {
         getAppData()
+    }
+    test11()
+}
+
+fun test11() {
+//    我来解释一下这段代码。调用withContext()函数之后，会立即执行代码块中的代码，同时
+//    将外部协程挂起。当代码块中的代码全部执行完之后，会将最后一行的执行结果作为
+//    withContext()函数的返回值返回，因此基本上相当于val result = async{ 5 + 5
+//    }.await()的写法。唯一不同的是，withContext()函数强制要求我们指定一个线程参数，
+//    关于这个参数我准备好好讲一讲。
+    runBlocking {
+        val result = withContext(Dispatchers.Default) {
+            5 + 5
+        }
+        launch { }
+        println(result)
+    }
+}
+
+private fun test10() {
+    runBlocking {
+        val start = System.currentTimeMillis()
+        val deferred1 = async {
+            delay(1000)
+            5 + 5
+        }
+        val deferred2 = async {
+            delay(1000)
+            4 + 6
+        }
+        println("result is ${deferred1.await() + deferred2.await()}.")
+        val end = System.currentTimeMillis()
+        println("cost ${end - start} milliseconds.")
     }
 }
 
@@ -99,6 +119,9 @@ private fun test3() {
 
 private fun test4() {
     runBlocking {
+//        注意这里的launch函数和我们刚才所使用的GlobalScope.launch函数不同。首先它必须在
+//        协程的作用域中才能调用，其次它会在当前协程的作用域下创建子协程。子协程的特点是如果
+//        外层作用域的协程结束了，该作用域下的所有子协程也会一同结束。
         launch {
             println("launch1")
             delay(1000)
