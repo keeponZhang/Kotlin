@@ -30,6 +30,7 @@ suspend fun bar(a: Int): String {
 //    return "Hello"
 //}
 
+//真正的挂起必须异步调用resume：包括切到其他线程resume，单线程事件循环异步执行
 //suspendCoroutine可以拿到编译器传的continuation
 suspend fun getUserSuspend(name: String) = suspendCoroutine<User> { continuation ->
     githubApi.getUserCallback(name).enqueue(object : Callback<User> {
