@@ -10,7 +10,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun main() {
-//    test1()
+    test1()
 //    test2()
 //    test3()
 //    test4()
@@ -18,7 +18,7 @@ fun main() {
 //    test6()
 
 
-//
+//获取一个全局CoroutineScope
     GlobalScope.launch {
         test8()
     }
@@ -40,11 +40,16 @@ fun test11() {
 //    }.await()的写法。唯一不同的是，withContext()函数强制要求我们指定一个线程参数，
 //    关于这个参数我准备好好讲一讲。
     runBlocking {
-        val result = withContext(Dispatchers.Default) {
-            5 + 5
-        }
+        val result = sum()
         launch { }
         println(result)
+    }
+}
+
+private suspend fun sum() {
+    val result = withContext(Dispatchers.Default) {
+        5 + 5
+        launch { }
     }
 }
 
@@ -93,6 +98,10 @@ private fun test6() {
 }
 
 private fun test1() {
+//    val coroutine = if (start.isLazy)
+//        LazyStandaloneCoroutine(newContext, block) else
+//        StandaloneCoroutine(newContext, active = true)
+//    coroutine.start(start, coroutine, block)
     GlobalScope.launch {
         println("codesrun in coroutine scope")
 
