@@ -11,6 +11,7 @@ package com.keepon.kotlin.chapter6
 data class Person(val name:String)
 
 fun  Person.comparePerson(other:Any ?):Boolean {
+    //as?转换不成成功就返回null
     val otherPerson = other as? Person ?: return false
     return name == other.name
 }

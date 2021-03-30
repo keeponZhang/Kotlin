@@ -80,7 +80,7 @@ fun 我要开始协程啦BaseContinuation(block: suspend () -> Unit) {
 }
 
 /**
- * suspendCoroutine 又会创建一个SafeContinuation
+ * suspendCoroutine可以拿到编译器的continuation，进行回调 又会创建一个SafeContinuation
  */
 suspend fun 我要开始加载图片啦不切换线程同步2_0(url: String) =
         suspendCoroutine<ByteArray> { continuation ->
@@ -106,7 +106,7 @@ suspend fun 我要开始加载图片啦不切换线程同步2_0(url: String) =
 //continuation是Safecontinuation
 //suspendCoroutine->suspendCoroutineOrReturn,目的是返回T,suspendCoroutineOrReturn的参数是block
 //suspendCoroutineUninterceptedOrReturn也是接收一个block参数，
-//参数先传到suspendCoroutineUninterceptedOrReturn的cont，做了cont.intercepted()
+//参数先传到suspendCoroutineUninterceptedOrReturn的cont（最原始的编译器的continuation，CoroutineImpl），做了cont.intercepted()
 // 运算后又传到suspendCoroutineOrReturn，有创造了SafeContinuation，传到suspendCoroutine<ByteArray> {
 // continuation->}中的continuation
 
