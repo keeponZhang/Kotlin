@@ -8,6 +8,7 @@ interface Dispatcher {
     fun dispatch(block: () -> Unit)
 }
 
+//这里的key用的是ContinuationInterceptor，很重要
 open class DispatcherContext(private val dispatcher: Dispatcher = DefaultDispatcher) :
         AbstractCoroutineContextElement(ContinuationInterceptor), ContinuationInterceptor {
     override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> =

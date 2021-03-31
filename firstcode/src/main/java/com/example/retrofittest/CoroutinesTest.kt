@@ -1,11 +1,20 @@
 package com.example.retrofittest
 
-import android.util.Log
-import kotlinx.coroutines.*
+import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import javax.swing.JFrame
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -21,7 +30,7 @@ fun main(args: Array<String>) {
     frame.isVisible = true
     frame.onButtonClick {
 //        test1()
-            test2()
+//        test2()
 //    test3()
 //        test4()
 //    test5()
@@ -32,71 +41,15 @@ fun main(args: Array<String>) {
 //    }
 //        test7()
 //    test9()
-//        test12()
+//        test11()
+        test12()
 //        test13()
+//        test14()
 //
     }
 }
 
-fun test12() {
-    runBlocking {
-        try {
-            supervisorScope {
-                launch { // “1”
-                    println("a")
-                }
-                launch {// “2”
-                    println("b")
-                    launch {// “3”
-                        delay(1000)
-                        println("c")
-                        throw ArithmeticException("Hey!!")
-                    }
-                }
-                val job = launch {// “4”
-                    println("d")
-                    delay(2000)
-                    println("e")
-                }
-                job.join()
-                println("f")
-            }
-        } catch (e: Exception) {
-            println("g")
-        }
-        println("h")
-    }
-}
 
-fun test13() {
-    runBlocking {
-        try {
-            coroutineScope {
-                launch { // “1”
-                    println("a")
-                }
-                launch(Dispatchers.IO) {// “2”
-                    println("b" + Thread.currentThread().name)
-                    launch {// “3”
-                        delay(1000)
-                        println("c")
-                        throw ArithmeticException("Hey!!")
-                    }
-                }
-                val job = launch {// “4”
-                    println("d")
-                    delay(2000)
-                    println("e")
-                }
-                job.join()
-                println("f")
-            }
-        } catch (e: Exception) {
-            println("g")
-        }
-        println("h")
-    }
-}
 
 fun main() {
 //    test2()
@@ -115,11 +68,16 @@ fun main() {
 }
 
 private suspend fun sum() {
+    //Dispatchers.Default是CoroutineDispatcher的子类，后者的key是ContinuationInterceptor，返回的Continuation
+    // 是DispatchedContinuation
     val result = withContext(Dispatchers.Default) {
         5 + 5
+        println("Thread name = " + Thread.currentThread().name)
         launch { }
     }
 }
+
+
 
 private fun test1() {
 //    val coroutine = if (start.isLazy)
@@ -256,7 +214,22 @@ fun test11() {
         println(result)
     }
 }
-
+fun test12() {
+//    我来解释一下这段代码。调用withContext()函数之后，会立即执行代码块中的代码，同时
+//    将外部协程挂起。当代码块中的代码全部执行完之后，会将最后一行的执行结果作为
+//    withContext()函数的返回值返回，因此基本上相当于val result = async{ 5 + 5
+//    }.await()的写法。唯一不同的是，withContext()函数强制要求我们指定一个线程参数，
+//    关于这个参数我准备好好讲一讲。
+    runBlocking {
+        val result = withContext(TestContext()) {
+            println("Thread name = " + Thread.currentThread().name)
+            5 + 5
+        }
+        println(result)
+        log("---------")
+        delay(100)
+    }
+}
 suspend fun printDot() {
     println("printDot")
     delay(1000)
@@ -266,7 +239,65 @@ suspend fun printDot() {
 //
 //    }
 }
+fun test13() {
+    runBlocking {
+        try {
+            supervisorScope {
+                launch { // “1”
+                    println("a")
+                }
+                launch {// “2”
+                    println("b")
+                    launch {// “3”
+                        delay(1000)
+                        println("c")
+                        throw ArithmeticException("Hey!!")
+                    }
+                }
+                val job = launch {// “4”
+                    println("d")
+                    delay(2000)
+                    println("e")
+                }
+                job.join()
+                println("f")
+            }
+        } catch (e: Exception) {
+            println("g")
+        }
+        println("h")
+    }
+}
 
+fun test14() {
+    runBlocking {
+        try {
+            coroutineScope {
+                launch { // “1”
+                    println("a")
+                }
+                launch(Dispatchers.IO) {// “2”
+                    println("b" + Thread.currentThread().name)
+                    launch {// “3”
+                        delay(1000)
+                        println("c")
+                        throw ArithmeticException("Hey!!")
+                    }
+                }
+                val job = launch {// “4”
+                    println("d")
+                    delay(2000)
+                    println("e")
+                }
+                job.join()
+                println("f")
+            }
+        } catch (e: Exception) {
+            println("g")
+        }
+        println("h")
+    }
+}
 //可以借用coroutineScope
 //虽然看上去coroutineScope函数和runBlocking函数的作用是有点类似的，但是
 //coroutineScope函数只会阻塞当前协程，既不影响其他协程，也不影响任何线程，因此是不
@@ -283,7 +314,7 @@ suspend fun printDot1() = coroutineScope {
 suspend fun getAppData() {
     try {
         val appList = ServiceCreator.create<AppService>().getAppData()
-            .await() // 这段代码想运行通过，需要将BASE_URL中的地址改成http://localhost/
+                .await() // 这段代码想运行通过，需要将BASE_URL中的地址改成http://localhost/
         println(appList)
         // 对服务器响应的数据进行处理
     } catch (e: Exception) {
