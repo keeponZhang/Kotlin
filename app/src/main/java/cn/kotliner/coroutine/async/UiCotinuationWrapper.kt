@@ -10,6 +10,7 @@ import kotlin.coroutines.experimental.EmptyCoroutineContext
  */
 //可以在这里进行线程切换
 class UiCotinuationWrapper<T>(val continuation: Continuation<T>) : Continuation<T> {
+    //启动的时候就会调用，原因 createCoroutineUnchecked(completion).resume(Unit)
     override fun resume(value: T) {
         SwingUtilities.invokeLater { continuation.resume(value) }
         log("UiCotinuationWrapper resume "+continuation)

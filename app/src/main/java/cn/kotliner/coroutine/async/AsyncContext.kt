@@ -15,6 +15,7 @@ import kotlin.coroutines.experimental.ContinuationInterceptor
 class AsyncContext : AbstractCoroutineContextElement(ContinuationInterceptor),
         ContinuationInterceptor {
 
+
     //continuation.context.fold 可以看成遍历数组，原理类似
     override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> {
         //这样不行，因为所有的interceptor都用一个key,要给其他的key篡改的机会
