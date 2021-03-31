@@ -120,3 +120,22 @@
 //       }));
 //    }
 // }
+
+
+// CoroutineImpl,从这里可以知道，传进去的 Continuation是最后调用的，等到doResume(null,exception)返回的不是COROUTINE_SUSPENDED
+/* override fun resumeWithException(exception:Throwable){
+         processBareContinuationResume(completion!!){
+         doResume(null,exception)
+         }
+         }
+internal inline fun processBareContinuationResume(completion:Continuation<*>,block:()->Any?){
+        try{
+        val result=block()
+        if(result!==COROUTINE_SUSPENDED){
+@Suppress("UNCHECKED_CAST")
+            (completion as Continuation<Any?>).resume(result)
+        }
+        }catch(t:Throwable){
+        completion.resumeWithException(t)
+        }
+        }*/
