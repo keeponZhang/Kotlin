@@ -1,7 +1,7 @@
 package cn.kotliner.coroutine.ui
 
-import cn.kotliner.coroutine.async.我要开始加载图片啦4
-import cn.kotliner.coroutine.async.我要开始协程啦OnlyAsyncContext
+import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦3
+import cn.kotliner.coroutine.async.我要开始协程啦OnlyAsyncContext3_
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
@@ -22,11 +22,11 @@ fun main(args: Array<String>) {
 //    ext.kotlin_version = '1.2.51'
     frame.onButtonClick {
         log("协程之前")
-        我要开始协程啦OnlyAsyncContext() {
+        我要开始协程啦OnlyAsyncContext3_() {
             log("协程开始")
             try {
                 //这里相当于我要开始耗时操作了的方法参数是lambda表达式
-                val imageData = 我要开始加载图片啦4(LOGO_URL)
+                val imageData = 我要开始加载图片啦3(LOGO_URL)
                 log("拿到图片")
                 frame.setLogo(imageData)
             } catch (e: Exception) {

@@ -1,10 +1,9 @@
 package cn.kotliner.coroutine.ui
 
+import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦4_
+import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始耗时操作了4
 import cn.kotliner.coroutine.async.DownloadContext
-import cn.kotliner.coroutine.async.我要开始加载图片啦4
-import cn.kotliner.coroutine.async.我要开始加载图片啦4_0
-import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用ContextContinuation
-import cn.kotliner.coroutine.async.我要开始耗时操作了4_1
+import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用ContextContinuation_4_1
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
 import kotlin.coroutines.experimental.ContinuationInterceptor
@@ -26,16 +25,16 @@ fun main(args: Array<String>) {
     frame.onButtonClick {
         log("协程之前")
 //        DownloadContext(LOGO_URL)是第一个参数
-        我要开始协程啦自定义Context使用ContextContinuation() {
+        我要开始协程啦自定义Context使用ContextContinuation_4_1() {
             log("协程开始")
             try {
                 //这里相当于我要开始耗时操作了的方法参数是lambda表达式
-                val imageData = 我要开始耗时操作了4_1() {
+                val imageData = 我要开始耗时操作了4() {
                     //这里表示lambda表达式传入的参数是CoroutineContext，返回的是ByteArray类型
                     //可以调用this[DownloadContext]
                     log("this[ContinuationInterceptor] " + this[ContinuationInterceptor])
 //                    println("this[MYKey] " + this[AsyncContext2]?.test)
-                    我要开始加载图片啦4_0(this[DownloadContext]!!.url)
+                    我要开始加载图片啦4_(this[DownloadContext]!!.url)
                 }
 
                 log("拿到图片")
