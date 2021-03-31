@@ -1,16 +1,104 @@
 package com.example.retrofittest
 
+import android.util.Log
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
+import javax.swing.JFrame
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+fun main(args: Array<String>) {
+    val frame = MainWindow()
+    frame.title = "Coroutine@Bennyhuo"
+    frame.setSize(200, 150)
+    frame.isResizable = true
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.init()
+    frame.isVisible = true
+    frame.onButtonClick {
+//        test1()
+            test2()
+//    test3()
+//        test4()
+//    test5()
+//    test6()
+        //获取一个全局CoroutineScope
+//    GlobalScope.launch {
+//        test8()
+//    }
+//        test7()
+//    test9()
+//        test12()
+//        test13()
+//
+    }
+}
+
+fun test12() {
+    runBlocking {
+        try {
+            supervisorScope {
+                launch { // “1”
+                    println("a")
+                }
+                launch {// “2”
+                    println("b")
+                    launch {// “3”
+                        delay(1000)
+                        println("c")
+                        throw ArithmeticException("Hey!!")
+                    }
+                }
+                val job = launch {// “4”
+                    println("d")
+                    delay(2000)
+                    println("e")
+                }
+                job.join()
+                println("f")
+            }
+        } catch (e: Exception) {
+            println("g")
+        }
+        println("h")
+    }
+}
+
+fun test13() {
+    runBlocking {
+        try {
+            coroutineScope {
+                launch { // “1”
+                    println("a")
+                }
+                launch(Dispatchers.IO) {// “2”
+                    println("b" + Thread.currentThread().name)
+                    launch {// “3”
+                        delay(1000)
+                        println("c")
+                        throw ArithmeticException("Hey!!")
+                    }
+                }
+                val job = launch {// “4”
+                    println("d")
+                    delay(2000)
+                    println("e")
+                }
+                job.join()
+                println("f")
+            }
+        } catch (e: Exception) {
+            println("g")
+        }
+        println("h")
+    }
+}
+
 fun main() {
-    test1()
 //    test2()
 //    test3()
 //    test4()
@@ -18,32 +106,12 @@ fun main() {
 //    test6()
 
 
-//获取一个全局CoroutineScope
-    GlobalScope.launch {
-        test8()
-    }
-    test7()
-    test9()
-//
-    test10()
+//    test10()
 
-    runBlocking {
-        getAppData()
-    }
-    test11()
-}
-
-fun test11() {
-//    我来解释一下这段代码。调用withContext()函数之后，会立即执行代码块中的代码，同时
-//    将外部协程挂起。当代码块中的代码全部执行完之后，会将最后一行的执行结果作为
-//    withContext()函数的返回值返回，因此基本上相当于val result = async{ 5 + 5
-//    }.await()的写法。唯一不同的是，withContext()函数强制要求我们指定一个线程参数，
-//    关于这个参数我准备好好讲一讲。
-    runBlocking {
-        val result = sum()
-        launch { }
-        println(result)
-    }
+//    runBlocking {
+//        getAppData()
+//    }
+//    test11()
 }
 
 private suspend fun sum() {
@@ -53,68 +121,27 @@ private suspend fun sum() {
     }
 }
 
-private fun test10() {
-    runBlocking {
-        val start = System.currentTimeMillis()
-        val deferred1 = async {
-            delay(1000)
-            5 + 5
-        }
-        val deferred2 = async {
-            delay(1000)
-            4 + 6
-        }
-        println("result is ${deferred1.await() + deferred2.await()}.")
-        val end = System.currentTimeMillis()
-        println("cost ${end - start} milliseconds.")
-    }
-}
-
-private fun test7() {
-    // coroutineScope函数和runBlocking函数还有点类似，它可以保证其作用域内的所
-//    有代码和子协程在全部执行完之前，外部的协程会一直被挂起
-    runBlocking {
-        coroutineScope {
-            launch {
-                for (i in 1..10) {
-                    println(i)
-                    delay(1000)
-                }
-            }
-        }
-        println("coroutineScope finished")
-    }
-    println("runBlocking finished")
-}
-
-private fun test6() {
-    val job = Job()
-    val scope = CoroutineScope(job)
-    //launch的是拥有协程作用域的
-    scope.launch {
-        // do something
-    }
-    job.cancel()
-}
-
 private fun test1() {
 //    val coroutine = if (start.isLazy)
 //        LazyStandaloneCoroutine(newContext, block) else
 //        StandaloneCoroutine(newContext, active = true)
 //    coroutine.start(start, coroutine, block)
     GlobalScope.launch {
-        println("codesrun in coroutine scope")
+        println("codesrun in coroutine scope=" + this)
 
     }
+    Thread.sleep(5000)
 }
 
 private fun test2() {
-    GlobalScope.launch {
+    val launch = GlobalScope.launch {
         println("codes run in coroutine scope")
         delay(1500)
         println("codes run in coroutine scope finished")
 
     }
+    Thread.sleep(100)
+    launch.cancel()
 }
 
 private fun test3() {
@@ -132,12 +159,12 @@ private fun test4() {
 //        协程的作用域中才能调用，其次它会在当前协程的作用域下创建子协程。子协程的特点是如果
 //        外层作用域的协程结束了，该作用域下的所有子协程也会一同结束。
         launch {
-            println("launch1")
+            println("launch1=" + this)
             delay(1000)
             println("launch1 finished")
         }
         launch {
-            println("launch2")
+            println("launch2=" + this)
             delay(1000)
             println("launch2 finished")
         }
@@ -157,8 +184,34 @@ private fun test5() {
     println(end - start)
 }
 
-private fun test9() {
-    runBlocking { printDot() }
+private fun test6() {
+    val job = Job()
+    val scope = CoroutineScope(job)
+    //launch的是拥有协程作用域的
+    scope.launch {
+        // do something
+    }
+    job.cancel()
+}
+
+private fun test7() {
+    // coroutineScope函数和runBlocking函数还有点类似，它可以保证其作用域内的所
+//    有代码和子协程在全部执行完之前，外部的协程会一直被挂起
+    runBlocking {
+        println(" test70:" + this);
+        coroutineScope {
+            println(" test71:" + this);
+            launch {
+                println(" test72:" + this);
+                for (i in 1..10) {
+                    println(i)
+                    delay(1000)
+                }
+            }
+        }
+        println("coroutineScope finished")
+    }
+    println("runBlocking finished")
 }
 
 private suspend fun test8() {
@@ -169,6 +222,40 @@ private suspend fun test8() {
 //    println(".")
 //    delay(1000)
 //}
+
+private fun test9() {
+    runBlocking { printDot() }
+}
+
+private fun test10() {
+    runBlocking {
+        val start = System.currentTimeMillis()
+        val deferred1 = async {
+            delay(1000)
+            5 + 5
+        }
+        val deferred2 = async {
+            delay(1000)
+            4 + 6
+        }
+        println("result is ${deferred1.await() + deferred2.await()}.")
+        val end = System.currentTimeMillis()
+        println("cost ${end - start} milliseconds.")
+    }
+}
+
+fun test11() {
+//    我来解释一下这段代码。调用withContext()函数之后，会立即执行代码块中的代码，同时
+//    将外部协程挂起。当代码块中的代码全部执行完之后，会将最后一行的执行结果作为
+//    withContext()函数的返回值返回，因此基本上相当于val result = async{ 5 + 5
+//    }.await()的写法。唯一不同的是，withContext()函数强制要求我们指定一个线程参数，
+//    关于这个参数我准备好好讲一讲。
+    runBlocking {
+        val result = sum()
+        launch { }
+        println(result)
+    }
+}
 
 suspend fun printDot() {
     println("printDot")
