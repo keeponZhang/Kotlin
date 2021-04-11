@@ -31,7 +31,7 @@ public class JavaSams {
         });
 
         //kotlin方法
-        KotlinSamsKt.submit(() -> {
+        KotlinSamsKt.submit2(() -> {
             System.out.println("Hello");
         });
     }
