@@ -34,28 +34,14 @@ suspend fun <T> AsyncScope.await(block: () -> Call<T>) = suspendCoroutine<T> {
 
 fun async(context: CoroutineContext = EmptyCoroutineContext, block: suspend AsyncScope.() -> Unit) {
     val completion = AsyncCoroutine(context)
+    //这里为什么需要传reciver，因为AsyncScope.()会转换成function1，把调用者传入，主要就是block需要
     block.startCoroutine(completion, completion)
 }
 
 class AsyncCoroutine(override val context: CoroutineContext = EmptyCoroutineContext): Continuation<Unit>, AsyncScope {
     override fun resumeWith(result: Result<Unit>) {
+        //并不需要完成后做点什么，有异常就抛异常，无就算
         result.getOrThrow()
     }
 }
 
-fun main() {
-    Looper.prepare()
-    val handlerDispatcher = DispatcherContext(object : Dispatcher {
-        val handler = Handler()
-        override fun dispatch(block: () -> Unit) {
-            handler.post(block)
-        }
-    })
-
-    async(handlerDispatcher) {
-        val user = await { githubApi.getUserCallback("bennyhuo") }
-        log(user)
-    }
-
-    Looper.loop()
-}

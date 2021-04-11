@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.bennyhuo.kotlin.coroutines.android"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,8 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = ["-Xallow-result-return-type"]
+        freeCompilerArgs = ["-XXLanguage:+NewInference", "-XXLanguage:+SamConversionForKotlinFunctions" ]
     }
 
     packagingOptions {
@@ -66,4 +68,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "io.ktor:ktor-server-core:1.2.6"
+    implementation "io.ktor:ktor-server-netty:1.2.6"
+    implementation "io.ktor:ktor-serialization:1.2.6"
+
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+
+    implementation 'com.bennyhuo.java:portable-android-handler:0.3'
+
 }

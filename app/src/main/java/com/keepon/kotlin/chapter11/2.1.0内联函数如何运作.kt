@@ -12,7 +12,7 @@ package com.keepon.kotlin.chapter11
 
 //当一个函数被声明为inline时，它的函数体是内联的，也就是说，函数体会被直接替换到函数被调用地方，下面我们来看一个简单的例子，下面是我们定义的一个内联的函数：
 
-inline fun inlineFunc(prefix : String, action : () -> Unit) {
+inline fun inlineFunc(prefix: String, action: () -> Unit) {
     println("call before $prefix")
     action()
     println("call after $prefix")
@@ -22,6 +22,10 @@ inline fun inlineFunc(prefix : String, action : () -> Unit) {
 
 fun main(args: Array<String>) {
     inlineFunc("inlineFunc") {
+        println("HaHa")
+    }
+    var str = "Keepon"
+    inlineFunc(str) {
         println("HaHa")
     }
 }

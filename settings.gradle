@@ -1,3 +1,4 @@
+include ':lib'
 include ':coroutine'
 include ':coolweather'
 include ':library'

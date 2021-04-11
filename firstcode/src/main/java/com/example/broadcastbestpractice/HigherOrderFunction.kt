@@ -67,6 +67,17 @@ fun main(args: Array<String>) {
         }
         append("Ate all fruits.")
     }
+    //这里会报错
+//    val resul2 = stringBuilder.build2 {
+//        append("Start eating fruits.\n")
+//        for (fruit in list) {
+//            append(fruit).append("\n")
+//        }
+//        append("Ate all fruits.")
+//    }
+    val resul3 = stringBuilder.build3 {
+        println("this is result3")
+    }
     println(result.toString())
 
 
@@ -119,6 +130,11 @@ fun StringBuilder.build(block: StringBuilder.() -> Unit): StringBuilder {
 
 fun StringBuilder.build2(block: () -> Unit): StringBuilder {
     block()
+    return this
+}
+
+fun StringBuilder.build3(block: (String) -> Unit): StringBuilder {
+    block("keepon")
     return this
 }
 /**一个会把调用对象传进去，一个不会

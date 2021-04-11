@@ -223,9 +223,9 @@ fun test12() {
     runBlocking {
         val result = withContext(TestContext()) {
             println("Thread name = " + Thread.currentThread().name)
+            delay(1000)
             5 + 5
         }
-        println(result)
         log("---------")
         delay(100)
     }
