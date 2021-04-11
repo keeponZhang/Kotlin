@@ -22,7 +22,8 @@ operator fun String.times(int: Int): String {
 
 val String.a: String
     get() = "a" + this
-
+//可以把扩展属性看作是两个扩展函数，一个是 getter， 一个是 setter 。
+//这是因为扩展属性并没有真正地插入一个属性到类中，所以扩展属性没有幕后字段（backing field），不能进行初始化。同样，也不能在扩展属性的 setter 里使用 field 关键字。
 ////拓展属性不能初始化，下面这个会报错
 //var String.cc: Int = 2
 
