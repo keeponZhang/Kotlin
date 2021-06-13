@@ -70,13 +70,30 @@ fun getTextLength(text: String?) = text?.length ?: 0
 
 var study: Study? = null
 
+//注意这个block(this)
 fun doStudy() {
     study?.let {
         it.readBooks()
         it.doHomework()
     }
 }
+//apply会返回调用者对象，用的也是拓展方法
+//T.() -> Unit，相当于调用者内部调用这个lambda表达式，lambda表达式相当于一个内部方法，所以可以直接访问属性
+fun alphabet() = StringBuilder().apply {
+    for (letter in 'A'..'Z') {
+        append(letter)
+    }
+    append("\nNow I know the alphabet!")
+}
 
+//run方法返回的lambda表达式里面的
+fun alphabet2() = StringBuilder().run {
+    for (letter in 'A'..'Z') {
+        append(letter)
+    }
+    append("\nNow I know the alphabet2!")
+    println("")
+}
 fun printParams(num: Int = 100, str: String) {
     println("num is $num , str is $str")
 }

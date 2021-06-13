@@ -10,12 +10,25 @@ data class Person(val name: String, val age: Int) {
     fun work() {
         println("$name is working!!!")
     }
+
     fun work2() {
         println("$name is working2!!!")
     }
 }
- inline fun <T> T.apply2(block: T.(Int) -> Unit): T {
+
+//    public static final Object apply2(Object $receiver, @NotNull Function2 block) {
+//        Intrinsics.checkParameterIsNotNull(block, "block");
+//        block.invoke($receiver, 2);
+//        return $receiver;
+//    }
+//像这种传值一般是方法里面的传
+fun <T> T.apply2(block: T.(a: Int) -> Unit): T {
     block(2)
+    return this
+}
+
+fun <T> T.apply3(block: T.(Int, Int) -> Unit): T {
+    block(2, 3)
     return this
 }
 
@@ -42,10 +55,18 @@ fun main(args: Array<String>) {
         work()
     }
 
+
     //apply表示要调用lambda表达式啦，并且这个表达式式在调用对象的拓展方法里面的，可以直接访问对象的属性与方法
-    findPerson()?.apply2{
-        println("apply2  name: "+name+"  int="+it)
-        println("apply2  age: "+age)
+    findPerson()?.apply2 {
+        println("apply2  name: " + name + "  int=" + it)
+        println("apply2  age: " + age)
+        work()
+        work2()
+    }?.name
+
+    findPerson()?.apply2 {
+        println("apply2  name: " + name + "  int=" + it)
+        println("apply2  age: " + age)
         work()
         work2()
     }?.name

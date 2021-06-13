@@ -1,8 +1,6 @@
 package com.example.activitytest
 
 /**
- *
- *
  * @author guolin
  * @since 2019-05-14
  */
@@ -22,7 +20,7 @@ class Util {
         private val keepon2 = "keepon2"
         val interfaceImpl = object : Runnable {
             override fun run() {
-                println("")
+                println("" + keepon2)
             }
         }
 
