@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,72 +9,95 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="32sp"/>
+        android:textAllCaps="false"
+        android:textSize="32sp" />
 
     <Button
         android:id="@+id/plusOneBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Plus One"/>
+        android:text="Plus One"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/clearBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Clear"/>
+        android:text="Clear"
+        android:textAllCaps="false" />
+
     <Button
         android:id="@+id/showGetUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="showGetUser"/>
+        android:text="showGetUser"
+        android:textAllCaps="false" />
+
     <Button
         android:id="@+id/getUserBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Get User"/>
+        android:text="Get User"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/getUserNameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Get User NAME"
+        android:textAllCaps="false" />
+
     <Button
         android:id="@+id/getUserBtn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Get User2"/>
+        android:text="Get User2"
+        android:textAllCaps="false" />
+
     <Button
         android:id="@+id/addDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Add Data"/>
+        android:text="Add Data"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/updateDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Update Data"/>
+        android:text="Update Data"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/deleteDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Delete Data"/>
+        android:text="Delete Data"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/queryDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Query Data"/>
+        android:text="Query Data"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/doWorkBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Do Work"/>
+        android:text="Do Work"
+        android:textAllCaps="false" />
 
 </LinearLayout>

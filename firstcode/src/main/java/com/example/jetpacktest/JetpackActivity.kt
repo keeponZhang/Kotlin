@@ -30,7 +30,7 @@ class JetpackActivity : AppCompatActivity() {
         val countReserved = sp.getInt("count_reserved", 0)
         //这里应该是
         viewModel = ViewModelProviders.of(this, MainViewModelFactory(countReserved))
-            .get(MainViewModel::class.java)
+                .get(MainViewModel::class.java)
         plusOneBtn.setOnClickListener {
             viewModel.plusOne()
         }
@@ -45,7 +45,12 @@ class JetpackActivity : AppCompatActivity() {
 //            infoText.text = count.toString()
 //        }
 
-
+        getUserNameBtn.setOnClickListener {
+            viewModel.userName.observe(this, Observer
+            { name ->
+                Log.e("TAG", "JetpackActivity onCreate $name:" );
+            })
+        }
         getUserBtn2.setOnClickListener {
             val userId = (0..10000).random().toString()
             viewModel.getUser(userId)
@@ -70,10 +75,10 @@ class JetpackActivity : AppCompatActivity() {
         }
         showGetUser.setOnClickListener {
             viewModel.user
-                .observe(this, Observer
-            { user ->
-                infoText.text = user.firstName
-            })
+                    .observe(this, Observer
+                    { user ->
+                        infoText.text = user.firstName
+                    })
         }
         updateDataBtn.setOnClickListener {
             thread {
