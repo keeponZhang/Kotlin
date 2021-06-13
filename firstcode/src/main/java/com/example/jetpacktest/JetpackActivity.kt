@@ -45,16 +45,8 @@ class JetpackActivity : AppCompatActivity() {
 //            infoText.text = count.toString()
 //        }
 
-        getUserNameBtn.setOnClickListener {
-            viewModel.userName.observe(this, Observer
-            { name ->
-                Log.e("TAG", "JetpackActivity onCreate $name:" );
-            })
-        }
-        getUserBtn2.setOnClickListener {
-            val userId = (0..10000).random().toString()
-            viewModel.getUser(userId)
-        }
+
+
 //        viewModel.user.observe(this, Observer
 //        { user ->
 //            infoText.text = user.firstName
@@ -69,16 +61,32 @@ class JetpackActivity : AppCompatActivity() {
                 user2.id = userDao.insertUser(user2)
             }
         }
-        getUserBtn.setOnClickListener {
-            val userId = (0..10000).random().toString()
-            viewModel.getUser(userId)
-        }
-        showGetUser.setOnClickListener {
+
+
+       //switchMap
+        registUser.setOnClickListener {
             viewModel.user
                     .observe(this, Observer
                     { user ->
                         infoText.text = user.firstName
                     })
+        }
+        changeUserId.setOnClickListener {
+            val userId = (0..10000).random().toString()
+            viewModel.changeUserId(userId)
+        }
+
+
+        //map
+        registerUserNameBtn.setOnClickListener {
+            viewModel.userName.observe(this, Observer
+            { name ->
+                Log.e("TAG", "JetpackActivity onCreate $name:");
+            })
+        }
+
+        changeUser.setOnClickListener {
+            viewModel.changeUser(System.currentTimeMillis())
         }
         updateDataBtn.setOnClickListener {
             thread {

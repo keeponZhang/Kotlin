@@ -29,36 +29,44 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/showGetUser"
+        android:id="@+id/registUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="showGetUser"
+        android:text="regist User（switchMap）"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/changeUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="changeUserId（switchmap）"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/getUserBtn"
+        android:id="@+id/registerUserNameBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Get User"
+        android:text="register User name（map)"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/getUserNameBtn"
+        android:id="@+id/changeUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Get User NAME"
+        android:text="changeUser(map)"
         android:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/getUserBtn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Get User2"
-        android:textAllCaps="false" />
+
+
+
+
+
+
+
+
 
     <Button
         android:id="@+id/addDataBtn"
