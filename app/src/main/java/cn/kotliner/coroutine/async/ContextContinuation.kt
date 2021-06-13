@@ -1,7 +1,6 @@
 package cn.kotliner.coroutine.async
 
 import cn.kotliner.coroutine.common.log
-import javax.swing.SwingUtilities
 import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.EmptyCoroutineContext
