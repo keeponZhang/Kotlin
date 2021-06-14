@@ -38,6 +38,8 @@ class MainViewModel(countReserved: Int) : ViewModel() {
 
     private val userIdLiveData = MutableLiveData<String>()
 
+    //user外层的订阅灰触发userIdLiveData里层的订阅
+
     // 注意，这个方法也很重要   activeStateChanged(boolean )，传true会发送更新事件，数据为data
     //返回的relsutLiveData观察了两个（本来是一个，userIdLiveData改变之后就变成了2个），result
     // .addSource与最终观察的无关，只会影响onChanged的类型(onChanged里面会调用多一次addSource方法，hasActiveObservers()
