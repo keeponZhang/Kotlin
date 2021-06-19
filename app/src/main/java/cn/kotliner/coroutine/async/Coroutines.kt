@@ -1,23 +1,10 @@
 package cn.kotliner.coroutine.async
 
 import cn.kotliner.coroutine.basic.BaseContinuation
-import cn.kotliner.coroutine.common.HttpError
-import cn.kotliner.coroutine.common.HttpException
-import cn.kotliner.coroutine.common.HttpService
-import cn.kotliner.coroutine.common.log
 import cn.kotliner.coroutine.ui.LOGO_URL
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import javax.swing.SwingUtilities
-import javax.xml.bind.JAXBElement
-import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.EmptyCoroutineContext
-import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
 import kotlin.coroutines.experimental.startCoroutine
-import kotlin.coroutines.experimental.suspendCoroutine
 
 /**
  * Created by benny on 5/29/17.
@@ -27,7 +14,7 @@ fun 我要开始协程啦BaseContinuation(block: suspend () -> Unit) {
 }
 
 fun 我要开始协程啦OnlyAsyncContext3_(
-    block: suspend () -> Unit
+        block: suspend () -> Unit
 ) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     block.startCoroutine(ContextContinuation(AsyncContext()))
@@ -36,7 +23,7 @@ fun 我要开始协程啦OnlyAsyncContext3_(
 
 //协程 suspend 修饰
 fun 我要开始协程啦自定义Context使用ContextContinuation_4_1(
-    context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit
+        context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit
 ) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     //可以组合多个context
@@ -44,7 +31,7 @@ fun 我要开始协程啦自定义Context使用ContextContinuation_4_1(
 }
 
 fun 我要开始协程啦自定义Context使用ContextContinuation4_2(
-    context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit
+        context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> Unit
 ) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     //可以组合多个context
@@ -68,7 +55,7 @@ fun 我要开始协程啦自定义Context使用ContextContinuation4_2(
 //AsyncContext() + AsyncContext3()
 //AsyncContext3生效
 fun 我要开始协程啦TwoAsyncContext3_2(
-    block: suspend () -> Unit
+        block: suspend () -> Unit
 ) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     block.startCoroutine(ContextContinuation(AsyncContext() + AsyncContext3()))
@@ -76,24 +63,11 @@ fun 我要开始协程啦TwoAsyncContext3_2(
 
 //相同key会覆盖,其他的context只能通过拦截器调用
 fun 我要开始协程啦TwoAsyncContext3_3(
-    block: suspend () -> Unit
+        block: suspend () -> Unit
 ) {
     //被suspend修饰的lambda表达式才有startCoroutine方法
     block.startCoroutine(ContextContinuation(AsyncContext3() + AsyncContext()))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 fun main(args: Array<String>) {
     //没有这个

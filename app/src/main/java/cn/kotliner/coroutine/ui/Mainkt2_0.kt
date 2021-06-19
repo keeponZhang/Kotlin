@@ -31,6 +31,7 @@ fun main(args: Array<String>) {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            log("协程结束")
         }
         log("协程之后")
     }

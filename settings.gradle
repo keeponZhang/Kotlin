@@ -1,3 +1,6 @@
+include ':kotlin-stdlib-1_2_51'
+include ':kotlin-stdlib-common-1_2_51'
+include ':kotlin-stdlib-jdk7-1_2_51'
 //include ':coroutine'
 //include ':coolweather'
 //include ':library'

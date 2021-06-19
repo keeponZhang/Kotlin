@@ -45,10 +45,10 @@ fun main(args: Array<String>) {
             log("协程开始")
             //不用try catch，内部有try catch，异常后会回调失败的方法
 //            throw RuntimeException("keepon")
+            //获取后还是在线程池看
+            test2()
+            testsuspend()
             try {
-                //获取后还是在线程池
-                test2()
-                test()
                 val imageData = 我要开始加载图片啦不切换线程异步2_1(LOGO_URL)
                 log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
                 frame.setLogo(imageData)
@@ -61,7 +61,12 @@ fun main(args: Array<String>) {
 }
 
 //suspend的函数默认会多生成一个参数Continuation，并把外层的Continuation传入
-suspend fun test() {}
-fun test2() {}
+suspend fun testsuspend() {
+    println("suspend test")
+}
+
+fun test2() {
+    println("test2")
+}
 
 

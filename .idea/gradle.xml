@@ -12,6 +12,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/kotlin-stdlib-1_2_51" />
+            <option value="$PROJECT_DIR$/kotlin-stdlib-common-1_2_51" />
+            <option value="$PROJECT_DIR$/kotlin-stdlib-jdk7-1_2_51" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
