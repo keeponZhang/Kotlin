@@ -7,7 +7,7 @@ package kotlin.coroutines.experimental
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater
 import kotlin.*
 import kotlin.coroutines.experimental.intrinsics.COROUTINE_SUSPENDED
-
+//注释：这里delegate即使CoroutineImpl， resume的话会调用delegate.resume(value)
 @PublishedApi
 internal actual class SafeContinuation<in T>
 internal actual constructor(

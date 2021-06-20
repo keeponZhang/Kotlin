@@ -151,6 +151,41 @@
 
 
 
+//注释：这里函数调用完，就会返回COROUTINE_SUSPENDED
+// @Nullable
+// public static final Object 我要开始加载图片啦不切换线程同步2_0(@NotNull String url, @NotNull Continuation $completion) {
+//         Continuation c$iv = CoroutineIntrinsics.normalizeContinuation($completion);
+//         SafeContinuation safe$iv = new SafeContinuation(c$iv);
+//         Continuation continuation = (Continuation)safe$iv;
+//         int var5 = false;
+//         LogKt.log("耗时操作，下载图片原始0");
+//
+//         try {
+//         Response responseBody = HttpService.INSTANCE.getService().getLogo(url).execute();
+//         LogKt.log("耗时操作，下载图片ing");
+//         continuation.resumeWithException((Throwable)(new HttpException(responseBody.code())));
+//         } catch (Exception var11) {
+//         continuation.resumeWithException((Throwable)var11);
+//         }
+//
+//         return safe$iv.getResult();
+//         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // CoroutineImpl,从这里可以知道，传进去的 Continuation是最后调用的，等到doResume(null,exception)返回的不是COROUTINE_SUSPENDED
 /* override fun resumeWithException(exception:Throwable){
          processBareContinuationResume(completion!!){
@@ -168,3 +203,6 @@ internal inline fun processBareContinuationResume(completion:Continuation<*>,blo
         completion.resumeWithException(t)
         }
         }*/
+
+
+
