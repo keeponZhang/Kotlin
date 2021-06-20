@@ -113,6 +113,7 @@ internal inline fun processBareContinuationResume(completion: Continuation<*>, b
             (completion as Continuation<Any?>).resume(result)
         }
     } catch (t: Throwable) {
+        //抛异常的话会走这里
         completion.resumeWithException(t)
     }
 }

@@ -26,6 +26,7 @@ import kotlin.coroutines.experimental.*
  * Note that it is not recommended to call either [Continuation.resume] nor [Continuation.resumeWithException] functions synchronously
  * in the same stackframe where suspension function is run. Use [suspendCoroutine] as a safer way to obtain current
  * continuation instance.
+ * 注释，这个方法有点不懂
  */
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
