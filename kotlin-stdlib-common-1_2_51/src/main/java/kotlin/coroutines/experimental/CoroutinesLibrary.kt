@@ -108,6 +108,7 @@ public suspend inline val coroutineContext: CoroutineContext
 internal inline fun processBareContinuationResume(completion: Continuation<*>, block: () -> Any?) {
     try {
         val result = block()
+//       注释：一般调用后，函数挂起，返回的就是COROUTINE_SUSPENDED，就是阻塞式挂起
         if (result !== COROUTINE_SUSPENDED) {
             @Suppress("UNCHECKED_CAST")
             (completion as Continuation<Any?>).resume(result)

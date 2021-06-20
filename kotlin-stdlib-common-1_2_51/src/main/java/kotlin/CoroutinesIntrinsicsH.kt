@@ -32,7 +32,7 @@ public expect inline fun <R, T> (suspend R.() -> T).startCoroutineUninterceptedO
     completion: Continuation<T>
 ): Any?
 
-@SinceKotlin("1.1")//IntrinsicsKt.class->createCoroutineUnchecked
+@SinceKotlin("1.1")//IntrinsicsJvm.class->createCoroutineUnchecked
 public expect fun <T> (suspend () -> T).createCoroutineUnchecked(
     completion: Continuation<T>
 ): Continuation<Unit>

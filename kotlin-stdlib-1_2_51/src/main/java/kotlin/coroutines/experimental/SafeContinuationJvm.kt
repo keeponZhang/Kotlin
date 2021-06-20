@@ -69,6 +69,7 @@ internal actual constructor(
     internal actual fun getResult(): Any? {
         var result = this.result // atomic read
         if (result === UNDECIDED) {
+            // 注释：阻塞函数调用后，应该会调用这个，返回挂起标志
             if (RESULT.compareAndSet(this, UNDECIDED, COROUTINE_SUSPENDED)) return COROUTINE_SUSPENDED
             result = this.result // reread volatile var
         }

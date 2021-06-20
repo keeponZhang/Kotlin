@@ -62,6 +62,8 @@
 //                                         Mainkt2_1Kt.test2();
 //                                          注释2：这里状态改为1
 //                                         super.label = 1;
+//                                         注释3:如果是挂起标志，直接返回，所以是非阻塞式挂起
+//                                          注释4：挂起函数有结果是，会再次通过doResume的data传进来
 //                                         if (Mainkt2_1Kt.testsuspend(this) == var4) {
 //                                             return var4;
 //                                         }

@@ -7,6 +7,7 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.51/5f939fcc5f4f5979ebc5f122c6b20b6da6ecb6b7/kotlin-stdlib-1.2.51-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/kotlin-stdlib-1_2_51/src/main/java" />   </SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.51/649a609725b857dd285cf69d49d4f1f77335076e/kotlin-stdlib-1.2.51-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
