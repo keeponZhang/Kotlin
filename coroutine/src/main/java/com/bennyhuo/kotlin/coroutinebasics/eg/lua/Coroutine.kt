@@ -1,5 +1,6 @@
 package com.bennyhuo.kotlin.coroutinebasics.eg.lua
 
+import com.bennyhuo.kotlin.coroutinebasics.utils.log
 import kotlinx.coroutines.yield
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -11,6 +12,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.createCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
 //有栈非对称协程 yield挂起，resume恢复
 //有栈协程：可以在任意函数嵌套中挂起，例如Lua Coroutine
 //无栈协程：只能在当前函数嵌套中挂起，例如Python Coroutine
@@ -23,6 +25,7 @@ sealed class Status {
     object Dead : Status()
 }
 
+//P是参数的类型，R是生产的类型
 class Coroutine<P, R>(
         var name: String = "默认",
         override val context: CoroutineContext = EmptyCoroutineContext,
@@ -46,23 +49,27 @@ class Coroutine<P, R>(
     //希望yield在里面调用，所以用了CoroutineBody
     inner class CoroutineBody {
         init {
-            println("CoroutineBody create")
+            log("CoroutineBody create")
         }
 
         var parameter: P? = null
 
+        //        yield为什么是传R，因为这里会通过yield生产值
         suspend fun yield(value: R): P = suspendCoroutine { continuation ->
             val previousStatus = status.getAndUpdate {
                 when (it) {
                     is Status.Created -> throw IllegalStateException("Never started!")
                     is Status.Yielded<*> -> throw IllegalStateException("Already yielded!")
+//                    保存了当前挂起点
                     is Status.Resumed<*> -> Status.Yielded(continuation)
                     Status.Dead -> throw IllegalStateException("Already dead!")
                 }
             }
-            println("yield " + value + " " + name + " continuation=" + continuation + " (previousStatus" +
+            log("yield $name " + value + " continuation=" + continuation + " " +
+                    "(previousStatus" +
                     " as? Status.Resumed<R>)?.continuation?" + ((previousStatus as? Status.Resumed<R>)?.continuation))
-            // producer.resume(Unit)(注意，这个是生产一个消费一个，所以没有continuation)
+            // producer.resume(Unit)(注意，这个是生产一个消费一个，所以没有continuation
+//            把之前保存的continuation恢复，执行的
             (previousStatus as? Status.Resumed<R>)?.continuation?.resume(value)
         }
     }
@@ -82,8 +89,9 @@ class Coroutine<P, R>(
     }
 
     override fun resumeWith(result: Result<R>) {
-        println("resumeWith-- " + this + " status=" + status)
+        log("resumeWith $name  status=" + status)
         val previousStatus = status.getAndUpdate {
+            //it就是previousStatus
             when (it) {
                 is Status.Created -> throw IllegalStateException("Never started!")
                 is Status.Yielded<*> -> throw IllegalStateException("Already yielded!")
@@ -94,17 +102,17 @@ class Coroutine<P, R>(
                 Status.Dead -> throw IllegalStateException("Already dead!")
             }
         }
+//        Resumed的时候回调出去
         (previousStatus as? Status.Resumed<R>)?.continuation?.resumeWith(result)
     }
 
     //这个resume跟continuation的resume不是一个概念
     suspend fun resume(value: P): R = suspendCoroutine { continuation ->
-
         val previousStatus = status.getAndUpdate {
-            println("------" + name)
             when (it) {
                 is Status.Created -> {
                     body.parameter = value
+//第一次状态改为Resumed
                     Status.Resumed(continuation)
                 }
                 is Status.Yielded<*> -> {
@@ -114,11 +122,14 @@ class Coroutine<P, R>(
                 Status.Dead -> throw IllegalStateException("Already dead!")
             }
         }
-        println("resume " + value + " previousStatus=" + previousStatus + " name=" + name)
+        log("resume $name " + value + " previousStatus=" + previousStatus )
         when (previousStatus) {
-            //会执行 block(parameter!!)
+            //会执行 block(parameter!!)，协程第一次resume，不需要参数
             is Status.Created -> previousStatus.continuation.resume(Unit)
-            is Status.Yielded<*> -> (previousStatus as Status.Yielded<P>).continuation.resume(value)
+            is Status.Yielded<*> -> {
+                log("resume-------- $name is Status.Yield")
+                (previousStatus as Status.Yielded<P>).continuation.resume(value)
+            }
         }
     }
 
