@@ -23,14 +23,10 @@ fun main(args: Array<String>) {
         log("协程之前")
         我要开始协程啦BaseContinuation() {
             log("协程开始")
-            try {
-                //获取后还是在线程池
-                val imageData = 我要开始加载图片啦不切换线程同步2_0(LOGO_URL)
-                log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
-                frame.setLogo(imageData)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            //获取后还是在线程池
+            val imageData = 我要开始加载图片啦不切换线程同步2_0(LOGO_URL)
+            log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
+            frame.setLogo(imageData)
             log("协程结束")
         }
         log("协程之后")

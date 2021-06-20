@@ -29,7 +29,7 @@ suspend fun 我要开始加载图片啦不切换线程同步2_0(url: String): By
                 //这里是用的同步方法
                 val responseBody = HttpService.service.getLogo(url).execute()
                 log("耗时操作，下载图片ing")
-                if (responseBody.isSuccessful) {
+                if (false && responseBody.isSuccessful) {
                     //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
                     // ，注意continuation为SafeContinuation，为SafeContinuation的result
                     // 赋值，接着会调用SafeContinuation的
@@ -103,7 +103,7 @@ suspend fun 我要开始加载图片啦不切换线程异步2_1(url: String) = s
         continuation.resumeWithException(e)
     }
 }
-
+//这里resume的时候还在线程池
 suspend fun 我要开始加载图片啦不切换线程AsyTask_2_2(url: String) =
         suspendCoroutine<ByteArray> { continuation ->
             log("耗时操作，下载图片原始0")
@@ -124,7 +124,7 @@ suspend fun 我要开始加载图片啦不切换线程AsyTask_2_2(url: String) =
             }.execute()
 
         }
-
+//这里resume的时候切换回主线程
 suspend fun 我要开始加载图片啦切换线程AsyTask_2_3(url: String) =
         suspendCoroutine<ByteArray> { continuation ->
             log("耗时操作，下载图片原始0" + continuation)
@@ -148,7 +148,7 @@ suspend fun 我要开始加载图片啦切换线程AsyTask_2_3(url: String) =
 
         }
 
-
+//UiCotinuationWrapper把切线程封装起来
 //ByteArray表示你想要的数据结果，continuation是suspendCoroutine里面传入的SafeContinuation
 suspend fun 我要开始加载图片啦Uicontinuation2_4(url: String) =
         suspendCoroutine<ByteArray> { continuation ->
