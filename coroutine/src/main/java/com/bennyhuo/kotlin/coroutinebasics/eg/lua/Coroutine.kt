@@ -11,7 +11,11 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.createCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+//有栈非对称协程 yield挂起，resume恢复
+//有栈协程：可以在任意函数嵌套中挂起，例如Lua Coroutine
+//无栈协程：只能在当前函数嵌套中挂起，例如Python Coroutine
 
+//非对称协程，yield只能将调用权转移给对应的resume
 sealed class Status {
     class Created(val continuation: Continuation<Unit>) : Status()
     class Yielded<P>(val continuation: Continuation<P>) : Status()

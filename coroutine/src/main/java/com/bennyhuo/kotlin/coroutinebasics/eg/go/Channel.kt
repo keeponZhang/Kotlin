@@ -5,7 +5,14 @@ import com.bennyhuo.kotlin.coroutinebasics.utils.log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.*
+//每个go routine都是并发或者并行
+//无Buffer的Channel写时会挂起，直到读取，反之亦然
+//可以认为是一种有栈对称协程的实现
 
+//async/await
+//可以多层嵌套，但必须是async funciton
+//async/await是一种无栈非对称的协程实现
+//async/await是目前各类语言支持最广泛的特性
 interface Channel<T> {
     suspend fun send(value: T)
 

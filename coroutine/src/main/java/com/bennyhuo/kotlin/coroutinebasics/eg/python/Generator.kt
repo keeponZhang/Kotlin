@@ -7,21 +7,22 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.createCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+//无栈非对称
 
-interface Generator<T> {
-    operator fun iterator(): Iterator<T>
-}
 //T就是传进来的
 class GeneratorImpl<T>(
         private val block: suspend GeneratorScope<T>.(T) -> Unit, private val parameter: T
 ) : Generator<T> {
     override fun iterator(): Iterator<T> {
+//        最重要的是GeneratorIterator
         return GeneratorIterator(block, parameter)
     }
 }
 
 sealed class State {
+//    需要有一个continuation，继续执行协程体
     class NotReady(val continuation: Continuation<Unit>) : State()
+// 也需要有一个continuation，继续执行协程体，还需要value
     class Ready<T>(val continuation: Continuation<Unit>, val nextValue: T) : State()
     object Done : State()
 }
@@ -34,8 +35,9 @@ class GeneratorIterator<T>(
     private var state: State
 
     init {
-        //没有参数的lambda表达式
+        //启动的协程的lambda表达式是没有参数的，所以这里需要转换下没有参数的lambda表达式
         val coroutineBlock: suspend GeneratorScope<T>.() -> Unit = { block(parameter) }
+//        启动协程，因为前的lambda函数有GeneratorScope<T>，所以需要用带recevier的
         val start = coroutineBlock.createCoroutine(this, this)
         state = State.NotReady(start)
     }
@@ -76,7 +78,7 @@ class GeneratorIterator<T>(
             State.Done -> throw IndexOutOfBoundsException("No value left.")
         }
     }
-
+//    执行到表示协程体执行完了
     override fun resumeWith(result: Result<Any?>) {
         state = State.Done
         result.getOrThrow()
@@ -85,10 +87,13 @@ class GeneratorIterator<T>(
 
 abstract class GeneratorScope<T> internal constructor() {
     protected abstract val parameter: T
-
+//    不希望yield在哪里都能调用，所有定义了GeneratorScope
     abstract suspend fun yield(value: T)
 }
-
+interface Generator<T> {
+    operator fun iterator(): Iterator<T>
+}
+//返回值是(T) -> Generator<T>，有Receiver,表示是GeneratorScope<T>的拓展lambda
 fun <T> generator(block: suspend GeneratorScope<T>.(T) -> Unit): (T) -> Generator<T> {
     //要搞清楚parameter怎么来的,其实就是传进来的
     return { parameter: T ->

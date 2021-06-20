@@ -74,6 +74,7 @@ public actual fun <T> (suspend () -> T).createCoroutineUnchecked(
  *
  * This function is _unchecked_. Repeated invocation of any resume function on the resulting continuation corrupts the
  * state machine of the coroutine and may result in arbitrary behaviour or exception.
+ * 注释：需要看协程本身带不带recevier
  */
 @SinceKotlin("1.1")
 public actual fun <R, T> (suspend R.() -> T).createCoroutineUnchecked(

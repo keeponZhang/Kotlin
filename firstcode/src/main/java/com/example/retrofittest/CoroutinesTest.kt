@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
     frame.init()
     frame.isVisible = true
     frame.onButtonClick {
-//        test1()
+        test1()
 //        test2()
 //    test3()
 //        test4()
@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
 //        test7()
 //    test9()
 //        test11()
-        test12()
+//        test12()
 //        test13()
 //        test14()
 //
