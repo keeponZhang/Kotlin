@@ -6,7 +6,7 @@ buildscript {
 
     repositories {
         maven {
-            url "http://repo.yypm.com:8181/nexus/content/groups/public"
+            url "http://duowan.yypm.com:8181/nexus/content/groups/public"
         }
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
         maven {
@@ -28,7 +28,7 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            url "http://repo.yypm.com:8181/nexus/content/groups/public"
+            url "http://duowan.yypm.com:8181/nexus/content/groups/public"
         }
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
         maven {
