@@ -46,7 +46,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.1.0"
     implementation project(':library')
     implementation 'com.google.android.material:material:1.0.0'
-//    implementation files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
-    implementation files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
+    implementation files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
+//    implementation files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
 
 }
