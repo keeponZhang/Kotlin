@@ -48,8 +48,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit_version}"
-//    implementation files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
-    compileOnly files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
+    compileOnly files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
+//    compileOnly files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
     implementation "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.retrofit_version}"
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger_version}"
