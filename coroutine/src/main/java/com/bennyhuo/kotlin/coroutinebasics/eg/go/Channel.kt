@@ -47,6 +47,7 @@ class SimpleChannel<T> : Channel<T> {
                 Element.Closed -> throw IllegalStateException("Cannot send after closed.")
             }
         }
+        //把自己也resume下
         (prev as? Element.Consumer<T>)?.continuation?.resume(value)?.let { continuation.resume(Unit) }
     }
 
@@ -176,6 +177,7 @@ fun plainChannelSample() {
         }
     }
 
+    //协程执行了5次接收后，close了
     go("consumer", channel::close){
         for (i in 0..5) {
             log("receive")

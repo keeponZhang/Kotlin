@@ -41,5 +41,10 @@
       <option name="name" value="maven" />
       <option name="url" value="http://repo.duowan.com:8181/nexus/content/groups/public" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="http://repo.yypm.com:8181/nexus/content/groups/public" />
+    </remote-repository>
   </component>
 </project>

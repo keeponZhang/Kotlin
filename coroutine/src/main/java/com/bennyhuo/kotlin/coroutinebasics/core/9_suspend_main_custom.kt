@@ -17,6 +17,7 @@ fun main1(continuation: Continuation<Unit>): Any? {
 }
 
 fun main() {
+    //block相当于::main1 as suspend () -> Unit
     runSuspend(::main1 as suspend () -> Unit)
 }
 
