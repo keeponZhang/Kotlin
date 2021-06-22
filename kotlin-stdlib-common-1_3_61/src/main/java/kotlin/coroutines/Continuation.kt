@@ -135,6 +135,7 @@ public fun <R, T> (suspend R.() -> T).startCoroutine(
  * In this function both [Continuation.resume] and [Continuation.resumeWithException] can be used either synchronously in
  * the same stack-frame where the suspension function is run or asynchronously later in the same thread or
  * from a different thread of execution. Subsequent invocation of any resume function will produce an [IllegalStateException].
+ * 注释：这里的c是ContinuationImpl
  */
 @SinceKotlin("1.3")
 @InlineOnly
