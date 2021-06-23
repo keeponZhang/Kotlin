@@ -1,7 +1,7 @@
 package com.bennyhuo.kotlin.coroutines
 
 import com.bennyhuo.kotlin.coroutines.core.Disposable
-import com.sun.org.apache.xpath.internal.operations.Bool
+//import com.sun.org.apache.xpath.internal.operations.Bool
 import kotlin.coroutines.CoroutineContext
 
 typealias OnComplete = () -> Unit
@@ -27,5 +27,4 @@ interface Job : CoroutineContext.Element {
     suspend fun join()
 
     fun cancel()
-
 }
