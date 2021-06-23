@@ -29,8 +29,8 @@ fun main(args: Array<String>) {
     frame.init()
     frame.isVisible = true
     frame.onButtonClick {
-        test1()
-//        test2()
+//        test1()
+        test2()
 //    test3()
 //        test4()
 //    test5()
@@ -79,17 +79,7 @@ private suspend fun sum() {
 
 
 
-private fun test1() {
-//    val coroutine = if (start.isLazy)
-//        LazyStandaloneCoroutine(newContext, block) else
-//        StandaloneCoroutine(newContext, active = true)
-//    coroutine.start(start, coroutine, block)
-    GlobalScope.launch {
-        println("codesrun in coroutine scope=" + this)
 
-    }
-    Thread.sleep(5000)
-}
 
 private fun test2() {
     val launch = GlobalScope.launch {

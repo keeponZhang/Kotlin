@@ -5,10 +5,15 @@
 
 package kotlinx.coroutines
 
-import kotlinx.coroutines.CoroutineStart.*
-import kotlinx.coroutines.intrinsics.*
-import kotlin.coroutines.*
-import kotlin.jvm.*
+import kotlinx.coroutines.CoroutineStart.ATOMIC
+import kotlinx.coroutines.CoroutineStart.DEFAULT
+import kotlinx.coroutines.CoroutineStart.LAZY
+import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
+import kotlinx.coroutines.intrinsics.startCoroutineCancellable
+import kotlinx.coroutines.intrinsics.startCoroutineUndispatched
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.startCoroutine
 
 /**
  * Abstract base class for implementation of coroutines in coroutine builders.
@@ -155,6 +160,8 @@ public abstract class AbstractCoroutine<in T>(
      */
     public fun <R> start(start: CoroutineStart, receiver: R, block: suspend R.() -> T) {
         initParentJob()
+        //start()这样是调用CoroutineStart的invoke方法
+//        start.invoke<Any, Any>(block, receiver, this as Continuation<*>)
         start(block, receiver, this)
     }
 }

@@ -30,6 +30,7 @@ internal actual fun createDefaultDispatcher(): CoroutineDispatcher =
  */
 @ExperimentalCoroutinesApi
 public actual fun CoroutineScope.newCoroutineContext(context: CoroutineContext): CoroutineContext {
+    //最外面GlobalScope的coroutineContext，相加返回后面那个
     val combined = coroutineContext + context
     val debug = if (DEBUG) combined + CoroutineId(COROUTINE_ID.incrementAndGet()) else combined
     return if (combined !== Dispatchers.Default && combined[ContinuationInterceptor] == null)

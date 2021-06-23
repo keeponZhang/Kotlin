@@ -26,7 +26,7 @@ public interface Delay {
      */
     suspend fun delay(time: Long) {
         if (time <= 0) return // don't delay
-        return suspendCancellableCoroutine { scheduleResumeAfterDelay(time, it) }
+        return suspendCancellableCoroutine { it -> scheduleResumeAfterDelay(time, it) }
     }
 
     /**
@@ -70,10 +70,11 @@ public interface Delay {
  */
 public suspend fun delay(timeMillis: Long) {
     if (timeMillis <= 0) return // don't delay
-    return suspendCancellableCoroutine sc@ { cont: CancellableContinuation<Unit> ->
+    return suspendCancellableCoroutine sc@{ cont: CancellableContinuation<Unit> ->
         cont.context.delay.scheduleResumeAfterDelay(timeMillis, cont)
     }
 }
 
 /** Returns [Delay] implementation of the given context */
-internal val CoroutineContext.delay: Delay get() = get(ContinuationInterceptor) as? Delay ?: DefaultDelay
+internal val CoroutineContext.delay: Delay
+    get() = get(ContinuationInterceptor) as? Delay ?: DefaultDelay
