@@ -1,6 +1,7 @@
 package com.bennyhuo.kotlin.advancedtypes.eg
 
 sealed class IntList {
+//  最后一位如果没有
     object Nil: IntList() {
         override fun toString(): String {
             return "Nil"
@@ -9,6 +10,7 @@ sealed class IntList {
 
     data class Cons(val head: Int, val tail: IntList): IntList(){
         override fun toString(): String {
+//            这里有递归调用，tail也会调用toString
             return "$head, $tail"
         }
     }
@@ -57,6 +59,7 @@ fun intListOf(vararg ints: Int): IntList {
         else -> {
             IntList.Cons(
                 ints[0],
+//                    切出来一个数组
                 intListOf(*(ints.slice(1 until ints.size).toIntArray()))
             )
         }
@@ -65,17 +68,18 @@ fun intListOf(vararg ints: Int): IntList {
 
 // [0, 1, 2, 3]
 fun main() {
+    //最后一位没了，所以用IntList.Nil
     //val list = IntList.Cons(0, IntList.Cons(1,  IntList.Cons(2,  IntList.Cons(3, IntList.Nil))))
     val list = intListOf(0, 1, 2, 3)
-    println(list)
-    println(list.joinToString('-'))
+//    println(list)
+//    println(list.joinToString('-'))
     println(list.sum())
 
     val (first, second, third) = list
-
-    println(first)
-    println(second)
-    println(third)
+//
+//    println(first)
+//    println(second)
+//    println(third)
 
     //val (a, b, c, d, e) = listOf<Int>()
 }
