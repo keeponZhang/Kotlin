@@ -37,3 +37,15 @@ object Context {
 //1.SafeContinuation仅在挂起点时出现
 //2.拦截器在每次恢复执行协程体时调用
 //3.SuspendLambda是协程函数体
+
+//协程的创建
+//协程是一段可执行的程序
+//协程的创建通常需要一个函数  suspend function
+//协程的创建也需要一个api  createCoroutine startCoroutine
+
+//协程的启动
+//suspend{}.startCoroutine(object:Continution<Unit>{
+//override val context =EmptyCoroutineContext
+// override fun resumeWith(result：Result<Unit>){
+// log("Coroutine End with $result") 协程执行完成后调用
+// }}
