@@ -47,6 +47,7 @@ tailrec fun DisposableList.forEach(action: (Disposable) -> Unit): Unit = when(th
     }
 }
 
+//是DisposableList的拓展函数
 inline fun <reified T: Disposable> DisposableList.loopOn(crossinline action: (T) -> Unit) = forEach {
     when(it){
         is T -> action(it)

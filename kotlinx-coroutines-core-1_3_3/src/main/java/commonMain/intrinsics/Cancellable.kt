@@ -11,7 +11,7 @@ import kotlin.coroutines.intrinsics.*
 /**
  * Use this function to start coroutine in a cancellable way, so that it can be cancelled
  * while waiting to be dispatched.
- * 注释；底部最终调用的还是我要开启协程啦的逻辑，回调到block里面的
+ * 注释；底部最终调用的还是我要开启协程啦的逻辑，回调到block里面的,IntrinsicsJvm
  */
 @InternalCoroutinesApi
 public fun <T> (suspend () -> T).startCoroutineCancellable(completion: Continuation<T>) = runSafely(completion) {

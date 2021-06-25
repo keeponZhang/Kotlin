@@ -2,6 +2,7 @@ package com.bennyhuo.kotlin.coroutines.core
 
 
 sealed class CoroutineState {
+    //表示要取消的集合list
     private var disposableList: DisposableList = DisposableList.Nil
 
     fun from(state: CoroutineState): CoroutineState {
@@ -26,6 +27,7 @@ sealed class CoroutineState {
     }
 
     fun notifyCancellation() {
+//        找到所有CancellationHandlerDisposable状态的，
         disposableList.loopOn<CancellationHandlerDisposable> {
             it.onCancel()
         }
