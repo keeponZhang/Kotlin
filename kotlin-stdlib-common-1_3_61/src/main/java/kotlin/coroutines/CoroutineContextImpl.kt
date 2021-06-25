@@ -49,7 +49,6 @@ internal class CombinedContext(val left: CoroutineContext, val element: Element)
 
     public override fun minusKey(key: Key<*>): CoroutineContext {
         element[key]?.let { return left }
-        //left有可能是单个element，此时返回的的newLeft==left,表示遍历后没找到
         val newLeft = left.minusKey(key)
         return when {
             newLeft === left -> this
