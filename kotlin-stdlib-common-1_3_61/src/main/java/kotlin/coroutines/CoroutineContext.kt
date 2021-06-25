@@ -8,26 +8,24 @@ package kotlin.coroutines
 /**
  * Persistent context for the coroutine. It is an indexed set of [Element] instances.
  * An indexed set is a mix between a set and a map.
- * https://blog.csdn.net/c10WTiybQ1Ye3/article/details/114956973
+ * Every element in this set has a unique [Key].
  */
 @SinceKotlin("1.3")
 public interface CoroutineContext {
     /**
-     * 操作符[]重载，可以通过CoroutineContext[Key]这种形式来获取与Key关联的Element
+     * Returns the element with the given [key] from this context or `null`.
      */
     public operator fun <E : Element> get(key: Key<E>): E?
 
     /**
      * Accumulates entries of this context starting with [initial] value and applying [operation]
-     * 它是一个聚集函数，提供了从left到right遍历CoroutineContext中每一个Element的能力，并对每一个Element做operation操作
+     * from left to right to current accumulator value and each element of this context.
      */
     public fun <R> fold(initial: R, operation: (R, Element) -> R): R
 
     /**
-     * 注释:只有EmptyCoroutineContext覆写了该方法
-     * 操作符+重载，可以CoroutineContext + CoroutineContext这种形式把两个CoroutineContext合并成一个;element就是element
-     * (本身），combine的就是右侧的elementelement就是element(本身），combine的就是右侧的element；首次调用acc就是init传的this
-     * 1+2+3,第二次2+3的时候就变成了，前面1+2的返回值就变成了init，就是acc
+     * Returns a context containing elements from this context and elements from  other [context].
+     * The elements from this context with the same key as in the other one are dropped.
      */
     public operator fun plus(context: CoroutineContext): CoroutineContext =
         if (context === EmptyCoroutineContext) this else // fast path -- avoid lambda creation
@@ -52,18 +50,15 @@ public interface CoroutineContext {
 
     /**
      * Key for the elements of [CoroutineContext]. [E] is a type of element with this key.
-     * Key定义，空实现，仅仅做一个标识
      */
     public interface Key<E : Element>
 
     /**
      * An element of the [CoroutineContext]. An element of the coroutine context is a singleton context by itself.
-     * Element定义，每个Element都是一个CoroutineContext
      */
     public interface Element : CoroutineContext {
         /**
          * A key of this coroutine context element.
-         * 每个Element都有一个Key实例
          */
         public val key: Key<*>
 
@@ -73,7 +68,7 @@ public interface CoroutineContext {
 
         public override fun <R> fold(initial: R, operation: (R, Element) -> R): R =
             operation(initial, this)
-
+//if (this.key == key) EmptyCoroutineContext 注意这里
         public override fun minusKey(key: Key<*>): CoroutineContext =
             if (this.key == key) EmptyCoroutineContext else this
     }
