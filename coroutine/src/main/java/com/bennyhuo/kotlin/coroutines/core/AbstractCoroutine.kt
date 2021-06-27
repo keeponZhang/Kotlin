@@ -20,12 +20,13 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 
     protected val state = AtomicReference<CoroutineState>()
 
-//    只要拿到context，就能拿到job实例
+    //    只要拿到context，就能拿到job实例
     override val context: CoroutineContext = context + this
 
     override val scopeContext: CoroutineContext
         get() = context
-//是传进来的context
+
+    //是传进来的context
     protected var parentJob = context[Job]
 
     private var parentCancelDisposable: Disposable? = null
@@ -71,8 +72,13 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         when (state.get()) {
             is CoroutineState.Cancelling,
             is CoroutineState.InComplete -> return joinSuspend()
+//            如果调用我join的这个协程已经取消
             is CoroutineState.Complete<*> -> {
+//                获取到当前协程的coroutineContext（不是this）
+                log("***********join CoroutineState.Complete*************************")
                 val currentCallingJobState = coroutineContext[Job]?.isActive ?: return
+//一旦为false，一定是被取消了
+                log("***********join currentCallingJobState=$currentCallingJobState ")
                 if (!currentCallingJobState) {
                     throw CancellationException("Coroutine is cancelled.")
                 }
@@ -92,9 +98,11 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 //    disposable.dispose() 就是一个cancel
         continuation.invokeOnCancel {
             log("AbstractCoroutine 取消执行invokeOnCancel")
-            disposable.dispose() }
+            disposable.dispose()
+        }
     }
-//如果已经完成，就回调block，不然就放在state里面，完成后会调用
+
+    //如果已经完成，就回调block，不然就放在state里面，完成后会调用
     protected fun doOnCompleted(block: (Result<T>) -> Unit): Disposable {
 //        注意，这里disposable会保存到CoroutineState里面
         val disposable = CompletionHandlerDisposable(this, block)
@@ -165,7 +173,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     protected open fun handleJobException(e: Throwable): Boolean {
         return false
     }
-//    子类抛异常了，会先抛上去让父协程处理
+
+    //    子类抛异常了，会先抛上去让父协程处理
     protected open fun handleChildException(e: Throwable): Boolean {
 //        先把自己取消
         cancel()
