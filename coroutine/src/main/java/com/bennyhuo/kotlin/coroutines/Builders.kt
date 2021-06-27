@@ -32,12 +32,12 @@ fun <T> CoroutineScope.async(context: CoroutineContext = EmptyCoroutineContext,
 }
 
 fun CoroutineScope.newCoroutineContext(context: CoroutineContext): CoroutineContext {
-//    scopeContext是CoroutineScope里面的
+//    scopeContext是CoroutineScope里面的，CoroutineName用于打印名字
     val combined = scopeContext + context + CoroutineName("@coroutine#${coroutineIndex.getAndIncrement()}")
     return if(combined !== Dispatchers.Default && combined[ContinuationInterceptor] == null)
         combined + Dispatchers.Default else combined
 }
-
+//runBlocking最后返回一个值，T
 fun <T> runBlocking(context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> T): T {
     val eventQueue = BlockingQueueDispatcher()
     val newContext = context + DispatcherContext(eventQueue)

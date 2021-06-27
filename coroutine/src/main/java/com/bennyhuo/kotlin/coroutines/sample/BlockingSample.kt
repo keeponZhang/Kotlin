@@ -14,6 +14,7 @@ fun main() = runBlocking {
         log(3)
     }
     log(4)
+//    要想job里面的调用完，还是需要join的
     job.join()
     log(5)
     delay(100)

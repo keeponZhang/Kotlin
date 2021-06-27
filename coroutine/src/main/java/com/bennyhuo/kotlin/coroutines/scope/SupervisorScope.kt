@@ -7,7 +7,7 @@ import kotlin.coroutines.suspendCoroutine
 
 private class SupervisorCoroutine<T>(context: CoroutineContext, continuation: Continuation<T>) :
     ScopeCoroutine<T>(context, continuation) {
-
+//    主要是异常传播的处理不同
     override fun handleChildException(e: Throwable): Boolean {
         return false
     }

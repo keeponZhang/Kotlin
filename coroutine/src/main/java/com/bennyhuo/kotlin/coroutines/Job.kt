@@ -17,11 +17,12 @@ interface Job : CoroutineContext.Element {
     val isActive: Boolean
 
     val isCompleted: Boolean
-
+//    可以在job添加一些回调，当结束的时候可以回调告诉你
     fun invokeOnCompletion(onComplete: OnComplete): Disposable
 
     fun invokeOnCancel(onCancel: OnCancel): Disposable
 
+//    这个要注意下
     fun remove(disposable: Disposable)
 
     suspend fun join()

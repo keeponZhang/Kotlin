@@ -2,10 +2,8 @@ package com.bennyhuo.kotlin.coroutines.sample
 
 import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.delay
-import com.bennyhuo.kotlin.coroutines.dispatcher.Dispatchers
 import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
-import com.bennyhuo.kotlin.coroutines.scope.CoroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
@@ -13,9 +11,42 @@ import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.concurrent.thread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+//响应取消的是响应调用的协程
+suspend fun main() {
+//    test1()
+//    test11()
+    test2()
+}
 
-suspend fun main(){
+private suspend fun test11() {
+    val job = GlobalScope.launch {
+        log(1)
+        val result = hello()
+        log(2, result)
+        delay(1000)
+        log(3)
+    }
+    log(job.isActive)
+//    cancel就进入join的状态
+    job.cancel()
+    job.join()
+}
+
+
+
+suspend fun test1() {
+    val job = GlobalScope.launch {
+        log(1)
+        val result = hello()
+        log(2, result)
+    }
+    log(job.isActive)
+    job.join()
+}
+
+private suspend fun test2() {
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+//拿到的就是StandardCoroutine
         log(coroutineContext[Job], throwable)
     }
 
@@ -37,13 +68,14 @@ suspend fun main(){
     job.join()
 }
 
-suspend fun world(){
+suspend fun world() {
     coroutineScope {
 
     }
 }
 
 suspend fun hello() = suspendCoroutine<Int> {
+//    是isDaemon有可能不会等待
     thread(isDaemon = true) {
         Thread.sleep(1000)
         it.resume(10086)

@@ -23,13 +23,17 @@ fun CoroutineScope.cancel(){
     job.cancel()
 }
 
+//通过这个启动的叫协同作用域
 suspend fun <R> coroutineScope(block: suspend CoroutineScope.() -> R): R =
     suspendCoroutine {
         continuation ->
+//        因为用的是父类的continuation.context
         val coroutine = ScopeCoroutine(continuation.context, continuation)
+//        这里receiver是CoroutineScope，所以AbstractCoroutine实现了CoroutineScope，拿到的其实就是AbstractCoroutine的CoroutineContext
         block.startCoroutine(coroutine, coroutine)
     }
 
+//continuation注意，这里起始就是静态代理
 internal open class ScopeCoroutine<T>(context: CoroutineContext,
                                       val continuation: Continuation<T>)
     : AbstractCoroutine<T>(context) {

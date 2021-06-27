@@ -69,7 +69,7 @@ fun intListOf(vararg ints: Int): IntList {
 // [0, 1, 2, 3]
 fun main() {
     //最后一位没了，所以用IntList.Nil
-    //val list = IntList.Cons(0, IntList.Cons(1,  IntList.Cons(2,  IntList.Cons(3, IntList.Nil))))
+    val list0 = IntList.Cons(0, IntList.Cons(1,  IntList.Cons(2,  IntList.Cons(3, IntList.Nil))))
     val list = intListOf(0, 1, 2, 3)
 //    println(list)
 //    println(list.joinToString('-'))
