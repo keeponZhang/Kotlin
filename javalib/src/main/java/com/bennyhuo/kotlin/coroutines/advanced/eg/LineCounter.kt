@@ -30,8 +30,9 @@ suspend fun lineCounter(root: File): HashMap<File, Int> {
         .use {
             withContext(it){
                 val fileChannel  = walkFile(root)
-
+//相当于并发操作
                 val fileLinesChannels = List(5){
+//                    把file转为fileLine
                     fileLineCounter(fileChannel)
                 }
 
@@ -75,6 +76,7 @@ suspend fun CoroutineScope.resultAggregator(channels: List<ReceiveChannel<FileLi
                 }
             }
         } ?.let {
+            log("--------received let---------: $it")
             map[it.file] = it.lines
         }
     }

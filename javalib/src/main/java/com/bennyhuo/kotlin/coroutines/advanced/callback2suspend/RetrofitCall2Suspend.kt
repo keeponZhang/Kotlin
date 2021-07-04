@@ -37,7 +37,7 @@ suspend fun main() {
     }.cancelAndJoin()
 }
 
-private fun test1() {
+suspend fun   test1() {
     val user = gitHubServiceApi.getUserCallback("").await()
     log(user)
 }
