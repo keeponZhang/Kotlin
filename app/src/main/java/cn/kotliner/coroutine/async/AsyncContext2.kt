@@ -1,6 +1,5 @@
 package cn.kotliner.coroutine.async
 
-import ch10.ex2_1_3_ReflectionAPI2.counter
 import cn.kotliner.coroutine.common.log
 import kotlin.coroutines.experimental.AbstractCoroutineContextElement
 import kotlin.coroutines.experimental.Continuation
