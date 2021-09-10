@@ -39,6 +39,7 @@ class ChooseAreaViewModel(private val repository: PlaceRepository) : ViewModel()
 
     lateinit var counties: MutableList<County>
 
+//    这个就是adapter持有的引用
     val dataList = ArrayList<String>()
 
     fun getProvinces() {

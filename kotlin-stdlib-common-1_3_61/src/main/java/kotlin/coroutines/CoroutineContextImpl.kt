@@ -46,9 +46,14 @@ internal class CombinedContext(val left: CoroutineContext, val element: Element)
 
     public override fun <R> fold(initial: R, operation: (R, Element) -> R): R =
         operation(left.fold(initial, operation), element)
-
+    //CombinedContext的minusKey操作的逻辑是：
+    //1、先看element是否是匹配，如果匹配，那么element就是需要删除的元素，返回left，否则说明要删除的元素在left中，继续从left中删除对应的元素，根据left是否删除了要删除的元素转到2或3或4
+    //2、如果left中不存在要删除的元素，那么当前CombinedContext就不存在要删除的元素，直接返回当前CombinedContext实例就行
+    //3、如果left中存在要删除的元素，删除了这个元素后，left变为了空，那么直接返回当前CombinedContext的element就行
+    //4、如果left中存在要删除的元素，删除了这个元素后，left不为空，那么组合一个新的CombinedContext返回
     public override fun minusKey(key: Key<*>): CoroutineContext {
         element[key]?.let { return left }
+        //left有可能是单个element，此时返回的的newLeft==left,表示遍历后没找到
         val newLeft = left.minusKey(key)
         return when {
             newLeft === left -> this

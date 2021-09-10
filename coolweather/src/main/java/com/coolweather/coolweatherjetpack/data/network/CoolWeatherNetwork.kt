@@ -11,6 +11,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class CoolWeatherNetwork {
 
+//    注意这里是私有的
     private val placeService = ServiceCreator.create(PlaceService::class.java)
 
     private val weatherService = ServiceCreator.create(WeatherService::class.java)

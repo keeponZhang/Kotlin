@@ -12,16 +12,17 @@ private val executor = Executors.newScheduledThreadPool(1) { runnable ->
 }
 
 suspend fun delay(time: Long, unit: TimeUnit = TimeUnit.MILLISECONDS) =
-        suspendCancellableCoroutine<Unit> { continuation ->
-            log("调用delay")
-            val future = executor.schedule(
-                    {
-                        log("delay代码执行")
-                        continuation.resume(Unit)
-                    }, time, unit)
+    suspendCancellableCoroutine<Unit> { continuation ->
+        log("调用delay")
+        val future = executor.schedule(
+            {
+                log("delay代码执行")
+                continuation.resume(Unit)
+            }, time, unit
+        )
 //            这里给delay任务增加取消回调
-            continuation.invokeOnCancel {
-                log("Delay 取消执行future.cancel")
-                future.cancel(true)
-            }
+        continuation.invokeOnCancel {
+            log("Delay 取消执行future.cancel")
+            future.cancel(true)
         }
+    }
