@@ -6,7 +6,6 @@ import cn.kotliner.coroutine.async.DownloadContext
 import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用ContextContinuation_4_1
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
-import kotlin.coroutines.experimental.ContinuationInterceptor
 
 /**
  * Created by benny on 5/20/17.

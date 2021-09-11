@@ -48,8 +48,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit_version}"
-    compileOnly files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
-//    compileOnly files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
+//    compileOnly files('C:\\Program Files\\Java\\jdk1.8.0_212\\jre\\lib\\rt.jar')
+    compileOnly files('D:\\java\\jdk_1.8\\jre\\lib\\rt.jar')
     implementation "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.retrofit_version}"
     implementation "com.google.dagger:dagger:${rootProject.ext.dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger_version}"
@@ -63,16 +63,28 @@ dependencies {
 }
 task genDict {
     println "Gen Proguard dict！"
-
-//    def currentProductName = project.ext.get("currentProductName")
-//    println "currentProductName $currentProductName"
     doLast {
-        def f = file('.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_2_51.xml')
+        def files =file('doc')
+        files.eachFile{f->
+            def fileName = f.name
+            def parentFile =file('..')
+            def baseKeyFile = new File(parentFile,
+                    ".idea/libraries/"+fileName)
+            println("$f.name")
 
-        f.withWriter("UTF-8") {
-            baseKeyFile.eachLine { line ->
-                println "$line"
+            println("$baseKeyFile")
+            if(baseKeyFile.exists()){
+                println("------------------------")
+                baseKeyFile.withWriter("UTF-8") {
+                    f.eachLine { line ->
+                        it.append("$line")
+                        it.append(System.lineSeparator())
+                    }
+                }
             }
+
         }
+
+
     }
 }
