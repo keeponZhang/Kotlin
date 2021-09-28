@@ -4,23 +4,19 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/coolweather" />
             <option value="$PROJECT_DIR$/coroutine" />
-            <option value="$PROJECT_DIR$/firstcode" />
             <option value="$PROJECT_DIR$/javalib" />
             <option value="$PROJECT_DIR$/kotlin-stdlib-1_3_61" />
             <option value="$PROJECT_DIR$/kotlin-stdlib-common-1_3_61" />
             <option value="$PROJECT_DIR$/kotlinx-coroutines-core-1_3_3" />
-            <option value="$PROJECT_DIR$/library" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

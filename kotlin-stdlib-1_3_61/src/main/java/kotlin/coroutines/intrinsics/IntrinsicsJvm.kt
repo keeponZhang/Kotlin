@@ -9,14 +9,8 @@
 
 package kotlin.coroutines.intrinsics
 
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.ContinuationInterceptor
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.jvm.internal.BaseContinuationImpl
-import kotlin.coroutines.jvm.internal.ContinuationImpl
-import kotlin.coroutines.jvm.internal.RestrictedContinuationImpl
-import kotlin.coroutines.jvm.internal.probeCoroutineCreated
+import kotlin.coroutines.*
+import kotlin.coroutines.jvm.internal.*
 import kotlin.internal.InlineOnly
 
 /**
@@ -30,17 +24,11 @@ import kotlin.internal.InlineOnly
  *
  * This function is designed to be used from inside of [suspendCoroutineUninterceptedOrReturn] to resume the execution of the suspended
  * coroutine using a reference to the suspending function.
- *
- */
-/**
- * 挂起函数的类型
- * suspend fun fool{}-> suspend()->Unit
- *
  */
 @SinceKotlin("1.3")
 @InlineOnly
 public actual inline fun <T> (suspend () -> T).startCoroutineUninterceptedOrReturn(
-        completion: Continuation<T>
+    completion: Continuation<T>
 ): Any? = (this as Function1<Continuation<T>, Any?>).invoke(completion)
 
 /**
@@ -58,8 +46,8 @@ public actual inline fun <T> (suspend () -> T).startCoroutineUninterceptedOrRetu
 @SinceKotlin("1.3")
 @InlineOnly
 public actual inline fun <R, T> (suspend R.() -> T).startCoroutineUninterceptedOrReturn(
-        receiver: R,
-        completion: Continuation<T>
+    receiver: R,
+    completion: Continuation<T>
 ): Any? = (this as Function2<R, Continuation<T>, Any?>).invoke(receiver, completion)
 
 
@@ -88,7 +76,7 @@ public actual inline fun <R, T> (suspend R.() -> T).startCoroutineUninterceptedO
  */
 @SinceKotlin("1.3")
 public actual fun <T> (suspend () -> T).createCoroutineUnintercepted(
-        completion: Continuation<T>
+    completion: Continuation<T>
 ): Continuation<Unit> {
     val probeCompletion = probeCoroutineCreated(completion)
     return if (this is BaseContinuationImpl)
@@ -122,8 +110,8 @@ public actual fun <T> (suspend () -> T).createCoroutineUnintercepted(
  */
 @SinceKotlin("1.3")
 public actual fun <R, T> (suspend R.() -> T).createCoroutineUnintercepted(
-        receiver: R,
-        completion: Continuation<T>
+    receiver: R,
+    completion: Continuation<T>
 ): Continuation<Unit> {
     val probeCompletion = probeCoroutineCreated(completion)
     return if (this is BaseContinuationImpl)
@@ -146,7 +134,7 @@ public actual fun <R, T> (suspend R.() -> T).createCoroutineUnintercepted(
  */
 @SinceKotlin("1.3")
 public actual fun <T> Continuation<T>.intercepted(): Continuation<T> =
-        (this as? ContinuationImpl)?.intercepted() ?: this
+    (this as? ContinuationImpl)?.intercepted() ?: this
 
 // INTERNAL DEFINITIONS
 
@@ -165,8 +153,8 @@ public actual fun <T> Continuation<T>.intercepted(): Continuation<T> =
  */
 @SinceKotlin("1.3")
 private inline fun <T> createCoroutineFromSuspendFunction(
-        completion: Continuation<T>,
-        crossinline block: (Continuation<T>) -> Any?
+    completion: Continuation<T>,
+    crossinline block: (Continuation<T>) -> Any?
 ): Continuation<Unit> {
     val context = completion.context
     // label == 0 when coroutine is not started yet (initially) or label == 1 when it was
@@ -175,35 +163,35 @@ private inline fun <T> createCoroutineFromSuspendFunction(
             private var label = 0
 
             override fun invokeSuspend(result: Result<Any?>): Any? =
-                    when (label) {
-                        0 -> {
-                            label = 1
-                            result.getOrThrow() // Rethrow exception if trying to start with exception (will be caught by BaseContinuationImpl.resumeWith
-                            block(this) // run the block, may return or suspend
-                        }
-                        1 -> {
-                            label = 2
-                            result.getOrThrow() // this is the result if the block had suspended
-                        }
-                        else -> error("This coroutine had already completed")
+                when (label) {
+                    0 -> {
+                        label = 1
+                        result.getOrThrow() // Rethrow exception if trying to start with exception (will be caught by BaseContinuationImpl.resumeWith
+                        block(this) // run the block, may return or suspend
                     }
+                    1 -> {
+                        label = 2
+                        result.getOrThrow() // this is the result if the block had suspended
+                    }
+                    else -> error("This coroutine had already completed")
+                }
         }
     else
         object : ContinuationImpl(completion as Continuation<Any?>, context) {
             private var label = 0
 
             override fun invokeSuspend(result: Result<Any?>): Any? =
-                    when (label) {
-                        0 -> {
-                            label = 1
-                            result.getOrThrow() // Rethrow exception if trying to start with exception (will be caught by BaseContinuationImpl.resumeWith
-                            block(this) // run the block, may return or suspend
-                        }
-                        1 -> {
-                            label = 2
-                            result.getOrThrow() // this is the result if the block had suspended
-                        }
-                        else -> error("This coroutine had already completed")
+                when (label) {
+                    0 -> {
+                        label = 1
+                        result.getOrThrow() // Rethrow exception if trying to start with exception (will be caught by BaseContinuationImpl.resumeWith
+                        block(this) // run the block, may return or suspend
                     }
+                    1 -> {
+                        label = 2
+                        result.getOrThrow() // this is the result if the block had suspended
+                    }
+                    else -> error("This coroutine had already completed")
+                }
         }
 }
