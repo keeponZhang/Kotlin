@@ -6,6 +6,7 @@ import cn.kotliner.coroutine.common.log
 import cn.kotliner.coroutine.ui.LOGO_URL
 import cn.kotliner.coroutine.ui.MainWindow
 import javax.swing.JFrame
+import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
 
 /**
  * createBy	keepon
@@ -18,7 +19,7 @@ fun main(args: Array<String>) {
     frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     frame.init()
     frame.isVisible = true
-
+    COROUTINE_SUSPENDED
     frame.onButtonClick {
         log("协程之前")
         我要开始协程啦BaseContinuation() {

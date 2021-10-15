@@ -30,19 +30,25 @@ public interface CoroutineContext {
      * The elements from this context with the same key as in the other one are dropped.
      */
     public operator fun plus(context: CoroutineContext): CoroutineContext =
-        if (context === EmptyCoroutineContext) this else // fast path -- avoid lambda creation
+        if (context === EmptyCoroutineContext) this else {// fast path -- avoid lambda creation
             context.fold(this) { acc, element ->
                 val removed = acc.minusKey(element.key)
                 if (removed === EmptyCoroutineContext) element else {
                     // make sure interceptor is always last in the context (and thus is fast to get when present)
                     val interceptor = removed[ContinuationInterceptor]
-                    if (interceptor == null) CombinedContext(removed, element) else {
-                        val left = removed.minusKey(ContinuationInterceptor)
-                        if (left === EmptyCoroutineContext) CombinedContext(element, interceptor) else
-                            CombinedContext(CombinedContext(left, element), interceptor)
-                    }
+                    val combinedContext =
+                        if (interceptor == null) CombinedContext(removed, element) else {
+                            val left = removed.minusKey(ContinuationInterceptor)
+                            if (left === EmptyCoroutineContext) CombinedContext(
+                                element,
+                                interceptor
+                            ) else
+                                CombinedContext(CombinedContext(left, element), interceptor)
+                        }
+                    combinedContext
                 }
             }
+        }
 
     /**
      * Returns a context containing elements from this context, but without an element with
