@@ -4,6 +4,7 @@ import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.delay
 import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
+import com.bennyhuo.kotlin.coroutines.launch0
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
@@ -14,13 +15,25 @@ import kotlin.coroutines.suspendCoroutine
 
 //响应取消的是响应调用的协程
 suspend fun main() {
-//    test1()
+    test1()
 //    test11()
 //    test20()
-    test21()
+//    test21()
 //    test22()
 }
 
+
+
+suspend fun test1() {
+    val job = GlobalScope.launch0 {
+        log(1)
+        val result = hello()
+        log(2, result)
+    }
+    log(job.isActive)
+    job.join()
+    log("end----------")
+}
 private suspend fun test11() {
     val job = GlobalScope.launch {
         log(1)
@@ -34,17 +47,6 @@ private suspend fun test11() {
     job.cancel()
     job.join()
 }
-
-suspend fun test1() {
-    val job = GlobalScope.launch {
-        log(1)
-        val result = hello()
-        log(2, result)
-    }
-    log(job.isActive)
-    job.join()
-}
-
 private suspend fun test20() {
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine

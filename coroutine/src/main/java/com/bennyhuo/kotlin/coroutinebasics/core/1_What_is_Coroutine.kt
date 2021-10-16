@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun async() {
+fun async0() {
     val call = githubApi.getUserCallback("bennyhuo")
     call.enqueue(object : Callback<User> {
         override fun onFailure(call: Call<User>, t: Throwable) {

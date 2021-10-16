@@ -1,5 +1,6 @@
 package com.bennyhuo.kotlin.coroutines.core
 
+import com.bennyhuo.kotlin.coroutinebasics.utils.log
 import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.OnCancel
 
@@ -10,8 +11,11 @@ interface Disposable {
 }
 //这里要注意传入构造函数的变量，OnCompleteT跟OnComplete不一样
 class CompletionHandlerDisposable<T>(val job: Job, val onComplete: OnCompleteT<T>): Disposable {
+    init {
+        log("CompletionHandlerDisposable 创建实例 $this")
+    }
     override fun dispose() {
-//        协程结束的时候不需要再调用我啦
+//        协程结束的时候不需要再调用我啦，实际就是取消回调
         job.remove(this)
     }
 }
@@ -21,7 +25,7 @@ class CancellationHandlerDisposable(val job: Job, val onCancel: OnCancel): Dispo
         job.remove(this)
     }
 }
-
+//是递归列表
 sealed class DisposableList {
     object Nil: DisposableList()
 //    最后一个

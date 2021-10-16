@@ -20,6 +20,7 @@ fun main() {
     })
 
     async(handlerDispatcher) {
+//       这里的await跟原来async.await还是不一样的
         val user = await { githubApi.getUserCallback("bennyhuo") }
         log(user)
     }

@@ -31,7 +31,7 @@ suspend fun <T> AsyncScope.await(block: () -> Call<T>) = suspendCoroutine<T> {
         }
     })
 }
-
+//这里直接开启了一个协程
 fun async(context: CoroutineContext = EmptyCoroutineContext, block: suspend AsyncScope.() -> Unit) {
     val completion = AsyncCoroutine(context)
     //这里为什么需要传reciver，因为AsyncScope.()会转换成function1，把调用者传入，主要就是block需要

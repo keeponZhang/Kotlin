@@ -49,6 +49,7 @@ class GeneratorIterator<T>(
             is State.Ready<*> -> throw IllegalStateException("Cannot yield a value while ready.")
             State.Done -> throw IllegalStateException("Cannot yield a value while done.")
         }
+        println("yield state $state ")
     }
 
     private fun resume() {
@@ -60,6 +61,7 @@ class GeneratorIterator<T>(
 
     override fun hasNext(): Boolean {
         //resume是赋值，会调用到yield
+        println("hasNext state =$state")
         resume()
         return state != State.Done
     }
@@ -93,7 +95,12 @@ abstract class GeneratorScope<T> internal constructor() {
 interface Generator<T> {
     operator fun iterator(): Iterator<T>
 }
-//返回值是(T) -> Generator<T>，有Receiver,表示是GeneratorScope<T>的拓展lambda
+// GeneratorScope<T>.(T) -> Unit)，有Receiver,表示是GeneratorScope<T>的拓展lambda，(T) -> Unit则表示是普通的labmda
+//blcok表示要执行的代码块，如下
+//for (i in 0..5) {
+//    yield(start + i)
+//}
+//这里(T) -> Generator<T>表示返回一个函数，可以给函数传值，然后返回Generator
 fun <T> generator(block: suspend GeneratorScope<T>.(T) -> Unit): (T) -> Generator<T> {
     //要搞清楚parameter怎么来的,其实就是传进来的
     return { parameter: T ->
