@@ -19,7 +19,21 @@ fun CoroutineScope.launch0(
     //kotlin 1.2的时候completion是传进来的，所以StandardCoroutine是一个Continuation
     //注释1：CoroutineScope和Continuation里面都有一个
 //    注释2：newCoroutineContext是返回混合后的context
-    val completion = StandardCoroutine(newCoroutineContext(context))
+//    val completion = StandardCoroutine(newCoroutineContext(context))
+    val completion = StandardCoroutine(context)
+//    这里receiver是实现了CoroutineScope的CoroutineContext
+    block.startCoroutine(completion)
+    return completion
+}
+fun CoroutineScope.launch01(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend () -> String
+): Job {
+    //kotlin 1.2的时候completion是传进来的，所以StandardCoroutine是一个Continuation
+    //注释1：CoroutineScope和Continuation里面都有一个
+//    注释2：newCoroutineContext是返回混合后的context
+//    val completion = StandardCoroutine(newCoroutineContext(context))
+    val completion = StringCoroutine(context)
 //    这里receiver是实现了CoroutineScope的CoroutineContext
     block.startCoroutine(completion)
     return completion

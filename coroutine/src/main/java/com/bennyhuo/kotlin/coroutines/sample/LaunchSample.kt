@@ -5,6 +5,7 @@ import com.bennyhuo.kotlin.coroutines.delay
 import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
 import com.bennyhuo.kotlin.coroutines.launch0
+import com.bennyhuo.kotlin.coroutines.launch01
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
@@ -16,6 +17,7 @@ import kotlin.coroutines.suspendCoroutine
 //响应取消的是响应调用的协程
 suspend fun main() {
     test1()
+    log("end main----------")
 //    test11()
 //    test20()
 //    test21()
@@ -23,15 +25,18 @@ suspend fun main() {
 }
 
 
-
+//挂起函数需要传一个Continution，所以挂起函数需要在协程或者挂起函数中调用
 suspend fun test1() {
-    val job = GlobalScope.launch0 {
+    val job = GlobalScope.launch01 {
         log(1)
         val result = hello()
         log(2, result)
+        result.toString()
     }
     log(job.isActive)
     job.join()
+    log("end----------")
+    log("end----------")
     log("end----------")
 }
 private suspend fun test11() {

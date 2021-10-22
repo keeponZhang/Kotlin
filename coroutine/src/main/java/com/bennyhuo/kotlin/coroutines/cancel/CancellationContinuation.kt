@@ -33,7 +33,7 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         state.updateAndGet { prev ->
             when (prev) {
                 CancelState.InComplete -> {
-                    log("CancellationContinuation 调用resumeWith $continuation----- ${state.get()}")
+                    log("CancellationContinuation 调用resumeWith $continuation----- ${prev} $result")
                     continuation.resumeWith(result)
                     CancelState.Complete(result.getOrNull(), result.exceptionOrNull())
                 }
@@ -118,8 +118,9 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
 suspend inline fun <T> suspendCancellableCoroutine(
     crossinline block: (CancellationContinuation<T>) -> Unit
 ): T = suspendCoroutineUninterceptedOrReturn { c: Continuation<T> ->
-    log("suspendCancellableCoroutine $c")
-    val cancellationContinuation = CancellationContinuation(c.intercepted())
+    val intercepted = c.intercepted()
+    log("suspendCancellableCoroutine $c  intercepted=$intercepted")
+    val cancellationContinuation = CancellationContinuation(intercepted)
     block(cancellationContinuation)
     cancellationContinuation.getResult()
 }

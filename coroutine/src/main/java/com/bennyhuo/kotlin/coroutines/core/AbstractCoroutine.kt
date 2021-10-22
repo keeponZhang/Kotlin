@@ -94,7 +94,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     private suspend fun joinSuspend() = suspendCancellableCoroutine<Unit> { continuation ->
         val disposable = doOnCompleted { result ->
 //            问题是这个什么时候会回调，那就要看block在doOnCompleted什么时候会回调，还要注意这里返回了一个disposable
-//            这里只关心是不是执行完了，所以传Unit
+//            这里只关心是不是执行完了，所以传Unit.这里的是CancellationContinuation
             log("joinSuspend 回调 doOnCompleted $continuation")
             continuation.resume(Unit)
         }
@@ -144,7 +144,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     }
 
     override fun resumeWith(result: Result<T>) {
-        log("!!!!!!!!!!! AbstractCoroutine resumeWith  $result")
+        log("!!!!!!!!!!! AbstractCoroutine resumeWith end $result ${result.getOrNull()}")
         val newState = state.updateAndGet { prevState ->
             when (prevState) {
                 is CoroutineState.Cancelling,
@@ -239,7 +239,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         parentCancelDisposable?.dispose()
     }
 
-    override fun toString(): String {
-        return "${context[CoroutineName]?.name}"
-    }
+//    override fun toString(): String {
+//        return "${context[CoroutineName]?.name}"
+//    }
 }
