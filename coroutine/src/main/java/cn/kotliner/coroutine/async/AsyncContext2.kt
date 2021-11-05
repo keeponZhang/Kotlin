@@ -9,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Created by benny on 5/29/17.
  */
-//使用伴生对象的特点,构造函数传一个对象
+//使用伴生对象的特点,构造函数传一个对象，伴生对象名就是伴生对象
 class AsyncContext2 : AbstractCoroutineContextElement(MYKey), ContinuationInterceptor {
     val test = "keepon"
 

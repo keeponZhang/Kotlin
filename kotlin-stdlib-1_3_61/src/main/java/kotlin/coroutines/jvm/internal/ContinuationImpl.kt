@@ -156,7 +156,7 @@ internal abstract class RestrictedSuspendLambda(
 internal abstract class SuspendLambda(
     public override val arity: Int,
     completion: Continuation<Any?>?
-) : ContinuationImpl(completion), FunctionBase<Any?>, SuspendFunction {
+ ) : ContinuationImpl(completion), FunctionBase<Any?>, SuspendFunction {
     constructor(arity: Int) : this(arity, null)
 
     public override fun toString(): String =

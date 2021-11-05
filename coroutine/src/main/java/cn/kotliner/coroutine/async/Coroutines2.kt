@@ -22,6 +22,8 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * 会这样调用CoroutineIntrinsics.normalizeContinuation($completion); completion:CoroutineImpl
  * suspendCoroutine可以拿到编译器的continuation，进行回调 又会创建一个SafeContinuation.getResult，返回结果，接着回到协程继续执行
+ *
+ * continuation是SafeContinuation，恢复的时候使用
  */
 suspend fun 我要开始加载图片啦不切换线程同步2_0(url: String): ByteArray =
     suspendCoroutine<ByteArray> { continuation ->

@@ -1,6 +1,7 @@
 package cn.kotliner.coroutine.ui.Mainkt2.kt
 
 import cn.kotliner.coroutine.async.Coroutines2_simple.kt.我要开始加载图片啦不切换线程同步2_0_simple
+import cn.kotliner.coroutine.async.Coroutines2_simple.kt.我要开始加载图片啦不切换线程同步2_0_simple2
 import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation
 import cn.kotliner.coroutine.common.log
 import cn.kotliner.coroutine.ui.LOGO_URL
@@ -25,9 +26,9 @@ fun main(args: Array<String>) {
         我要开始协程啦BaseContinuation() {
             log("协程开始")
             //获取后还是在线程池
-            val imageData = 我要开始加载图片啦不切换线程同步2_0_simple(LOGO_URL)
+            val imageData = 我要开始加载图片啦不切换线程同步2_0_simple2(LOGO_URL)
             log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
-            frame.setLogo(imageData)
+//            frame.setLogo(imageData)
             log("协程结束")
         }
         log("协程之后")

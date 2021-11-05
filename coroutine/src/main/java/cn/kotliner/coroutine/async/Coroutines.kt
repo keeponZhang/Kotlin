@@ -2,6 +2,7 @@ package cn.kotliner.coroutine.async
 
 import cn.kotliner.coroutine.basic.BaseContinuation
 import cn.kotliner.coroutine.ui.LOGO_URL
+import com.bennyhuo.kotlin.coroutinebasics.utils.log
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.startCoroutine
@@ -9,9 +10,13 @@ import kotlin.coroutines.startCoroutine
 /**
  * Created by benny on 5/29/17.
  */
+// suspend () -> Unit 会实例化成SuspendLambda
 fun 我要开始协程啦BaseContinuation(block: suspend () -> Unit) {
+    log("--------------")
     block.startCoroutine(BaseContinuation(EmptyCoroutineContext))
 }
+
+
 
 fun 我要开始协程啦OnlyAsyncContext3_(
     block: suspend () -> Unit

@@ -1,5 +1,7 @@
 package com.example.activitytest
 
+import com.bennyhuo.kotlin.coroutinebasics.utils.log
+
 /**
  * @author guolin
  * @since 2019-05-14
@@ -35,8 +37,19 @@ class Util {
     }
 }
 
+class Util2 {
+    //companion object属性会生成静态的外部属性，公共的(companion object跟object生成的是不一样的)
+    companion object : Runnable {
+        override fun run() {
+            log("test")
+        }
+    }
+}
+
 fun main(args: Array<String>) {
     test2 { str -> str + 1 }
+//    其实就是调用Util2的静态属性，然后调用方法
+    Util2.run()
 }
 
 fun test2(block: (String) -> String) {
