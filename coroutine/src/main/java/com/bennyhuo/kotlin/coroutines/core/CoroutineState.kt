@@ -2,6 +2,7 @@ package com.bennyhuo.kotlin.coroutines.core
 
 import com.bennyhuo.kotlin.coroutinebasics.utils.log
 
+//每个Coroutine都有一个state，其实就是要记录状态，保存和取消回调
 sealed class CoroutineState {
     //表示要取消的集合list，是CoroutineState的成员变量，这里其实放的就是完成或者取消的回调
     private var disposableList: DisposableList = DisposableList.Nil
@@ -25,7 +26,8 @@ sealed class CoroutineState {
     }
 
     // disposableList放的就是完成或者取消的回调
-//    Continuation完成后，回调resumeWith之后，会调用到这里
+//    Continuation完成后，回调resumeWith之后，会调用到这里，
+//    此时只是通知，并没有移除，移除是disposable调用dispose方法
     fun <T> notifyCompletion(result: Result<T>) {
         this.disposableList.loopOn<CompletionHandlerDisposable<T>> {
 //it就是泛型参数类型

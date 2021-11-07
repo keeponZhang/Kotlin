@@ -27,6 +27,6 @@ class DeferredCoroutine<T>(context: CoroutineContext) : AbstractCoroutine<T>(con
         val disposable = doOnCompleted { result ->
             continuation.resumeWith(result)
         }
-        continuation.invokeOnCancel { disposable.dispose() }
+        continuation.invokeOnCancelListener { disposable.dispose() }
     }
 }

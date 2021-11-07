@@ -21,7 +21,7 @@ suspend fun delay(time: Long, unit: TimeUnit = TimeUnit.MILLISECONDS) =
             }, time, unit
         )
 //            这里给delay任务增加取消回调
-        continuation.invokeOnCancel {
+        continuation.invokeOnCancelListener {
             log("Delay 取消执行future.cancel")
             future.cancel(true)
         }

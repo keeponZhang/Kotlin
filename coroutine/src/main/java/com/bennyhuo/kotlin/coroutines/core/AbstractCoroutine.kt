@@ -6,7 +6,6 @@ import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.OnCancel
 import com.bennyhuo.kotlin.coroutines.OnComplete
 import com.bennyhuo.kotlin.coroutines.cancel.suspendCancellableCoroutine
-import com.bennyhuo.kotlin.coroutines.context.CoroutineName
 import com.bennyhuo.kotlin.coroutines.scope.CoroutineScope
 //import com.sun.org.apache.xpath.internal.operations.Bool
 import java.util.concurrent.atomic.AtomicReference
@@ -21,7 +20,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 
     protected val state = AtomicReference<CoroutineState>()
 
-    //    只要拿到context，就能拿到job实例
+    //只要拿到context，就能拿到job实例
     override val context: CoroutineContext = context + this
 
     override val scopeContext: CoroutineContext
@@ -35,7 +34,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     init {
         state.set(CoroutineState.InComplete())
 //        爹取消了，自己也要取消，不管是不是协同还是主从
-        parentCancelDisposable = parentJob?.invokeOnCancel {
+        parentCancelDisposable = parentJob?.invokeOnCancelListener {
             log("AbstractCoroutine parentJob init cancel")
             cancel()
         }
@@ -47,13 +46,13 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     override val isCompleted: Boolean
         get() = state.get() is CoroutineState.Complete<*>
 
-    override fun invokeOnCompletion(onComplete: OnComplete): Disposable {
+    override fun invokeOnCompletionListener(onComplete: OnComplete): Disposable {
         return doOnCompleted {
             onComplete()
         }
     }
 
-//    就是移除完成和取消的监听
+//    就是移除完成和取消的监听(需要作状态转移)
     override fun remove(disposable: Disposable) {
         state.updateAndGet { prev ->
             when (prev) {
@@ -100,7 +99,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         }
         log("AbstractCoroutine 调用 joinSuspend  $this")
 //   增加continuation的移除监听
-        continuation.invokeOnCancel {
+        continuation.invokeOnCancelListener {
             log("AbstractCoroutine 取消执行invokeOnCancel")
 //            disposable.dispose() 就是移除监听
             disposable.dispose()
@@ -149,6 +148,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
             when (prevState) {
                 is CoroutineState.Cancelling,
                 is CoroutineState.InComplete -> {
+//                    为什么有可能执行多次？
 //                   创建了一个新的状态并且更新了state
                     CoroutineState.Complete(result.getOrNull(), result.exceptionOrNull())
                         .from(prevState)
@@ -162,6 +162,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 //        如果协程抛异常的话，要处理异常
         (newState as CoroutineState.Complete<T>).exception?.let(::tryHandleException)
 
+//        如果调用join,这里可能会去唤醒，join里面有个onComplete的block
         newState.notifyCompletion(result)
         newState.clear()
 //        其实会回调到父协程的remove(disposable: Disposable)，移除，因为此时不需要父协程的回调了
@@ -192,7 +193,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         return tryHandleException(e)
     }
 
-    override fun invokeOnCancel(onCancel: OnCancel): Disposable {
+    override fun invokeOnCancelListener(onCancel: OnCancel): Disposable {
         val disposable = CancellationHandlerDisposable(this, onCancel)
 //        dispose会被保存到CoroutineState，后面对于dispose的时候会用到
         val newState = state.updateAndGet { prev ->

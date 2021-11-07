@@ -55,7 +55,8 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         parent.cancel()
     }
 
-    fun invokeOnCancel(onCancel: OnCancel) {
+//    这里会监听父job，父job取消了，会调用doCancel
+    fun invokeOnCancelListener(onCancel: OnCancel) {
         cancelHandlers += onCancel
         log(
             "CancellationContinuation 调用invokeOnCancel（增加监听)，cancelHandlers.size ${
@@ -89,7 +90,8 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         }
         val parent = job ?: return
         log("CancellationContinuation 调用installCancelHandler $parent")
-        parent.invokeOnCancel {
+//        这里就是设置监听，父job取消，子job也会被取消
+        parent.invokeOnCancelListener {
             log("CancellationContinuation 回调parent cancel")
             doCancel()
         }
