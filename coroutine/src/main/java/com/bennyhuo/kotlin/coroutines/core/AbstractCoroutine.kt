@@ -16,7 +16,7 @@ import kotlin.coroutines.resume
 
 //需要泛型参数，因为有返回值，Continuation是一开始创建或者启动协程用的Continuation，最后恢复需要用到
 abstract class AbstractCoroutine<T>(context: CoroutineContext) :
-    Job, Continuation<T>, CoroutineScope {
+        Job, Continuation<T>, CoroutineScope {
 
     protected val state = AtomicReference<CoroutineState>()
 
@@ -53,7 +53,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         }
     }
 
-//    就是移除完成和取消的监听(需要作状态转移)
+    //    就是移除完成和取消的监听(需要作状态转移)
     override fun remove(disposable: Disposable) {
         state.updateAndGet { prev ->
             when (prev) {
@@ -92,13 +92,13 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 
     //    跟invokeOnCompletion有点像
     private suspend fun joinSuspend() = suspendCancellableCoroutine<Unit> { continuation ->
+        log("AbstractCoroutine 调用 joinSuspend block  continuation = $continuation,  准备调用doOnCompleted")
         val disposable = doOnCompleted { result ->
 //            问题是这个什么时候会回调，那就要看block在doOnCompleted什么时候会回调，还要注意这里返回了一个disposable
 //            这里只关心是不是执行完了，所以传Unit.这里的是CancellationContinuation
             log("joinSuspend 回调 doOnCompleted $continuation")
             continuation.resume(Unit)
         }
-        log("AbstractCoroutine 调用 joinSuspend  $this")
 //   增加continuation的移除监听
         continuation.invokeOnCancelListener {
             log("AbstractCoroutine 取消执行invokeOnCancel")
@@ -126,17 +126,17 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
                 }
             }
         }
-        log("AbstractCoroutine doOnCompleted newState  $newState")
+        log("AbstractCoroutine调用 doOnCompleted方法 newState  $newState")
 //如果成功就直接回调了，没有的话就要看CompletionHandlerDisposable什么时候调用dispose了
 //  没有成功的话会通过resumeWith->  notifyCompletion    -》找出CompletionHandlerDisposable，调用onComplete
         (newState as? CoroutineState.Complete<T>)?.let {
 //            完成后回调给block传入参数
             block(
-                when {
-                    it.value != null -> Result.success(it.value)
-                    it.exception != null -> Result.failure(it.exception)
-                    else -> throw IllegalStateException("Won't happen!")
-                }
+                    when {
+                        it.value != null -> Result.success(it.value)
+                        it.exception != null -> Result.failure(it.exception)
+                        else -> throw IllegalStateException("Won't happen!")
+                    }
             )
         }
 
@@ -144,7 +144,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     }
 //失败还是异常都会回调这里
     override fun resumeWith(result: Result<T>) {
-        log("!!!!!!!!!!! AbstractCoroutine resumeWith end $result ${result.getOrNull()}")
+        log("!!!!!!!!!!!这里是complteContinutaion，完成或者失败的时候调用 AbstractCoroutine resumeWith end " +
+                "result=${result.getOrNull() }  continution=$this")
         val newState = state.updateAndGet { prevState ->
             when (prevState) {
                 is CoroutineState.Cancelling,
@@ -152,7 +153,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 //                    为什么有可能执行多次？
 //                   创建了一个新的状态并且更新了state
                     CoroutineState.Complete(result.getOrNull(), result.exceptionOrNull())
-                        .from(prevState)
+                            .from(prevState)
                 }
                 is CoroutineState.Complete<*> -> {
                     throw IllegalStateException("Already completed!")
@@ -168,7 +169,6 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         newState.clear()
 //        其实会回调到父协程的remove(disposable: Disposable)，移除，因为此时不需要父协程的回调了
         parentCancelDisposable?.dispose()
-
     }
 
     private fun tryHandleException(e: Throwable): Boolean {
@@ -179,7 +179,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 // + this，这里AbstractCoroutine是个job
 //协同关系可以抛给父协程，主从关系就不能抛给父协程，handleJobException(e)相对于前面返回空了
                 (parentJob as? AbstractCoroutine<*>)?.handleChildException(e)?.takeIf { it }
-                    ?: handleJobException(e)
+                        ?: handleJobException(e)
             }
         }
     }
@@ -235,8 +235,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         if (newState is CoroutineState.Cancelling) {
 //            这里很重要，会触发到onCancel代码块的回调
             log(
-                " AbstractCoroutine 调用cancel方法 newState.notifyCancellation()" +
-                    "（AbstractCoroutine.cancel）"
+                    " AbstractCoroutine 调用cancel方法 newState.notifyCancellation()" +
+                            "（AbstractCoroutine.cancel）"
             )
             newState.notifyCancellation()
         }

@@ -13,10 +13,10 @@ import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
 
 //需要有状态
 class CancellationContinuation<T>(private val continuation: Continuation<T>) :
-    Continuation<T> by continuation {
+        Continuation<T> by continuation {
 
     init {
-        log("--------传进来的continuation $continuation")
+        log("--------传进来的continuation $continuation ,创建CancellationContinuation")
     }
 
     private val state = AtomicReference<CancelState>(CancelState.InComplete)
@@ -55,20 +55,20 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         parent.cancel()
     }
 
-//    这里会监听父job，父job取消了，会调用doCancel
+    //    这里会监听父job，父job取消了，会调用doCancel
     fun invokeOnCancelListener(onCancel: OnCancel) {
         cancelHandlers += onCancel
         log(
-            "CancellationContinuation 调用invokeOnCancel（增加监听)，cancelHandlers.size ${
+                "CancellationContinuation 调用invokeOnCancel（增加监听)，cancelHandlers.size ${
                 cancelHandlers
-                    .size
-            }"
+                        .size
+                }"
         )
     }
 
     //这里是block代码执行完，判断有没取消，如果取消了，block的延迟任务取消调
     fun getResult(): Any? {
-        log("CancellationContinuation 调用getResult() ${state.get()}")
+        log("CancellationContinuation 调用getResult() 获取结果 ${state.get()}")
         installCancelHandler()
         return when (val currentState = state.get()) {
             CancelState.InComplete -> COROUTINE_SUSPENDED
@@ -86,10 +86,10 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         if (!isActive) return
         val job = continuation.context[Job]
         if (job == null) {
-            log("CancellationContinuation 调用installCancelHandler 返回了null--------------")
+            log("CancellationContinuation 调用installCancelHandler来获取job 返回了null--------------")
         }
         val parent = job ?: return
-        log("CancellationContinuation 调用installCancelHandler $parent")
+        log("CancellationContinuation 调用installCancelHandler来获取job= $parent")
 //        这里就是设置监听，父job取消，子job也会被取消
         parent.invokeOnCancelListener {
             log("CancellationContinuation 回调parent cancel")
@@ -118,10 +118,10 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
 
 //CancellationContinuation相当于SafeContinuation的作用，c传的是外层的Continuation
 suspend inline fun <T> suspendCancellableCoroutine(
-    crossinline block: (CancellationContinuation<T>) -> Unit
+        crossinline block: (CancellationContinuation<T>) -> Unit
 ): T = suspendCoroutineUninterceptedOrReturn { c: Continuation<T> ->
     val intercepted = c.intercepted()
-    log("suspendCancellableCoroutine $c  intercepted=$intercepted")
+    log("调用join suspendCancellableCoroutine $c    拦截intercepted=$intercepted")
     val cancellationContinuation = CancellationContinuation(intercepted)
     block(cancellationContinuation)
     cancellationContinuation.getResult()
