@@ -20,9 +20,10 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 
     protected val state = AtomicReference<CoroutineState>()
 
-    //只要拿到context，就能拿到job实例
+    //只要拿到context，就能拿到job实例（这里的this就是把job加上去）
     override val context: CoroutineContext = context + this
 
+//    这里的scopeContext等于context
     override val scopeContext: CoroutineContext
         get() = context
 
@@ -141,7 +142,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 
         return disposable
     }
-
+//失败还是异常都会回调这里
     override fun resumeWith(result: Result<T>) {
         log("!!!!!!!!!!! AbstractCoroutine resumeWith end $result ${result.getOrNull()}")
         val newState = state.updateAndGet { prevState ->
@@ -174,6 +175,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         return when (e) {
             is CancellationException -> false
             else -> {
+// parentJob as? AbstractCoroutine<*>，这里能直接转的原因是 override val context: CoroutineContext = context
+// + this，这里AbstractCoroutine是个job
 //协同关系可以抛给父协程，主从关系就不能抛给父协程，handleJobException(e)相对于前面返回空了
                 (parentJob as? AbstractCoroutine<*>)?.handleChildException(e)?.takeIf { it }
                     ?: handleJobException(e)
@@ -181,11 +184,12 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         }
     }
 
+//    这个如果没有父Job，会调用的
     protected open fun handleJobException(e: Throwable): Boolean {
         return false
     }
 
-    //    子类抛异常了，会先抛上去让父协程处理
+    //    子类抛异常了，会先抛上去让父协程处理，一般由子协程处理
     protected open fun handleChildException(e: Throwable): Boolean {
 //        先把自己取消
         cancel()

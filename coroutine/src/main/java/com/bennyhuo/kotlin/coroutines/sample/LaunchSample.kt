@@ -16,10 +16,10 @@ import kotlin.coroutines.suspendCoroutine
 
 //响应取消的是响应调用的协程
 suspend fun main() {
-    test1()
-    log("end main----------")
+//    test1()
+//    log("end main----------")
 //    test11()
-//    test20()
+    test20()
 //    test21()
 //    test22()
 }
@@ -124,7 +124,7 @@ suspend fun world() {
 suspend fun hello() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待
     thread(isDaemon = true) {
-        Thread.sleep(1000)
+        Thread.sleep(5000)
         it.resume(10086)
     }
 }
