@@ -1,0 +1,35 @@
+package com.bennyhuo.kotlin.coroutines.sample
+
+import com.bennyhuo.kotlin.coroutines.Job
+import com.bennyhuo.kotlin.coroutines.delay
+import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
+import com.bennyhuo.kotlin.coroutines.launch
+import com.bennyhuo.kotlin.coroutines.launch0
+import com.bennyhuo.kotlin.coroutines.launch01
+import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
+import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
+import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
+import com.bennyhuo.kotlin.coroutines.utils.log
+import kotlin.concurrent.thread
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
+//响应取消的是响应调用的协程,启动一个协程需要两个Continuation,一个是完成时用的，一个是返回的
+suspend fun main() {
+    log("begin----------")
+    val job = GlobalScope.launch01 {
+        log("我是invokeSuspend")
+        log("1")
+        val result = hello()
+        log("继续往下执行2", result)
+        result.toString()
+    }
+    log(job.isActive)
+    job.join()
+    log("end----------")
+    log("end----------")
+    log("end----------")
+}
+
+
+
