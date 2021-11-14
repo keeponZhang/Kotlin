@@ -10,6 +10,8 @@ import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
 import com.bennyhuo.kotlin.coroutines.utils.log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -18,10 +20,13 @@ import kotlin.coroutines.suspendCoroutine
 suspend fun main() {
     log("begin----------")
     val job = GlobalScope.launch01 {
-        log("我是invokeSuspend")
+        log("LaunchSampleSimple3 我是invokeSuspend")
         log("1")
-        val result = hello2()
-        log("继续往下执行2", result)
+        val result = withContext(Dispatchers.Default) {
+            log("LaunchSampleSimple3 准备计算")
+            5 + 5
+        }
+        log("LaunchSampleSimple3 继续往下执行2", result)
         result.toString()
     }
     log(job.isActive)
@@ -33,12 +38,3 @@ suspend fun main() {
 
 
 
-suspend fun hello2() = suspendCoroutine<Int> {
-//    是isDaemon有可能不会等待
-    thread(isDaemon = true) {
-        log("hello执行耗时任务")
-        Thread.sleep(1000)
-        log("hello恢复 $it ,这里的会回调到系统的SafeContinuation")
-        it.resume(10086)
-    }
-}

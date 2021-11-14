@@ -73,7 +73,6 @@ private suspend fun sum() {
     val result = withContext(Dispatchers.Default) {
         5 + 5
         println("Thread name = " + Thread.currentThread().name)
-        launch { }
     }
 }
 

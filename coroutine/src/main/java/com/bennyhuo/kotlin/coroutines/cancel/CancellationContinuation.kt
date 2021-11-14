@@ -115,7 +115,7 @@ class CancellationContinuation<T>(private val continuation: Continuation<T>) :
         cancelHandlers.clear()
     }
 }
-
+//suspendCoroutineUninterceptedOrReturn会对传进来的Continuation做一层拦截cont -> block(cont.intercepted())
 //CancellationContinuation相当于SafeContinuation的作用，c传的是外层的Continuation
 suspend inline fun <T> suspendCancellableCoroutine(
         crossinline block: (CancellationContinuation<T>) -> Unit
