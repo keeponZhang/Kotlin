@@ -1,7 +1,7 @@
 package com.bennyhuo.kotlin.coroutinebasics.prepare.go
 
 import com.bennyhuo.kotlin.coroutinebasics.common.DispatcherContext
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.*

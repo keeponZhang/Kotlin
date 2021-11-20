@@ -1,8 +1,8 @@
 package com.bennyhuo.kotlin.coroutines.core
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
 import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.OnCancel
+import com.bennyhuo.kotlin.coroutines.utils.log
 
 typealias OnCompleteT<T> = (Result<T>) -> Unit
 
@@ -14,7 +14,7 @@ interface Disposable {
 //这里要注意传入构造函数的变量，OnCompleteT跟OnComplete不一样
 class CompletionHandlerDisposable<T>(val job: Job, val onComplete: OnCompleteT<T>) : Disposable {
     init {
-        log("CompletionHandlerDisposable 创建实例 $this")
+        log("创建实例,this=$this")
     }
 
     override fun dispose() {
@@ -22,7 +22,7 @@ class CompletionHandlerDisposable<T>(val job: Job, val onComplete: OnCompleteT<T
         job.remove(this)
     }
 }
-
+//这里有2个重点，一个是onCancel什么时候调用，一个是dispose什么时候调用
 class CancellationHandlerDisposable(val job: Job, val onCancel: OnCancel) : Disposable {
     override fun dispose() {
         job.remove(this)

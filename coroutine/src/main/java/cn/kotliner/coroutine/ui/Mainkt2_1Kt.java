@@ -2,7 +2,7 @@ package cn.kotliner.coroutine.ui;// package cn.kotliner.coroutine.ui.Mainkt2.kt;
 //
 // import cn.kotliner.coroutine.async.CoroutinesKt;
 // import cn.kotliner.coroutine.async.Coroutines2.kt.Coroutines2Kt;
-// import cn.kotliner.coroutine.common.LogKt;
+// import com.bennyhuo.kotlin.coroutines.utils.logKt;
 // import cn.kotliner.coroutine.ui.MainWindow;
 // import java.awt.event.ActionEvent;
 // import kotlin.Metadata;

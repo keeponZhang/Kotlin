@@ -1,5 +1,6 @@
 package com.bennyhuo.kotlin.coroutinebasics.common
 
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.ContinuationInterceptor
@@ -18,9 +19,10 @@ open class DispatcherContext(private val dispatcher: Dispatcher = DefaultDispatc
 private class DispatchedContinuation<T>(val delegate: Continuation<T>, val dispatcher: Dispatcher) :
         Continuation<T> {
     override val context = delegate.context
-
+//launch启动的时候会调用以
     override fun resumeWith(result: Result<T>) {
         dispatcher.dispatch {
+            log("切换线程 delegeate=$delegate")
             delegate.resumeWith(result)
         }
     }

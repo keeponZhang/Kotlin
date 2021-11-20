@@ -2,7 +2,7 @@ package cn.kotliner.coroutine.basic
 
 import cn.kotliner.coroutine.common.HttpException
 import cn.kotliner.coroutine.common.HttpService
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

@@ -1,6 +1,6 @@
 package com.bennyhuo.kotlin.coroutines.core
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 
 //每个Coroutine都有一个state，其实就是要记录状态，保存和取消回调
 sealed class CoroutineState {
@@ -31,7 +31,7 @@ sealed class CoroutineState {
     fun <T> notifyCompletion(result: Result<T>) {
         this.disposableList.loopOn<CompletionHandlerDisposable<T>> {
 //it就是泛型参数类型
-            log("CoroutineState notifyCompletion CompletionHandlerDisposable $it")
+            log("CoroutineState notifyCompletion CompletionHandlerDisposable,dispose=$it")
             it.onComplete(result)
         }
     }
@@ -39,6 +39,7 @@ sealed class CoroutineState {
     fun notifyCancellation() {
 //        找到所有CancellationHandlerDisposable状态的，
         disposableList.loopOn<CancellationHandlerDisposable> {
+            log("CoroutineState notifyCancellation CompletionHandlerDisposable,dispose=$it")
             it.onCancel()
         }
     }

@@ -1,6 +1,6 @@
 package com.bennyhuo.kotlin.coroutinebasics.eg.lua
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext

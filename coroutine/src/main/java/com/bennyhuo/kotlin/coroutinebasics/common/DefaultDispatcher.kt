@@ -3,6 +3,10 @@ package com.bennyhuo.kotlin.coroutinebasics.common
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * @Deprecated
+ */
+@Deprecated("")
 object DefaultDispatcher: Dispatcher {
 
     private val threadGroup = ThreadGroup("DefaultDispatcher")

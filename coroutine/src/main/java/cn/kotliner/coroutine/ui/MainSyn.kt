@@ -2,7 +2,7 @@ package cn.kotliner.coroutine.ui
 
 import cn.kotliner.coroutine.basic.我要basic开始协程啦
 import cn.kotliner.coroutine.basic.我要开始basic加载图片啦
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import javax.swing.JFrame
 
 fun main(args: Array<String>) {

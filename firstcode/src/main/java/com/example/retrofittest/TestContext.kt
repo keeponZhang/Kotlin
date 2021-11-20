@@ -1,6 +1,6 @@
 package com.example.retrofittest
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.ContinuationInterceptor

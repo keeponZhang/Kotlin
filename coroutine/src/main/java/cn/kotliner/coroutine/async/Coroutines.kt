@@ -2,7 +2,7 @@ package cn.kotliner.coroutine.async
 
 import cn.kotliner.coroutine.basic.BaseContinuation
 import cn.kotliner.coroutine.ui.LOGO_URL
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.startCoroutine

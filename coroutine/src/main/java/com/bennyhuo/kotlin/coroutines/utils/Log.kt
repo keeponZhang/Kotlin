@@ -1,10 +1,8 @@
 package com.bennyhuo.kotlin.coroutines.utils
 
-import com.bennyhuo.kotlin.coroutines.Job
+import com.bennyhuo.kotlin.coroutines.cancel.CancellationContinuation
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.CoroutineContext
+import java.util.Date
 
 val dateFormat = SimpleDateFormat("HH:mm:ss:SSS")
 
@@ -12,12 +10,31 @@ val now = {
     dateFormat.format(Date(System.currentTimeMillis()))
 }
 
-fun log(vararg msg: Any?) = println("${now()} [${Thread.currentThread().name}] ${msg.joinToString(" ")}")
+fun log(vararg msg: Any?) =
+//    val classname = Exception().stackTrace[1].className
+//    println("classname-------------$classname")
+//        ${now()}
+        println("[${Thread.currentThread().name}] ${diaoyongName()} ${msg
+                .joinToString(" ")}")
 
-fun stackTrace(){
+fun stackTrace() {
     Throwable().printStackTrace(System.out)
 }
 
-fun <T> Continuation<T>.log(vararg msg: Any?) = context.log(*msg)
+fun diaoyongName(): String = Exception().stackTrace[2].let { it ->
+    var fileName = it.fileName.subSequence(0, it.fileName.length - 2)
+    val methodName = it.methodName
+    " $fileName$methodName"
+}
 
-fun CoroutineContext.log(vararg msg: Any?) = println("${now()} [${Thread.currentThread().name} ${this[Job]}] ${msg.joinToString(" ")}")
+fun <T> CancellationContinuation<T>.log(vararg msg: Any?) =
+        println("[${Thread.currentThread().name}] ${diaoyongName()} <<${name}>> ${msg
+                .joinToString(" ")}")
+
+
+//fun <T> Continuation<T>.log(vararg msg: Any?) = context.log(*msg)
+//
+////
+//fun CoroutineContext.log(vararg msg: Any?) =
+//        println("${now()} [${Thread.currentThread().name} " +
+//                "${this[Job]}  classname=${diaoyongName()}] ${msg.joinToString(" ")}")

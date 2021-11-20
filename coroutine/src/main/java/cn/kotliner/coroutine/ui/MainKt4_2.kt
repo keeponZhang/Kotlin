@@ -4,7 +4,7 @@ import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦4_
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始耗时操作了4
 import cn.kotliner.coroutine.async.DownloadContext
 import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用ContextContinuation4_2
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
 import kotlin.coroutines.ContinuationInterceptor
 

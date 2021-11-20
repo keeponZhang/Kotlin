@@ -5,7 +5,7 @@ import android.os.Looper
 import com.bennyhuo.kotlin.coroutinebasics.api.githubApi
 import com.bennyhuo.kotlin.coroutinebasics.common.Dispatcher
 import com.bennyhuo.kotlin.coroutinebasics.common.DispatcherContext
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException

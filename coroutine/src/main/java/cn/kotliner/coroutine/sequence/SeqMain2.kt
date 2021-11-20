@@ -1,6 +1,6 @@
 package cn.kotliner.coroutine.sequence
 
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.createCoroutine
 
 /**

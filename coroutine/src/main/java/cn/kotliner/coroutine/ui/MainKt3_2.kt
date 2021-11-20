@@ -2,7 +2,7 @@ package cn.kotliner.coroutine.ui
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦3
 import cn.kotliner.coroutine.async.我要开始协程啦TwoAsyncContext3_2
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
 /**

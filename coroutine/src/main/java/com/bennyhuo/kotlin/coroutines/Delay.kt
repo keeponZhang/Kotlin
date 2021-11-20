@@ -1,7 +1,7 @@
 package com.bennyhuo.kotlin.coroutines
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
-import com.bennyhuo.kotlin.coroutines.cancel.suspendCancellableCoroutine
+import com.bennyhuo.kotlin.coroutines.utils.log
+import com.bennyhuo.kotlin.coroutines.cancel.delaySuspendCancellableCoroutine
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
@@ -12,17 +12,17 @@ private val executor = Executors.newScheduledThreadPool(1) { runnable ->
 }
 
 suspend fun delay(time: Long, unit: TimeUnit = TimeUnit.MILLISECONDS) =
-    suspendCancellableCoroutine<Unit> { continuation ->
-        log("调用delay")
+    delaySuspendCancellableCoroutine<Unit> { continuation ->
+        log("执行到真正的block,continuation=$continuation")
         val future = executor.schedule(
             {
-                log("delay代码执行")
+                log("delay代码执行,回调resume,continuation=$continuation-------------")
                 continuation.resume(Unit)
             }, time, unit
         )
-//            这里给delay任务增加取消回调
+//            这里给delay任务增加取消回调,因为abstract用的是状态，当他是取消状态，这里会回调
         continuation.invokeOnCancelListener {
-            log("Delay 取消执行future.cancel")
+            log("delay执行future.cancel,取消任务")
             future.cancel(true)
         }
     }

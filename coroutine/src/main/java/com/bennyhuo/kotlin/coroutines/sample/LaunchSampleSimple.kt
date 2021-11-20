@@ -34,7 +34,6 @@ private suspend fun test20() {
             throw ArithmeticException("Div 0")
         }
         log(3)
-        job2.join()
 //        这里不会被执行，job2执行完抛异常，父协程把自己取消掉了
         log(4)
     }

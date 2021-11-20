@@ -10,12 +10,14 @@ typealias EventTask = () -> Unit
 class BlockingQueueDispatcher: LinkedBlockingDeque<EventTask>(), Dispatcher {
     override fun dispatch(block: () -> Unit) {
 //        offer添加不会抛异常
+        log("BlockingQueueDispatcher dispatch $block")
         offer(block)
     }
 }
 
 class BlockingCoroutine<T>(context: CoroutineContext, private val eventQueue: LinkedBlockingDeque<EventTask>)
     : AbstractCoroutine<T>(context){
+//    这里是消费
     fun joinBlocking(): T {
 //        take没有会阻塞
         while(!isCompleted){

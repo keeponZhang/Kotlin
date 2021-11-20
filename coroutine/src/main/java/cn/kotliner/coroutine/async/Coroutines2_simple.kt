@@ -5,7 +5,7 @@ import cn.kotliner.coroutine.async.UiCotinuationWrapper
 import cn.kotliner.coroutine.common.HttpError
 import cn.kotliner.coroutine.common.HttpException
 import cn.kotliner.coroutine.common.HttpService
-import cn.kotliner.coroutine.common.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

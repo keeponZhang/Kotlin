@@ -1,4 +1,4 @@
-package com.bennyhuo.kotlin.coroutines.sample
+package com.bennyhuo.kotlin.coroutines.sampleb
 
 import com.bennyhuo.kotlin.coroutines.delay
 import com.bennyhuo.kotlin.coroutines.launch
@@ -7,6 +7,7 @@ import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.utils.log
 
 fun main() = runBlocking {
+//    这个block会被调用几次
     log(1)
     val job = GlobalScope.launch {
         log(2)

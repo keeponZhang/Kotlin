@@ -1,6 +1,6 @@
 package com.bennyhuo.kotlin.coroutinebasics.api
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call

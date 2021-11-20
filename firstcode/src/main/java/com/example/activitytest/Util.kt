@@ -1,6 +1,6 @@
 package com.example.activitytest
 
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 
 /**
  * @author guolin
