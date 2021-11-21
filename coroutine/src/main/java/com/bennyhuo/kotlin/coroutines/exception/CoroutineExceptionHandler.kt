@@ -8,6 +8,7 @@ interface CoroutineExceptionHandler: CoroutineContext.Element {
 
     fun handleException(context: CoroutineContext, exception: Throwable)
 }
+// handler: (CoroutineContext, Throwable) -> Unit 把单一接口转成函数
 //handler就是一个高阶函数，block回调，CoroutineContext就是回调出来的CoroutineContext
 inline fun CoroutineExceptionHandler(crossinline handler: (CoroutineContext, Throwable) -> Unit):
         CoroutineExceptionHandler =

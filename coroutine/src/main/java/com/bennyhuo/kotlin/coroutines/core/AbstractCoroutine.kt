@@ -6,6 +6,7 @@ import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.OnCancel
 import com.bennyhuo.kotlin.coroutines.OnComplete
 import com.bennyhuo.kotlin.coroutines.cancel.joinSuspendCancellableCoroutine
+import com.bennyhuo.kotlin.coroutines.context.CoroutineName
 import com.bennyhuo.kotlin.coroutines.scope.CoroutineScope
 import com.bennyhuo.kotlin.coroutines.utils.log
 import java.util.concurrent.atomic.AtomicReference
@@ -80,7 +81,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
             is CoroutineState.InComplete -> return joinSuspend()
 //            如果调用我join的这个协程已经取消
             is CoroutineState.Complete<*> -> {
-//                获取到当前协程的coroutineContext（不是this）
+//                获取到当前协程的coroutineContext（不是this）,coroutineContext是全局属性
                 val currentCallingJobState = coroutineContext[Job]?.isActive ?: return
                 log("currentCallingJobState=$currentCallingJobState")
 //一旦为false，一定是被取消了
@@ -182,25 +183,28 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         return when (e) {
             is CancellationException -> false
             else -> {
+//                语法：(parentJob as? AbstractCoroutine<*>)?.handleChildException(e)有可能返回空，
+//                (parentJob as? AbstractCoroutine<*>)?.handleChildException(e)返回true是不会调用handleJobException
 // parentJob as? AbstractCoroutine<*>，这里能直接转的原因是 override val context: CoroutineContext = context
 // + this，这里AbstractCoroutine是个job
 //协同关系可以抛给父协程，主从关系就不能抛给父协程，handleJobException(e)相对于前面返回空了
+//                协同关系handleChildException返回false，表示子协程自己调用handleJobException处理
                 (parentJob as? AbstractCoroutine<*>)?.handleChildException(e)?.takeIf { it }
                         ?: handleJobException(e)
             }
         }
     }
 
-    //    这个如果没有父Job，会调用的
+    //这个如果没有父Job，会调用的，这里默认不处理
     protected open fun handleJobException(e: Throwable): Boolean {
         return false
     }
 
-    //    子类抛异常了，会先抛上去让父协程处理，一般由子协程处理
+    // 子协程抛异常了，会先抛上去让父协程处理，一般由子协程调用
     protected open fun handleChildException(e: Throwable): Boolean {
-//        先把自己取消
+//    先把自己取消
         cancel()
-//    然后问问直接能不能处理
+//    然后问问直接能不能处理，类似一层层往上
         return tryHandleException(e)
     }
 
@@ -252,7 +256,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         parentCancelDisposable?.dispose()
     }
 
-//    override fun toString(): String {
-//        return "${context[CoroutineName]?.name}"
-//    }
+    override fun toString(): String {
+        return "${context[CoroutineName]?.name}"
+    }
 }

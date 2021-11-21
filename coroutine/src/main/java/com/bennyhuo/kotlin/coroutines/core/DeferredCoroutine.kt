@@ -16,7 +16,7 @@ class DeferredCoroutine<T>(context: CoroutineContext) : AbstractCoroutine<T>(con
                 coroutineContext[Job]?.isActive?.takeIf { !it }?.let {
                     throw CancellationException("Coroutine is cancelled.")
                 }
-//                直接强转
+//                直接强转，获取了才给异常
                 (currentState.value as T?) ?: throw currentState.exception!!
             }
         }

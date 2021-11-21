@@ -63,7 +63,7 @@ fun <T> CoroutineScope.async(
 }
 
 fun CoroutineScope.newCoroutineContext(context: CoroutineContext): CoroutineContext {
-//    scopeContext是CoroutineScope里面的（注意这里），CoroutineName用于打印名字
+//    scopeContext是CoroutineScope里面的，父协程的（注意这里），CoroutineName用于打印名字
     val combined =
         scopeContext + context + CoroutineName("@coroutine#${coroutineIndex.getAndIncrement()}")
     return if (combined !== Dispatchers.Default && combined[ContinuationInterceptor] == null)
