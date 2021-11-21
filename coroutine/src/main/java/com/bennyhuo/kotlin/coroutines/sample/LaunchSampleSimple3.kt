@@ -17,6 +17,7 @@ suspend fun main() {
         log("1")
         val result = withContext(Dispatchers.Default) {
             log("LaunchSampleSimple3 准备计算")
+            Thread.sleep(1000)
             5 + 5
         }
         log("LaunchSampleSimple3 继续往下执行2", result)
