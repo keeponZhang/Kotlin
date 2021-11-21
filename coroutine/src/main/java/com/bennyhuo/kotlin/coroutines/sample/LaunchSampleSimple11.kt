@@ -16,7 +16,7 @@ suspend fun main() {
 //        启动的时候能拿到外层的scopeContext
 
         getNetworkData()
-        getNetworkData2()
+        val networkData2 = getNetworkData2()
         launch {
             log("日志4:$scopeContext")
         }
@@ -42,5 +42,6 @@ suspend fun getNetworkData(): Any? {
 }
 
 suspend fun getNetworkData2(): Any? = suspendCoroutine {
+    log("日志5")
     1
 }
