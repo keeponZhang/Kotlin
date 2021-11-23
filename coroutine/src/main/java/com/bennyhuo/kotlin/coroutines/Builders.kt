@@ -35,6 +35,7 @@ fun CoroutineScope.launch01(
 //    val completion = StandardCoroutine(newCoroutineContext(context))
     val completion = StringCoroutine(context)
 //    这里receiver是实现了CoroutineScope的CoroutineContext
+//    这里会执行block代码块里的代码啦
     block.startCoroutine(completion)
     return completion
 }
