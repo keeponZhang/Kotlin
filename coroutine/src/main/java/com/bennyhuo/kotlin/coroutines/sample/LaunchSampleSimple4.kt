@@ -1,11 +1,7 @@
 package com.bennyhuo.kotlin.coroutines.sample
 
-import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.delay
-import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
-import com.bennyhuo.kotlin.coroutines.launch0
-import com.bennyhuo.kotlin.coroutines.launch01
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlinx.coroutines.Dispatchers
@@ -18,26 +14,28 @@ import kotlin.coroutines.suspendCoroutine
 suspend fun main() {
     val job = GlobalScope.launch {
         log("日志1")
-        val result = hello()
-        log("日志2", result)
-        delay(20000)
+        log("日志1.2")
+//        val result = hello4()
+        withContext(Dispatchers.IO) {
+            log("日志1.3")
+        }
+//        这里基本不会执行到
+        log("日志2", "5")
+        delay(2000)
         log("日志3")
     }
     log(job.isActive)
 //    cancel就进入join的状态
-    job.cancel()
-    job.join()
+//    job.cancel()
     log("日志4")
 }
 
-
-
 suspend fun hello4() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待
-    thread(isDaemon = true) {
-        log("LaunchSampleSimple4 hello执行耗时任务")
-        Thread.sleep(1000)
-        log("LaunchSampleSimple4 hello恢复 $it ,这里的会回调到系统的SafeContinuation")
+    thread() {
+        log("LaunchSampleSimple4 日志hello执行耗时任务")
+        Thread.sleep(2000)
+        log("LaunchSampleSimple4 日志hello恢复 $it ,这里的会回调到系统的SafeContinuation")
         it.resume(10086)
     }
 }

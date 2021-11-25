@@ -81,7 +81,7 @@ public actual fun <T> (suspend () -> T).createCoroutineUnintercepted(
     val probeCompletion = probeCoroutineCreated(completion)
     return if (this is BaseContinuationImpl)
         create(probeCompletion)
-    else
+    else //下面 (this as Function1<Continuation<T>, Any?>).invoke(it)是调用返回continution，在调用resume，然后调用block的时候才调用
         createCoroutineFromSuspendFunction(probeCompletion) {
             (this as Function1<Continuation<T>, Any?>).invoke(it)
         }

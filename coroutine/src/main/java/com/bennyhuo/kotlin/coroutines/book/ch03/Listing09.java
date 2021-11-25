@@ -1,4 +1,4 @@
-package com.bennyhuo.kotlin.coroutines.ch03;
+package com.bennyhuo.kotlin.coroutines.book.ch03;
 
 import com.bennyhuo.kotlin.coroutine.ch03.Listing08Kt;
 
