@@ -12,8 +12,8 @@ import kotlin.coroutines.suspendCoroutine
 fun main() {
     runSuspend {
         val continuation = suspend {
-            hello4()
-            log("日志2")
+            val hello4 = hello4()
+            log("日志2 $hello4")
             5
         }.createCoroutine(object : Continuation<Int> {
             override fun resumeWith(result: Result<Int>) {
@@ -30,7 +30,7 @@ fun main() {
 
 suspend fun hello4() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待
-    thread(isDaemon = false) {
+    thread(isDaemon = true) {
         log("LaunchSampleSimple4 日志hello执行耗时任务")
         Thread.sleep(1000)
         log("LaunchSampleSimple4 日志hello恢复 $it ,这里的会回调到系统的SafeContinuation")
