@@ -68,7 +68,8 @@ fun main() {
 //    test2_2()
 //    test2_3()
 //    test3()
-    test3_2()
+//    test3_2()
+    testPlus()
 }
 
 fun test1() {
@@ -166,16 +167,23 @@ fun test3_1() {
 //    log("coroutineContextV21=$coroutineContextV21")
 }
 
-fun test4() {
-    val my3CoroutineName2 = My3CoroutineName("B")
-    val my4CoroutineName3 = My4CoroutineName("C")
-    val my5CoroutineName4 = My5CoroutineName("D")
-    val my5CoroutineName5 = My6CoroutineName("F")
-    val coroutineContextV2 = my3CoroutineName2 + my4CoroutineName3
-//    log("coroutineContextV2=$coroutineContextV2 ")
+//https://blog.csdn.net/xx23x/article/details/107976319
+fun testPlus() {
+    val a = My3CoroutineName("a")
+    val b = My4CoroutineName("b")
+    val interceptor = CoroutineDispatcherV2("interceptor ")
 
-    val coroutineContextV21 = my5CoroutineName4 + my5CoroutineName5
-    val coroutineContextV22 = coroutineContextV2 + coroutineContextV21
-//    log("coroutineContextV21=$coroutineContextV21")
+    val c = My5CoroutineName("c")
+    val d = My6CoroutineName("d")
+    val M = a + b
+    log("testPlus M=$M")
+
+    val N = c + interceptor
+    log("testPlus N=$N")
+
+    val R = d + M
+    log("testPlus R=$R")
+    val Res = N + R
+    log("testPlus Res=$Res")
 }
 //https://blog.csdn.net/qfanmingyiq/article/details/105081080
