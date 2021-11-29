@@ -46,6 +46,8 @@ fun main(args: Array<String>) {
 //        test13()
 //        test14()
 //
+        GlobalScope.launch(Dispatchers.Default) {
+        }
     }
 }
 

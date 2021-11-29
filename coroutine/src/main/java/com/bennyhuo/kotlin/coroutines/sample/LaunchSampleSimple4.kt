@@ -12,7 +12,11 @@ import kotlin.coroutines.suspendCoroutine
 
 //响应取消的是响应调用的协程,启动一个协程需要两个Continuation,一个是完成时用的，一个是返回的
 suspend fun main() {
-    val job = GlobalScope.launch {
+    test3()
+}
+
+fun test3() {
+    val job = GlobalScope.launch(Dispatchers.Main) {
         log("日志1")
         log("日志1.2")
 //        val result = hello4()

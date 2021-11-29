@@ -1,5 +1,6 @@
 package com.bennyhuo.kotlin.coroutine.ch03
 
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.*
 
 class LogInterceptor : ContinuationInterceptor {
@@ -11,6 +12,9 @@ class LogInterceptor : ContinuationInterceptor {
 
 class LogContinuation<T>(private val continuation: Continuation<T>)
     : Continuation<T> by continuation {
+    init {
+        log("init LogContinuation ")
+    }
     override fun resumeWith(result: Result<T>) {
         println("before resumeWith: $result")
         continuation.resumeWith(result)
@@ -27,6 +31,7 @@ fun main() {
 
         override fun resumeWith(result: Result<Int>) {
             result.getOrThrow()
+            log("end")
         }
     })
 }

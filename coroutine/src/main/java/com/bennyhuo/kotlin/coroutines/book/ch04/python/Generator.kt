@@ -85,8 +85,10 @@ interface GeneratorScope<T> {
     suspend fun yield(value: T)
 }
 
+//返回的函数类型有讲究，传入类型T,返回Generator
 fun <T> generator(block: suspend GeneratorScope<T>.(T) -> Unit): (T) -> Generator<T> {
     return { parameter: T ->
+//        block传进去了，要看什么社会化
         GeneratorImpl(block, parameter)
     }
 }

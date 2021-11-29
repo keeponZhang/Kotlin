@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 //响应取消的是响应调用的协程，最一开始的$continuation是编译器传进来的
 //block: suspend ()会生成一个BaseContinuationImpl，调用startCoroutine会调用create生成另一个BaseContinuationImpl，然后调用invokeSuspend
 suspend fun main() {
-//    test1()
+    test1()
 //    log("end main----------")
 //    test11()
 //    test20()
@@ -126,12 +126,22 @@ private suspend fun test22() {
 }
 
 suspend fun world() {
+
     coroutineScope {
 
     }
 }
 
 suspend fun hello() = suspendCoroutine<Int> {
+//    是isDaemon有可能不会等待
+    thread(isDaemon = true) {
+        log("hello执行耗时任务")
+        Thread.sleep(1000)
+        log("hello恢复 $it ,这里的会回调到系统的SafeContinuation")
+        it.resume(10086)
+    }
+}
+suspend fun hello3() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待
     thread(isDaemon = true) {
         log("hello执行耗时任务")

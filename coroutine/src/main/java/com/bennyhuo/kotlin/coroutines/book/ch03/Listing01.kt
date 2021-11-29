@@ -1,12 +1,12 @@
 package com.bennyhuo.kotlin.coroutine.ch03
 
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.createCoroutine
-import kotlin.coroutines.resume
 
 //suspend main 是createCoroutineFromSuspendFunction，里面已经重写了invokeSuspend方法
-fun main() {
+suspend fun main() {
     val continuation = suspend {
 //        delay(5000)
         Thread.sleep(500)
@@ -19,6 +19,7 @@ fun main() {
 
         override val context = EmptyCoroutineContext
     })
-//    delay(5000)
-    println("--------------")
+    log("1")
+    delay(5000)
+    log("2")
 }

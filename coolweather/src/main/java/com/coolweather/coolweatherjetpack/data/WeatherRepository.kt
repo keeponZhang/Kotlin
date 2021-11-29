@@ -3,6 +3,7 @@ package com.coolweather.coolweatherjetpack.data
 import com.coolweather.coolweatherjetpack.data.db.WeatherDao
 import com.coolweather.coolweatherjetpack.data.model.weather.Weather
 import com.coolweather.coolweatherjetpack.data.network.CoolWeatherNetwork
+import com.coolweather.coolweatherjetpack.util.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -29,7 +30,9 @@ class WeatherRepository private constructor(private val weatherDao: WeatherDao, 
     fun getCachedWeather() = weatherDao.getCachedWeatherInfo()!!
 
     private suspend fun requestWeather(weatherId: String) = withContext(Dispatchers.IO) {
+        log("日志3")
         val heWeather = network.fetchWeather(weatherId)
+        log("日志4")
         val weather = heWeather.weather!![0]
         weatherDao.cacheWeatherInfo(weather)
         weather

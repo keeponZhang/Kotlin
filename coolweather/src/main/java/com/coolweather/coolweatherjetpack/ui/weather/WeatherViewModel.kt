@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.coolweather.coolweatherjetpack.CoolWeatherApplication
 import com.coolweather.coolweatherjetpack.data.WeatherRepository
 import com.coolweather.coolweatherjetpack.data.model.weather.Weather
+import com.coolweather.coolweatherjetpack.util.log
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() {
@@ -22,8 +23,10 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
     var weatherId = ""
 
     fun getWeather() {
-        launch ({
+        launch({
+            log("日志1")
             weather.value = repository.getWeather(weatherId)
+            log("日志2")
             weatherInitialized.value = true
         }, {
             Toast.makeText(CoolWeatherApplication.context, it.message, Toast.LENGTH_SHORT).show()
@@ -33,8 +36,10 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
 
     fun refreshWeather() {
         refreshing.value = true
-        launch ({
+        launch({
+            log("日志1")
             weather.value = repository.refreshWeather(weatherId)
+            log("日志2")
             refreshing.value = false
             weatherInitialized.value = true
         }, {
@@ -60,12 +65,12 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
         })
     }
 
-    private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) = viewModelScope.launch {
-        try {
-            block()
-        } catch (e: Throwable) {
-            error(e)
-        }
-    }
-
+    private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
+            viewModelScope.launch {
+                try {
+                    block()
+                } catch (e: Throwable) {
+                    error(e)
+                }
+            }
 }

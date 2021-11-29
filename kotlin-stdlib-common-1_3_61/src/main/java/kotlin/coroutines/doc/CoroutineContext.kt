@@ -11,7 +11,7 @@
 // * Persistent context for the coroutine. It is an indexed set of [Element] instances.
 // * An indexed set is a mix between a set and a map.
 // * Every element in this set has a unique [Key]. https://blog.csdn.net/xx23x/article/details/107976319
-// */
+// */https://blog.csdn.net/c10WTiybQ1Ye3/article/details/114956973
 //@SinceKotlin("1.3")
 //public interface CoroutineContext {
 //    /**
@@ -45,6 +45,11 @@
 //                }
 //            }
 //
+//重要！！！！！！！！！：
+//协程context是个非常fp的、有头(head)有尾(tail)的list，换个比较通俗的词语来讲就是 单 向 链 表。
+//fold就是非常fp的对list进行遍历的函数，就是遍历而已，不会对list进行修改。
+//plus就是用于链接两个list的函数，返回一个新的list，不会对原来的两个list进行修改。
+//但是plus需要保证最终的结果里key不会重复，所以需要使用minusKey来去重。
 
 //它是一个聚集函数，提供了从left到right遍历CoroutineContext中每一个Element的能力，并对每一个Element做operation操作
 //    public fun <R> fold(initial: R, operation: (R, Element) -> R): R
@@ -59,9 +64,17 @@
 //  public override fun <R> fold(initial: R, operation: (R, Element) -> R): R =
 //            operation(initial, this)  (initial其实就是左边+的）
 
+
+//重要！！！！！！！！！！！！！
+//加号运算符将CoroutineContext实例相互结合。它会合并它们所包含的元素，
+//用操作符右边的上下文中的元素覆盖左边的上下文中的元素，很像Map上的行为。
+//[加号运算符]返回一个包含来自这个上下文的元素和其他上下文的元素的上下文。这个上下文中与另一个上下文中Key值相同的元素会被删除。
+//(Dispatchers.Main, “name”) + (Dispatchers.IO) = (Dispatchers.IO, “name”)
+
 //   A+B+C
-//   1.B.fold(A){operation(A,B)} 此时acc=A, element=B，CombinedContext(A, B)
-//   2.CombinedContextAB(A, B)+C    C.fold(CombinedContextAB(A, B)){acc=A.fold(CombinedContextAB, operation)}
+// 1.A+B，右边的那个调用fold方法，此时就是B.fold(A),A就是init，所以acc可以理解成+号左边的CoroutineContext
+//    即B.fold(A){operation(A,B)} 此时acc=A, element=B，CombinedContext(A, B)
+//  2.CombinedContextAB(A, B)+C    C.fold(CombinedContextAB(A, B)){acc=A.fold(CombinedContextAB, operation)}
 //public operator fun plus(context: CoroutineContext): CoroutineContext =
 //    //如果要相加的CoroutineContext为空，那么不做任何处理，直接返回
 //    if (context === EmptyCoroutineContext) this else
@@ -105,7 +118,7 @@
 ///Element的fold方法逻辑：对传入的initial和自己做operation操作
 //        public override fun <R> fold(initial: R, operation: (R, Element) -> R): R =
 //            operation(initial, this)
-////if (this.key == key) EmptyCoroutineContext
+
 
 //  //Element的minusKey方法逻辑：如果key和自己的key匹配，那么自己就是要删除的Element，
 //  返回EmptyCoroutineContext(表示删除了自己)，否则说明自己不需要被删除，返回自己
