@@ -185,5 +185,10 @@ fun testPlus() {
     log("testPlus R=$R")
     val Res = N + R
     log("testPlus Res=$Res")
+
+    val coroutineContextV2 = c + interceptor + d + a + b
+    log("testPlus coroutineContextV2=$coroutineContextV2")
+    val coroutineContextV3 = a + b + c + d + interceptor
+    log("testPlus coroutineContextV3=$coroutineContextV3")
 }
 //https://blog.csdn.net/qfanmingyiq/article/details/105081080
