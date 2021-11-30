@@ -1,6 +1,6 @@
 package com.bennyhuo.kotlin
 
-import android.util.Log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -14,13 +14,22 @@ import kotlinx.coroutines.runBlocking
 /**
  *createBy keepon
  * https://juejin.cn/post/6926695962354122765
+ * https://blog.csdn.net/eclipsexys/article/details/120407669?spm=1001.2014.3001.5501
  */
 fun main(args: Array<String>) = runBlocking<Unit> {
 //    test1()
 
 
 //    test2()
-    testException()
+//    testException()
+    val exceptionHandler =
+            CoroutineExceptionHandler { coroutineContext, throwable ->
+                log("xys", "---${coroutineContext}  ${throwable.printStackTrace()}")
+            }
+    GlobalScope.launch() {
+        throw Exception("test")
+    }
+    log("----------")
 }
 
 suspend fun testException() {

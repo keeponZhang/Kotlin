@@ -1,10 +1,12 @@
 package com.example.retrofittest
 
 import com.bennyhuo.kotlin.coroutines.utils.log
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -15,6 +17,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 import javax.swing.JFrame
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -47,7 +50,10 @@ fun main(args: Array<String>) {
 //        test14()
 //
         GlobalScope.launch(Dispatchers.Default) {
+            withContext(NonCancellable) {
+            }
         }
+
     }
 }
 

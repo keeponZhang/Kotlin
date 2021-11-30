@@ -9,6 +9,9 @@ import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
 import com.bennyhuo.kotlin.coroutines.utils.log
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -22,6 +25,8 @@ suspend fun main() {
 //    test20()
 //    test21()
 //    test22()
+
+
 }
 
 
@@ -141,6 +146,7 @@ suspend fun hello() = suspendCoroutine<Int> {
         it.resume(10086)
     }
 }
+
 suspend fun hello3() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待
     thread(isDaemon = true) {
