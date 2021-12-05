@@ -20,7 +20,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import io.fatih.livedatawithflowsample.R
+import com.zhang.firstcode.R
 
 class SearchCityAdapter(
     var itemList: List<String>

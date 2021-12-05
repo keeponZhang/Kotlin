@@ -25,12 +25,13 @@ import io.fatih.livedatawithflowsample.data.weatherforecast.WeatherForecastRepos
 import io.fatih.livedatawithflowsample.shared.Result
 
 class WeatherForecastOneShotViewModel @ViewModelInject constructor(
-    weatherForecastRepository: WeatherForecastRepository
+        weatherForecastRepository: WeatherForecastRepository
 ) : ViewModel() {
 
     private val _weatherForecast = weatherForecastRepository
-        .fetchWeatherForecast()
-        .asLiveData(viewModelScope.coroutineContext) // Use viewModel scope for auto cancellation
+            .fetchWeatherForecast()
+            .asLiveData(
+                    viewModelScope.coroutineContext) // Use viewModel scope for auto cancellation
 
     val weatherForecast: LiveData<Result<Int>>
         get() = _weatherForecast

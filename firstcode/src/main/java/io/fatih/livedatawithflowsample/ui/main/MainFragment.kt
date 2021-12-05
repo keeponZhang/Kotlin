@@ -35,8 +35,8 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
@@ -51,12 +51,14 @@ class MainFragment : Fragment() {
 
         btnWeatherForecastRealTimeLiveData.setOnClickListener {
             // Weather forecast with using Live data & Flow (data stream)
-            findNavController().navigate(R.id.action_mainFragment_to_weatherForecastDataStreamFragment)
+            findNavController().navigate(
+                    R.id.action_mainFragment_to_weatherForecastDataStreamFragment)
         }
 
         btnWeatherForecastRealTimeFlow.setOnClickListener {
             // Weather forecast with using only Flow (data stream)
-            findNavController().navigate(R.id.action_mainFragment_to_weatherForecastDataStreamFlowFragment)
+            findNavController().navigate(
+                    R.id.action_mainFragment_to_weatherForecastDataStreamFlowFragment)
         }
 
         btnDarkMode.setOnClickListener {

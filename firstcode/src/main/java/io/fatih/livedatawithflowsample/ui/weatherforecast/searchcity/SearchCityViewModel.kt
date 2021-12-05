@@ -26,8 +26,8 @@ import kotlinx.coroutines.flow.map
 
 class SearchCityViewModel @ViewModelInject constructor() : ViewModel() {
     val cityList = listOf(
-        "Los Angeles", "Chicago", "Indianapolis", "Phoenix", "Houston",
-        "Denver", "Las Vegas", "Philadelphia", "Portland", "Seattle"
+            "Los Angeles", "Chicago", "Indianapolis", "Phoenix", "Houston",
+            "Denver", "Las Vegas", "Philadelphia", "Portland", "Seattle"
     )
 
     // Channel to hold the text value inside search box
@@ -37,17 +37,17 @@ class SearchCityViewModel @ViewModelInject constructor() : ViewModel() {
     // whenever there is a update in the channel. This is
     // observed in UI to get filtered result
     val cityFilterFlow: Flow<List<String>> = cityFilterChannel
-        .asFlow()
-        .map {
-            // Filter cities with new value
-            val filteredCities = filterCities(it)
+            .asFlow()
+            .map {
+                // Filter cities with new value
+                val filteredCities = filterCities(it)
 
-            // Do some heavy work
-            delay(500)
+                // Do some heavy work
+                delay(500)
 
-            // Return the filtered list
-            filteredCities
-        }
+                // Return the filtered list
+                filteredCities
+            }
 
     override fun onCleared() {
         super.onCleared()

@@ -24,8 +24,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.zhang.firstcode.R
 import dagger.hilt.android.AndroidEntryPoint
-import io.fatih.livedatawithflowsample.R
 import io.fatih.livedatawithflowsample.shared.Result
 import kotlinx.android.synthetic.main.fragment_weather_forecast_one_shot.*
 
@@ -35,8 +35,8 @@ class WeatherForecastOneShotFragment : Fragment() {
     private val viewModel: WeatherForecastOneShotViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_weather_forecast_one_shot, container, false)
     }
