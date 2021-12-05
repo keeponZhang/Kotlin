@@ -1,7 +1,7 @@
 package com.zhang
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zhang.test.viewmodel.TestViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

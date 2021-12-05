@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun test2() {
         GlobalScope.launch {
-            com.bennyhuo.kotlin.coroutines.utils.log("日志0")
+            log("日志0")
             //   1.开启协程，
 //            testsuspend()
             testsuspend2()

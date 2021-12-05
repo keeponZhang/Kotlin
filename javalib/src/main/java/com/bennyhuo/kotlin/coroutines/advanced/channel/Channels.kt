@@ -30,6 +30,7 @@ suspend fun basics() {
     }
 
     val consumer = GlobalScope.launch {
+//        false表示还能接收
         while (!channel.isClosedForReceive) {
             log("receiving")
             val value = channel.receiveOrNull()

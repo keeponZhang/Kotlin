@@ -21,34 +21,38 @@ data class FileLines(val file: File, val lines: Int) {
 }
 
 suspend fun main() {
-    val result = lineCounter(File("."))
+    val result = lineCounter(
+            File("D:\\test5\\keeponGitgub\\Kotlin1_3\\javalib\\src\\main\\java\\com\\bennyhuo" +
+                    "\\kotlin\\coroutines\\advanced\\callback2suspend"))
     log(result)
 }
 
 suspend fun lineCounter(root: File): HashMap<File, Int> {
-    return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1).asCoroutineDispatcher()
-        .use {
-            withContext(it){
-                val fileChannel  = walkFile(root)
+    return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1)
+            .asCoroutineDispatcher()
+            .use {
+                withContext(it) {
+                    val fileChannel = walkFile(root)
 //相当于并发操作
-                val fileLinesChannels = List(5){
+                    val fileLinesChannels = List(5) {
 //                    把file转为fileLine
-                    fileLineCounter(fileChannel)
-                }
+                        fileLineCounter(fileChannel)
+                    }
 
-                resultAggregator(fileLinesChannels)
+                    resultAggregator(fileLinesChannels)
+                }
             }
-        }
 }
 
 fun CoroutineScope.walkFile(root: File): ReceiveChannel<File> {
     return produce(capacity = Channel.BUFFERED) {
+//        本身是sendChannel
         fileWalker(root)
     }
 }
 
 suspend fun SendChannel<File>.fileWalker(file: File) {
-    if(file.isDirectory){
+    if (file.isDirectory) {
         file.listFiles()?.filter(KotlinFileFilter)?.forEach { fileWalker(it) }
     } else {
         send(file)
@@ -57,7 +61,7 @@ suspend fun SendChannel<File>.fileWalker(file: File) {
 
 fun CoroutineScope.fileLineCounter(input: ReceiveChannel<File>): ReceiveChannel<FileLines> {
     return produce(capacity = Channel.BUFFERED) {
-        for (file in input){
+        for (file in input) {
             file.useLines {
                 send(FileLines(file, it.count()))
             }
@@ -65,25 +69,36 @@ fun CoroutineScope.fileLineCounter(input: ReceiveChannel<File>): ReceiveChannel<
     }
 }
 
-suspend fun CoroutineScope.resultAggregator(channels: List<ReceiveChannel<FileLines>>): HashMap<File, Int> {
+suspend fun CoroutineScope.resultAggregator(
+        channels: List<ReceiveChannel<FileLines>>
+): HashMap<File, Int> {
     val map = HashMap<File, Int>()
+//    因为要演示多路复用，所以上面是故意搞成List的
     channels.aggregate { filteredChannels ->
         select<FileLines?> {
+//            filteredChannels表示最快的那个
             filteredChannels.forEach {
                 it.onReceiveOrNull {
                     log("received: $it")
                     it
                 }
             }
-        } ?.let {
-            log("--------received let---------: $it")
+        }?.let {
+//            log("--------received let---------: $it")
             map[it.file] = it.lines
         }
     }
     return map
 }
 
-tailrec suspend fun List<ReceiveChannel<FileLines>>.aggregate(block: suspend (List<ReceiveChannel<FileLines>>) -> Unit) {
+//因为select是个挂起函数
+tailrec suspend fun List<ReceiveChannel<FileLines>>.aggregate(
+        block: suspend (List<ReceiveChannel<FileLines>>) -> Unit
+) {
     block(this)
-    filter { !it.isClosedForReceive }.takeIf { it.isNotEmpty() }?.aggregate(block)
+//    可能已经处理完了，这里过滤下
+    filter { !it.isClosedForReceive }.takeIf { it.isNotEmpty() }?.apply {
+//        只要有一个通道不为空，这里还会再执行
+        aggregate(block)
+    }
 }

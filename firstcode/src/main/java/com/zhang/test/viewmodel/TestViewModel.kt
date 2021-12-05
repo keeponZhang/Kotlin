@@ -1,4 +1,4 @@
-package com.zhang
+package com.zhang.test.viewmodel
 
 import android.view.View
 import android.widget.AdapterView
