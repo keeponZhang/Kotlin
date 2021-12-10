@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class DataViewModel2(val id: Int) : BaseViewModel() {
 
     val result = liveData {
-        val response = RetrofitClient.getXXX.getXXX(1)
+        val response = RetrofitClient.getXXX(1)
         if (response.isSuccess) {
             emit(response.data.toString())
         }

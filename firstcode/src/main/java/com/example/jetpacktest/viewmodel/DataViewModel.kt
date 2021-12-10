@@ -16,7 +16,7 @@ class DataViewModel(val id: Int) : BaseViewModel() {
 
     fun requestData(dataID: Int): LiveData<String> {
         launchOnMain {
-            val response = RetrofitClient.getXXX.getXXX(1)
+            val response = RetrofitClient.getXXX(1)
             if (response.isSuccess) {
                 resultInternal.value = response.data.toString()
             }

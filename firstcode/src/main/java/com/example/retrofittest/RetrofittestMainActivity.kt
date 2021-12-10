@@ -20,6 +20,7 @@ import retrofit2.Response
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.coroutineContext
 
 class RetrofittestMainActivity : AppCompatActivity() {
 
@@ -59,7 +60,7 @@ class RetrofittestMainActivity : AppCompatActivity() {
                     deferred.completeExceptionally(t)
                 }
             })
-            deferred.await()
+            val await = deferred.await()
 
 //            尽管对于理解上下文的构成很有趣，但这个例子在实践中完全没有用处。我们可以通过将启动的上下文参数保留为默认的空值来获得完全相同的行为。
             val inheritedContext = sequenceOf(

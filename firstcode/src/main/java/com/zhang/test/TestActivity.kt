@@ -2,7 +2,7 @@ package com.zhang.test
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bennyhuo.kotlin.coroutinebasics.utils.log
+import com.bennyhuo.kotlin.coroutines.utils.log
 import com.zhang.firstcode.databinding.ActivityTestBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.GlobalScope

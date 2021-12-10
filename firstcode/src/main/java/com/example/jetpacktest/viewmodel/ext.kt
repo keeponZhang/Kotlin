@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
  * createBy	 keepon
  */
 class ParamViewModelFactory<VM : ViewModel>(
-        private val factory: () -> VM,
+    private val factory: () -> VM
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = factory() as T
 }
 
 inline fun <reified VM : ViewModel> AppCompatActivity.viewModel(
-        noinline factory: () -> VM,
+    noinline factory: () -> VM
 ): Lazy<VM> = viewModels { ParamViewModelFactory(factory) }
 
