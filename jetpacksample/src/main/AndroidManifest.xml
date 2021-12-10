@@ -25,7 +25,9 @@
         <activity
             android:name="com.michael.lifecycleservicedemo.ServiceActivity"
             android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name="com.michael.roomdemo.RoomMainActivity"
+            android:screenOrientation="portrait"></activity>
         <service android:name="com.michael.lifecycleservicedemo.MyService"></service>
     </application>
 

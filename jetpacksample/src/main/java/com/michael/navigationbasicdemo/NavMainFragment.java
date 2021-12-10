@@ -11,7 +11,7 @@ import com.zhang.jetpacksample.R;
 import androidx.navigation.Navigation;
 
 
-public class MainFragment extends Fragment
+public class NavMainFragment extends Fragment
 {
 
     @Override
@@ -23,7 +23,7 @@ public class MainFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_nav_main, container, false);
 
         //方法一
         view.findViewById(R.id.btnToSecondFragment).setOnClickListener(new View.OnClickListener()

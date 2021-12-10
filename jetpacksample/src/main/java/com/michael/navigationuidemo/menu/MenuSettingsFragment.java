@@ -8,8 +8,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.michael.navigationuidemo.R;
-
+import com.zhang.jetpacksample.R;
 
 public class MenuSettingsFragment extends Fragment
 {

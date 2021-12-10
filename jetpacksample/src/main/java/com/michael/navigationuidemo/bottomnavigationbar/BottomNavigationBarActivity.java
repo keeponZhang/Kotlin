@@ -4,10 +4,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.zhang.jetpacksample.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.michael.navigationuidemo.R;
 
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
