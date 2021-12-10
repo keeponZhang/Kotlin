@@ -102,9 +102,8 @@ public fun <R, T> (suspend R.() -> T).createCoroutine(
     SafeContinuation(createCoroutineUnintercepted(receiver, completion).intercepted(), COROUTINE_SUSPENDED)
 
 /**
- * Starts a coroutine without a receiver and with result type [T].
- * This function creates and starts a new, fresh instance of suspendable computation every time it is invoked.
- * The [completion] continuation is invoked when the coroutine completes with a result or an exception.
+ * //重点：createCoroutineUnintercepted需要创建一个Continuation，很可能是继承BaseContinuationImpl，main函数RunSuspend，
+ * //我们launch的是继承ContinuationImpl，实现都在ContinuationImpl
  */
 @SinceKotlin("1.3")
 @Suppress("UNCHECKED_CAST")

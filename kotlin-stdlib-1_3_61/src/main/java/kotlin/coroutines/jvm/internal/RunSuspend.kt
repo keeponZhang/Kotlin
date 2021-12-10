@@ -19,7 +19,7 @@ internal fun runSuspend(block: suspend () -> Unit) {
     block.startCoroutine(run)
     run.await()
 }
-
+//RunSuspend只是充当completion
 private class RunSuspend : Continuation<Unit> {
     override val context: CoroutineContext
         get() = EmptyCoroutineContext
