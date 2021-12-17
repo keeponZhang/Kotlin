@@ -1,6 +1,5 @@
 package com.bennyhuo.kotlin.coroutines.sample
 
-
 import com.bennyhuo.kotlin.coroutines.launch01
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 
@@ -15,9 +14,10 @@ suspend fun main() {
     val job = GlobalScope.launch01 {
         log("我是invokeSuspend")
         log("1")
-        val result = hello2()
-        log("继续往下执行2", result)
-        result.toString()
+        ""
+//        val result = hello2()
+//        log("继续往下执行2", result)
+//        result.toString()
     }
     log(job.isActive)
     job.join()
@@ -25,8 +25,6 @@ suspend fun main() {
     log("end----------")
     log("end----------")
 }
-
-
 
 suspend fun hello2() = suspendCoroutine<Int> {
 //    是isDaemon有可能不会等待

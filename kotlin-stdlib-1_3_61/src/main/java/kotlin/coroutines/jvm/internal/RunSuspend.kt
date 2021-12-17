@@ -16,7 +16,7 @@ import kotlin.coroutines.startCoroutine
 @SinceKotlin("1.3")
 internal fun runSuspend(block: suspend () -> Unit) {
     val run = RunSuspend()
-    block.startCoroutine(run)
+     block.startCoroutine(run)
     run.await()
 }
 //RunSuspend只是充当completion
