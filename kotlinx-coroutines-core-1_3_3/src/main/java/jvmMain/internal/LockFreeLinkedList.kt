@@ -53,7 +53,7 @@ public actual typealias PrepareOp = LockFreeLinkedListNode.PrepareOp
  */
 @Suppress("LeakingThis")
 @InternalCoroutinesApi
-public actual open class LockFreeLinkedListNode {
+public actual open class LockFreeLinkedListNode {//是一个线程安全链表结构。
     private val _next = atomic<Any>(this) // Node | Removed | OpDescriptor
     private val _prev = atomic<Any>(this) // Node | Removed
     private val _removedRef = atomic<Removed?>(null) // lazily cached removed ref to this
@@ -140,7 +140,7 @@ public actual open class LockFreeLinkedListNode {
     public fun <T : Node> describeAddLast(node: T): AddLastDesc<T> = AddLastDesc(this, node)
 
     /**
-     * Adds last item to this list atomically if the [condition] is true.
+     * Adds last item to this list atomically if the [condition] is true.  插入一个节点在当前节点_prev上
      */
     public actual inline fun addLastIf(node: Node, crossinline condition: () -> Boolean): Boolean {
         val condAdd = makeCondAddOp(node, condition)

@@ -161,7 +161,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
      * If final state of the job is [Incomplete], then it is boxed into [IncompleteStateBox]
      * and should be [unboxed][unboxState] before returning to user code.
      */
-    internal val state: Any? get() {
+    internal val state: Any? get() {	//Job内部的状态对象
         _state.loop { state -> // helper loop on state (complete in-progress atomic operations)
             if (state !is OpDescriptor) return state
             state.perform(this)
@@ -169,7 +169,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
     }
 
     /**
-     * @suppress **This is unstable API and it is subject to change.**
+     *  //轮询状态,注意这里是一个内联函数block函数必须显示显示return 才可结束
      */
     private inline fun loopOnState(block: (Any?) -> Unit): Nothing {
         while (true) {
@@ -322,13 +322,13 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
             state.list?.notifyCompletion(cause)
         }
     }
-
+    //假设当前对象是childJob的实例
     private fun notifyCancelling(list: NodeList, cause: Throwable) {
         // first cancel our own children
-        onCancelling(cause)
-        notifyHandlers<JobCancellingNode<*>>(list, cause)
+        onCancelling(cause) //一个空函数可以自己实现
+        notifyHandlers<JobCancellingNode<*>>(list, cause) //这里是一个链表，所有子job和监听job的对象都放在list中； //这里会回掉所有的监听对象
         // then cancel parent
-        cancelParent(cause) // tentative cancellation -- does not matter if there is no parent
+        cancelParent(cause) // tentative cancellation --  // 通知父亲自己被取消
     }
 
     /**
@@ -338,7 +338,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
      * Invariant: never returns `false` for instances of [CancellationException], otherwise such exception
      * may leak to the [CoroutineExceptionHandler].
      */
-    private fun cancelParent(cause: Throwable): Boolean {
+    private fun cancelParent(cause: Throwable): Boolean {//如果取消异常是CancellationException那么一定只能返回true；如果父亲处理器异常也返回true
         // Is scoped coroutine -- don't propagate, will be rethrown
         if (isScopedCoroutine) return true
 
@@ -352,7 +352,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
         if (parent === null || parent === NonDisposableHandle) {
             return isCancellation
         }
-
+        //1通知父亲子job被取消，并告诉原因，父亲可以判断异常，判断自己是否需要取消。;2如果取消原因是CancellationException那么一般父亲不会取消自己
         // Notify parent but don't forget to check cancellation
         return parent.childCancelled(cause) || isCancellation
     }
@@ -446,31 +446,31 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
     @Suppress("OverridingDeprecatedMember")
     public final override fun invokeOnCompletion(handler: CompletionHandler): DisposableHandle =
         invokeOnCompletion(onCancelling = false, invokeImmediately = true, handler = handler)
-
+    //调用重载函数 onCancelling 取消的时候是否回调,invokeImmediately 已经结束的job是否回调
     public final override fun invokeOnCompletion(
         onCancelling: Boolean,
         invokeImmediately: Boolean,
         handler: CompletionHandler
     ): DisposableHandle {
         var nodeCache: JobNode<*>? = null
-        loopOnState { state ->
+        loopOnState { state ->//这里只有return才会返回 ;//JobSupport默认状态state是一个Empty对象，所以我们第一次调用的时候逻辑如下
             when (state) {
-                is Empty -> { // EMPTY_X state -- no completion handlers
-                    if (state.isActive) {
+                is Empty -> { // EMPTY_X state -- no completion handlers //第一次默认为Empty状态
+                    if (state.isActive) {//当前协程是存活的所以是true
                         // try move to SINGLE state
-                        val node = nodeCache ?: makeNode(handler, onCancelling).also { nodeCache = it }
-                        if (_state.compareAndSet(state, node)) return node
+                        val node = nodeCache ?: makeNode(handler, onCancelling).also { nodeCache = it }//创建一个Node 然后把当前状态设置成Node
+                        if (_state.compareAndSet(state, node)) return node  //CAS设置当前状态为新建的Node
                     } else
                         promoteEmptyToNodeList(state) // that way we can add listener for non-active coroutine
                 }
-                is Incomplete -> {
+                is Incomplete -> { //我们可以从第一次创建的节点继承图知道,第一次插入节点继承Incomplete
                     val list = state.list
-                    if (list == null) { // SINGLE/SINGLE+
-                        promoteSingleToNodeList(state as JobNode<*>)
+                    if (list == null) { // SINGLE/SINGLE+ // 我们第一次创建的Node的list必然为空；//此处代码创建了一个list节点作为一个新的状态，它实际没有；
+                        promoteSingleToNodeList(state as JobNode<*>)//包含任务监听器，仅仅是一个哨兵节点或者头节点；//然后把当前状态变为这个list对象，然后把第一次创建Node放入，接着继续循环
                     } else {
                         var rootCause: Throwable? = null
                         var handle: DisposableHandle = NonDisposableHandle
-                        if (onCancelling && state is Finishing) {
+                        if (onCancelling && state is Finishing) { //当前协程已经结束,这里我们为false
                             synchronized(state) {
                                 // check if we are installing cancellation handler on job that is being cancelled
                                 rootCause = state.rootCause // != null if cancelling job
@@ -487,11 +487,11 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
                                 }
                             }
                         }
-                        if (rootCause != null) {
+                        if (rootCause != null) {//异常取消原因当然这里rootCause==null
                             // Note: attachChild uses invokeImmediately, so it gets invoked when adding to cancelled job
                             if (invokeImmediately) handler.invokeIt(rootCause)
                             return handle
-                        } else {
+                        } else { //最终走到这里，此时状态是一个list对象，我们把当前状态;//这里我们创建一个节点放入list链表中
                             val node = nodeCache ?: makeNode(handler, onCancelling).also { nodeCache = it }
                             if (addLastAtomic(state, list, node)) return node
                         }
@@ -500,20 +500,20 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
                 else -> { // is complete
                     // :KLUDGE: We have to invoke a handler in platform-specific way via `invokeIt` extension,
                     // because we play type tricks on Kotlin/JS and handler is not necessarily a function there
-                    if (invokeImmediately) handler.invokeIt((state as? CompletedExceptionally)?.cause)
+                    if (invokeImmediately) handler.invokeIt((state as? CompletedExceptionally)?.cause) //协程完成的时候会走到这里 ,当然我们目前不会走到这
                     return NonDisposableHandle
                 }
             }
         }
     }
-
+//    下列函数用于创建一个监听节点，第一个参数的是回调函数，第二个参数是判断是否监听取消事件
     private fun makeNode(handler: CompletionHandler, onCancelling: Boolean): JobNode<*> {
         return if (onCancelling)
             (handler as? JobCancellingNode<*>)?.also { assert { it.job === this } }
                 ?: InvokeOnCancelling(this, handler)
         else
             (handler as? JobNode<*>)?.also { assert { it.job === this && it !is JobCancellingNode } }
-                ?: InvokeOnCompletion(this, handler)
+                ?: InvokeOnCompletion(this, handler) //这里我们只监听完成的所以创建InvokeOnCompletion
     }
 
     private fun addLastAtomic(expect: Any, list: NodeList, node: JobNode<*>) =
@@ -525,14 +525,14 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
         val update = if (state.isActive) list else InactiveNodeList(list)
         _state.compareAndSet(state, update)
     }
-
+    //参数state 就是我们第一次创建的对象
     private fun promoteSingleToNodeList(state: JobNode<*>) {
-        // try to promote it to list (SINGLE+ state)
+        // //创建一个List对象，并且这个state将state的next和prev字段设置为List;注意List也是一个Node对象，也有next和prev字段。此时新建list的；next和prev的设置为当前state。也就是形成了一个循环双向列表
         state.addOneIfEmpty(NodeList())
         // it must be in SINGLE+ state or state has changed (node could have need removed from state)
         val list = state.nextNode // either our NodeList or somebody else won the race, updated state
         // just attempt converting it to list if state is still the same, then we'll continue lock-free loop
-        _state.compareAndSet(state, list)
+        _state.compareAndSet(state, list) //讲当前的对象状态设置为创建的List对象（本质也是个Node）
     }
 
     public final override suspend fun join() {
@@ -643,8 +643,8 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
      * may leak to the [CoroutineExceptionHandler].
      */
     public open fun childCancelled(cause: Throwable): Boolean {
-        if (cause is CancellationException) return true
-        return cancelImpl(cause) && handlesException
+        if (cause is CancellationException) return true //如果子job取消原因是CancellationException 那么父job不处理
+        return cancelImpl(cause) && handlesException   //如果是其他异常比如除0异常那么会调用自己cancelImpl把自己取消掉，于是内部又会调用到自己notifyCancelling函数
     }
 
     /**
@@ -740,7 +740,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
                         // take cause for notification if was not in cancelling state before
                         state.rootCause.takeIf { !wasCancelling }
                     }
-                    notifyRootCause?.let { notifyCancelling(state.list, it) }
+                    notifyRootCause?.let { notifyCancelling(state.list, it) }//于是内部又会调用到自己notifyCancelling函数
                     return COMPLETING_ALREADY
                 }
                 is Incomplete -> {
@@ -1350,10 +1350,10 @@ internal abstract class JobNode<out J : Job>(
     override val list: NodeList? get() = null
     override fun dispose() = (job as JobSupport).removeNode(this)
 }
-
+//我们发现它与第一次创建的Node区别在于他不在实现Job,第二个list属于不在为空。
 internal class NodeList : LockFreeLinkedListHead(), Incomplete {
     override val isActive: Boolean get() = true
-    override val list: NodeList get() = this
+    override val list: NodeList get() = this//注意这个对象list默认部位空
 
     fun getString(state: String) = buildString {
         append("List{")

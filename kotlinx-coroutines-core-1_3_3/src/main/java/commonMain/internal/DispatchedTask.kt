@@ -30,7 +30,7 @@ internal abstract class DispatchedTask<in T>(
 
     internal fun getExceptionalResult(state: Any?): Throwable? =
         (state as? CompletedExceptionally)?.cause
-
+    //调用dispatcher.dispatch(context, this) 最终会在在某个线程中回调下面的run方法
     public final override fun run() {
         val taskContext = this.taskContext
         var fatalException: Throwable? = null
@@ -53,7 +53,7 @@ internal abstract class DispatchedTask<in T>(
                     continuation.resumeWithStackTrace(cause)
                 } else {
                     if (exception != null) continuation.resumeWithException(exception)
-                    else continuation.resume(getSuccessfulResult(state))
+                    else continuation.resume(getSuccessfulResult(state))  //看这 ，回调原始的Continuation对象，完成线程切换
                 }
             }
         } catch (e: Throwable) {

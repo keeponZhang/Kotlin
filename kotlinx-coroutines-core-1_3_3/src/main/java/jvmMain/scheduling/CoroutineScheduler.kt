@@ -380,7 +380,7 @@ internal class CoroutineScheduler(
         val task = createTask(block, taskContext)
         // try to submit the task to the local queue and act depending on the result
         val notAdded = submitToLocalQueue(task, fair)
-        if (notAdded != null) {
+        if (notAdded != null) {//把Task放入CoroutineScheduler的队列中
             if (!addToGlobalQueue(notAdded)) {
                 // Global queue is closed in the last step of close/shutdown -- no more tasks should be accepted
                 throw RejectedExecutionException("$schedulerName was terminated")
@@ -389,7 +389,7 @@ internal class CoroutineScheduler(
         // Checking 'task' instead of 'notAdded' is completely okay
         if (task.mode == TaskMode.NON_BLOCKING) {
             signalCpuWork()
-        } else {
+        } else {   // 然后唤醒或者创建一个线程运行Task的run函数
             signalBlockingWork()
         }
     }
@@ -407,8 +407,8 @@ internal class CoroutineScheduler(
     private fun signalBlockingWork() {
         // Use state snapshot to avoid thread overprovision
         val stateSnapshot = incrementBlockingTasks()
-        if (tryUnpark()) return
-        if (tryCreateWorker(stateSnapshot)) return
+        if (tryUnpark()) return//由于此时CoroutineScheduler并没有一个Thread所以此处不会唤醒线程所以返回false
+        if (tryCreateWorker(stateSnapshot)) return //创建一个thread去执行task
         tryUnpark() // Try unpark again in case there was race between permit release and parking
     }
 
@@ -427,10 +427,10 @@ internal class CoroutineScheduler(
          * and create one more if we have not enough of them.
          */
         if (cpuWorkers < corePoolSize) {
-            val newCpuWorkers = createNewWorker()
+            val newCpuWorkers = createNewWorker() //创建一个线程
             // If we've created the first cpu worker and corePoolSize > 1 then create
             // one more (second) cpu worker, so that stealing between them is operational
-            if (newCpuWorkers == 1 && corePoolSize > 1) createNewWorker()
+            if (newCpuWorkers == 1 && corePoolSize > 1) createNewWorker()//在创建一个，用于任务窃取，可以类比forkjoin，反正可以简单理解就是一个优化机制，提高效率所以多创建一个线程
             if (newCpuWorkers > 0) return true
         }
         return false
@@ -469,10 +469,10 @@ internal class CoroutineScheduler(
              * 2) Make it observable by increment created workers count
              * 3) Only then start the worker, otherwise it may miss its own creation
              */
-            val worker = Worker(newIndex)
+            val worker = Worker(newIndex)//创建一个Thread
             workers[newIndex] = worker
             require(newIndex == incrementCreatedWorkers())
-            worker.start()
+            worker.start() //启动线程
             return cpuWorkers + 1
         }
     }
@@ -566,10 +566,10 @@ internal class CoroutineScheduler(
             unTrackTask()
         }
     }
-
+    //注意是一个internal修饰的内部类，主要作用是用来获取globalCpuQueue和globalBlockingQueue队列任务，然后执行
     internal inner class Worker private constructor() : Thread() {
         init {
-            isDaemon = true
+            isDaemon = true//必然是个守护进程
         }
 
         // guarded by scheduler lock, index in workers array, 0 when not in array (terminated)
@@ -651,19 +651,19 @@ internal class CoroutineScheduler(
             if (previousState != newState) state = newState
             return hadCpu
         }
-
+        //转到runWorker()
         override fun run() = runWorker()
         @JvmField
         var mayHaveLocalTasks = false
 
-        private fun runWorker() {
+        private fun runWorker() {//一个while自旋转
             var rescanned = false
             while (!isTerminated && state != WorkerState.TERMINATED) {
-                val task = findTask(mayHaveLocalTasks)
+                val task = findTask(mayHaveLocalTasks)            	//取出CoroutineScheduler的globalCpuQueue和globalBlockingQueue任务
                 // Task found. Execute and repeat
                 if (task != null) {
                     rescanned = false
-                    minDelayUntilStealableTaskNs = 0L
+                    minDelayUntilStealableTaskNs = 0L//队列不为空那么取出task运行，task就是DispatchedContinuation对象；//这里会回调DispatchedContinuation的run方法。这里进步跟进去了
                     executeTask(task)
                     continue
                 } else {
@@ -696,7 +696,7 @@ internal class CoroutineScheduler(
                  * 2) Or no tasks available, time to park and, potentially, shut down the thread.
                  * Add itself to the stack of parked workers, re-scans all the queues
                  * to avoid missing wake-up (requestCpuWorker) and either starts executing discovered tasks or parks itself awaiting for new tasks.
-                 */
+                 *///休眠线城市内部采用LockSupport.park()休眠，在外部也会在适当时候，LockSupport.unPark()唤醒线程
                 tryPark()
             }
             tryReleaseCpu(WorkerState.TERMINATED)

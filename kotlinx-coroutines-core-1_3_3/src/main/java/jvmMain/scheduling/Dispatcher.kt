@@ -80,7 +80,7 @@ open class ExperimentalCoroutineDispatcher(
      * Creates a coroutine execution context with limited parallelism to execute tasks which may potentially block.
      * Resulting [CoroutineDispatcher] doesn't own any resources (its threads) and provides a view of the original [ExperimentalCoroutineDispatcher],
      * giving it additional hints to adjust its behaviour.
-     *
+     *	//创建一个CoroutineDispatcher,请注意this对象是DefaultScheduler
      * @param parallelism parallelism level, indicating how many threads can execute tasks in the resulting dispatcher parallel.
      */
     public fun blocking(parallelism: Int = BLOCKING_DEFAULT_PARALLELISM): CoroutineDispatcher {
@@ -102,7 +102,7 @@ open class ExperimentalCoroutineDispatcher(
     }
 
     internal fun dispatchWithContext(block: Runnable, context: TaskContext, fair: Boolean) {
-        try {
+        try {//CoroutineScheduler 线程池管理对象
             coroutineScheduler.dispatch(block, context, fair)
         } catch (e: RejectedExecutionException) {
             // Context shouldn't be lost here to properly invoke before/after task
@@ -152,13 +152,13 @@ private class LimitingDispatcher(
         while (true) {
             // Commit in-flight tasks slot
             val inFlight = inFlightTasks.incrementAndGet()
-
+            //判断当前运行的task数量，如果小于数量，直接放入线程池队列中
             // Fast path, if parallelism limit is not reached, dispatch task and return
-            if (inFlight <= parallelism) {
+            if (inFlight <= parallelism) {//这里dispatcher就是DefaultScheduler对象
                 dispatcher.dispatchWithContext(taskToSchedule, this, fair)
                 return
             }
-
+// 放入阻塞队列中等候下次取出
             // Parallelism limit is reached, add task to the queue
             queue.add(taskToSchedule)
 
