@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.zhang.jetpacksample.R;
+import com.zhang.jetpacksample.databinding.ActivityEventHandleBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -19,7 +20,8 @@ public class EventHandleActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        ActivityEventHandleBinding activityEventHandleBinding = DataBindingUtil.setContentView(this, R.layout.activity_event_handle);
+        ActivityEventHandleBinding
+                activityEventHandleBinding = DataBindingUtil.setContentView(this, R.layout.activity_event_handle);
         activityEventHandleBinding.setEventHandler(new EventHandleListener(this));
     }
 

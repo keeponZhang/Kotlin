@@ -1,4 +1,4 @@
-package com.michael.safeargsdemo;
+package com.michael.navSafeargsdemo;
 
 import android.os.Bundle;
 
@@ -13,6 +13,6 @@ public class SafeargsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_nav_safeargs_main);
     }
 }

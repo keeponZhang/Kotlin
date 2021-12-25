@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.michael.pagingitemkeyeddatasource.R;
 import com.michael.pagingitemkeyeddatasource.model.User;
 import com.squareup.picasso.Picasso;
+import com.zhang.jetpacksample.R;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;

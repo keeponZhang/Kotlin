@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorAccent"
+    android:layout_height="50dp"
+    android:drawablePadding="9dp"
+    android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:textColor="#010B16"
+    android:textSize="16sp"
+    tools:text="个人信息" />

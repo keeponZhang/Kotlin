@@ -2,6 +2,8 @@ package com.michael.databindingdemo.twowaybinding;
 
 import android.util.Log;
 
+import com.zhang.jetpacksample.BR;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -31,7 +33,7 @@ public class TwoWayBindingViewModel extends BaseObservable
         {
             loginModel.userName = userName;
             //TODO 可以在此处理一些相关业务逻辑，例如，保存userName等。
-            notifyPropertyChanged(com.michael.databindingdemo.BR.userName);
+            notifyPropertyChanged(BR.userName);
         }
     }
 
@@ -57,7 +59,7 @@ public class TwoWayBindingViewModel extends BaseObservable
         if (loginModel.rememberMe != checked)
         {
             loginModel.rememberMe = checked;
-            notifyPropertyChanged(com.michael.databindingdemo.BR.rememberMe);
+            notifyPropertyChanged(BR.rememberMe);
         }
     }
 }

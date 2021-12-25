@@ -3,9 +3,9 @@ package com.michael.databindingdemo.recyclerview;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.michael.databindingdemo.R;
-import com.michael.databindingdemo.databinding.LayoutItemBinding;
 import com.michael.databindingdemo.model.Book;
+import com.zhang.jetpacksample.R;
+import com.zhang.jetpacksample.databinding.LayoutItemBinding;
 
 import java.util.List;
 

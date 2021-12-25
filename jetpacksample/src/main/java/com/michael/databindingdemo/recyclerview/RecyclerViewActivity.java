@@ -3,6 +3,7 @@ package com.michael.databindingdemo.recyclerview;
 import android.os.Bundle;
 
 import com.zhang.jetpacksample.R;
+import com.zhang.jetpacksample.databinding.ActivityRecyclerviewBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,7 +15,8 @@ public class RecyclerViewActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        ActivityRecyclerviewBinding activityRecyclerviewBinding = DataBindingUtil.setContentView(this, R.layout.activity_recyclerview);
+        ActivityRecyclerviewBinding
+                activityRecyclerviewBinding = DataBindingUtil.setContentView(this, R.layout.activity_recyclerview);
         activityRecyclerviewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         activityRecyclerviewBinding.recyclerView.setHasFixedSize(true);
 

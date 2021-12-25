@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.michael.roomprepopulate.database.Student;
+import com.zhang.jetpacksample.R;
 
 import java.util.List;
 

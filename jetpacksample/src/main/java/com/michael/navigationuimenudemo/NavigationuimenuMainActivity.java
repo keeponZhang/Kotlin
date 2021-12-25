@@ -16,7 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity
+public class NavigationuimenuMainActivity extends AppCompatActivity
 {
     private AppBarConfiguration appBarConfiguration;
     private NavController navController;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_nav_uimenu_main);
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener()
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments)
             {
-                Toast.makeText(MainActivity.this, "onDestinationChanged() called", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NavigationuimenuMainActivity.this, "onDestinationChanged() called", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_nav_settings, menu);
         return true;
     }
 

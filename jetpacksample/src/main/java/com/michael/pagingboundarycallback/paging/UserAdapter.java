@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.michael.pagingboundarycallback.R;
 import com.michael.pagingboundarycallback.model.User;
 import com.squareup.picasso.Picasso;
+import com.zhang.jetpacksample.R;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.zhang.jetpacksample.R;
+import com.zhang.jetpacksample.databinding.ActivityBindingAdapterBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;

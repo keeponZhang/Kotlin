@@ -10,6 +10,7 @@ import com.michael.databindingdemo.includelayout.IncludeLayoutActivity;
 import com.michael.databindingdemo.recyclerview.RecyclerViewActivity;
 import com.michael.databindingdemo.smipletextview.SimpleTextViewActivity;
 import com.michael.databindingdemo.twowaybinding.TwoWayBindingActivity;
+import com.zhang.jetpacksample.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +21,7 @@ public class DataBindingMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_databinding_main);
     }
 
     public void simpleTextViewButtonClicked(View view)

@@ -20,7 +20,13 @@
         android:layout_below="@+id/tvTitle"
         android:textAllCaps="false"
         android:text="to SecondFragment"/>
-
+    <Button
+        android:id="@+id/btnToSecondFragment2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnToSecondFragment"
+        android:textAllCaps="false"
+        android:text="to SecondFragment2"/>
 </RelativeLayout>
 
 

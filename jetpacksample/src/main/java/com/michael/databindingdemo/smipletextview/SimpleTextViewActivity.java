@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.michael.databindingdemo.model.Book;
 import com.zhang.jetpacksample.R;
+import com.zhang.jetpacksample.databinding.ActivitySimpleTextViewBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -17,7 +18,8 @@ public class SimpleTextViewActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        ActivitySimpleTextViewBinding activitySimpleTextViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_simple_text_view);
+        ActivitySimpleTextViewBinding
+                activitySimpleTextViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_simple_text_view);
 
         Book book = new Book("Android高性能编程", "叶坤");
         book.rating = 5;

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.michael.pagingpositionaldatasource.model.Movie;
 import com.michael.pagingpositionaldatasource.paging.MovieAdapter;
 import com.michael.pagingpositionaldatasource.paging.MovieViewModel;
+import com.zhang.jetpacksample.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;

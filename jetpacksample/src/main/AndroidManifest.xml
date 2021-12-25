@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".JetpackMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +27,26 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.michael.roomdemo.RoomMainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <service android:name="com.michael.lifecycleservicedemo.MyService"></service>
+        <activity
+            android:name="com.michael.navigationbasicdemo.NavBasicMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navSafeargsdemo.SafeargsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navigationuimenudemo.NavigationuimenuMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navigationuidemo.bottomnavigationbar.BottomNavigationBarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navigationuidemo.drawerlayout.DrawerLayoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navigationuidemo.NavigationuidemoMainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -3,8 +3,8 @@ package com.michael.mvvmgithub.bindingadapter;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.michael.mvvmgithub.R;
 import com.squareup.picasso.Picasso;
+import com.zhang.jetpacksample.R;
 
 import androidx.databinding.BindingAdapter;
 

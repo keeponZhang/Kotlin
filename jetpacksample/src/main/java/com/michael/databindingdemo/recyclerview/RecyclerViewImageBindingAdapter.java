@@ -4,8 +4,8 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.michael.databindingdemo.R;
 import com.squareup.picasso.Picasso;
+import com.zhang.jetpacksample.R;
 
 import androidx.databinding.BindingAdapter;
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.michael.pagingboundarycallback.model.User;
 import com.michael.pagingboundarycallback.paging.UserAdapter;
 import com.michael.pagingboundarycallback.paging.UserViewModel;
+import com.zhang.jetpacksample.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
