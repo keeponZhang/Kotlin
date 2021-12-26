@@ -16,19 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.michael.deeplinkdemo.DeepLinkActivity"
-            android:screenOrientation="portrait"></activity>
+
         <activity
             android:name="com.michael.lifecycledemo.LifeCycleActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.michael.lifecycleservicedemo.ServiceActivity"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.michael.roomdemo.RoomMainActivity"
-            android:screenOrientation="portrait" />
+
+
         <service android:name="com.michael.lifecycleservicedemo.MyService"></service>
+
         <activity
             android:name="com.michael.navigationbasicdemo.NavBasicMainActivity"
             android:screenOrientation="portrait" />
@@ -46,6 +44,28 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.michael.navigationuidemo.NavigationuidemoMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.navDeeplinkdemo.DeepLinkActivity"
+            android:screenOrientation="portrait"> <!-- 为Activity设置<nav-graph/>标签 -->
+            <nav-graph android:value="@navigation/graph_deep_link_activity" />
+            <intent-filter>
+<!--                <action android:name="android.intent.action.VIEW" />-->
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.michael.roomdemo.RoomMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.roomwithlivedataandviewmodel.RoomWithLiveDataMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.roommigrationdemo.RoomMigrationMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.michael.roomprepopulate.RoomPrepopulateMainActivity"
             android:screenOrientation="portrait" />
     </application>
 

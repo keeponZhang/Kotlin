@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/deepLinkMainFragment"
-        android:name="com.michael.deeplinkdemo.DeepLinkMainFragment"
+        android:name="com.michael.navDeeplinkdemo.DeepLinkMainFragment"
         android:label="fragment_deep_link_main"
         tools:layout="@layout/fragment_deep_link_main">
 
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/deepLinkSettingsFragment"
-        android:name="com.michael.deeplinkdemo.DeepLinkSettingsFragment"
+        android:name="com.michael.navDeeplinkdemo.DeepLinkSettingsFragment"
         android:label="fragment_deep_link_settings"
         tools:layout="@layout/fragment_deep_link_settings">
 

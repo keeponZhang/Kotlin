@@ -1,4 +1,4 @@
-package com.michael.deeplinkdemo;
+package com.michael.navDeeplinkdemo;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
