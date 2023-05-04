@@ -1,4 +1,4 @@
-package cn.kotliner.coroutine.ui.Mainkt2_1.kt
+package cn.kotliner.coroutine.ui.mainkt2
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦不切换线程异步2_1
 import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation

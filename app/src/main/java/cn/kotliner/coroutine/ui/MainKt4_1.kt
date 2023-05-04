@@ -1,4 +1,4 @@
-package cn.kotliner.coroutine.ui
+package cn.kotliner.coroutine.ui.mainkt4
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦4_
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始耗时操作了4
@@ -7,11 +7,10 @@ import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用Co
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
 import kotlin.coroutines.experimental.ContinuationInterceptor
-
+import cn.kotliner.coroutine.ui.MainWindow
 /**
  * Created by benny on 5/20/17.
  */
-const val LOGO_URL = "http://www.imooc.com/static/img/index/logo.png?t=1.1"
 
 fun main(args: Array<String>) {
     val frame = MainWindow()

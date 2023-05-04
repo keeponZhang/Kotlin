@@ -1,4 +1,4 @@
-package cn.kotliner.coroutine.ui
+package cn.kotliner.coroutine.ui.mainkt4
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦4_
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始耗时操作了4
@@ -6,6 +6,8 @@ import cn.kotliner.coroutine.async.DownloadContext
 import cn.kotliner.coroutine.async.我要开始协程啦自定义Context使用ContextContinuation_4_1
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
+import cn.kotliner.coroutine.ui.MainWindow
+import cn.kotliner.coroutine.ui.LOGO_URL
 
 /**
  * Created by benny on 5/20/17.

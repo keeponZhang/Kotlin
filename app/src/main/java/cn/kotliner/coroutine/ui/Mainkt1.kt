@@ -1,4 +1,4 @@
-package cn.kotliner.coroutine.ui.Mainkt1.kt
+package cn.kotliner.coroutine.ui.mainkt1
 
 import cn.kotliner.coroutine.common.HttpError
 import cn.kotliner.coroutine.common.HttpException
@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities
 
 /**
  * createBy	keepon
+ * <option name="delegatedBuild" value="false"/>
  */
 fun main(args: Array<String>) {
     val frame = MainWindow()

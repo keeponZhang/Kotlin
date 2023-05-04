@@ -1,9 +1,11 @@
-package cn.kotliner.coroutine.ui
+package cn.kotliner.coroutine.ui.mainkt3
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦3
 import cn.kotliner.coroutine.async.我要开始协程啦OnlyAsyncContext3_
 import cn.kotliner.coroutine.common.log
 import javax.swing.JFrame.EXIT_ON_CLOSE
+import cn.kotliner.coroutine.ui.MainWindow
+import cn.kotliner.coroutine.ui.LOGO_URL
 
 /**
  * Created by benny on 5/20/17.
