@@ -2,10 +2,17 @@ package cn.kotliner.coroutine.ui.mainkt2
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦不切换线程异步2_1
 import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation
+import cn.kotliner.coroutine.common.HttpException
+import cn.kotliner.coroutine.common.HttpService
 import cn.kotliner.coroutine.common.log
 import cn.kotliner.coroutine.ui.LOGO_URL
 import cn.kotliner.coroutine.ui.MainWindow
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.swing.JFrame
+import kotlin.coroutines.experimental.suspendCoroutine
 
 /**
  * createBy	keepon
@@ -49,7 +56,7 @@ fun main(args: Array<String>) {
             test2()
             testsuspend()
             try {
-                val imageData = 我要开始加载图片啦不切换线程异步2_1(LOGO_URL)
+                val imageData = getPicSyn(LOGO_URL)
                 log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
                 frame.setLogo(imageData)
             } catch (e: Exception) {
@@ -69,4 +76,34 @@ fun test2() {
     println("test2")
 }
 
+
+suspend fun getPicSyn(url: String) = suspendCoroutine<ByteArray> { continuation ->
+    log("耗时操作，下载图片原始0" + continuation)
+
+    try {
+        //这里是用的同步方法
+        HttpService.service.getLogo(url).enqueue(object : Callback<ResponseBody> {
+
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                log("返回结果onFailure")
+            }
+
+            override fun onResponse(
+                call: Call<ResponseBody>?, response: Response<ResponseBody>?
+            ) {
+                log("返回结果")
+                if (response != null) {
+                    if (response.isSuccessful) {
+                        //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
+                        response.body()?.byteStream()?.readBytes()?.let(continuation::resume)
+                    } else {
+                        continuation.resumeWithException(HttpException(response.code()))
+                    }
+                }
+            }
+        })
+    } catch (e: Exception) {
+        continuation.resumeWithException(e)
+    }
+}
 
