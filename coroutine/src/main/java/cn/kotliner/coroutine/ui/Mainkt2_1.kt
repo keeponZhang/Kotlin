@@ -2,9 +2,10 @@ package cn.kotliner.coroutine.ui.Mainkt2.kt
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦不切换线程异步2_1
 import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation
-import com.bennyhuo.kotlin.coroutines.utils.log
 import cn.kotliner.coroutine.ui.LOGO_URL
 import cn.kotliner.coroutine.ui.MainWindow
+import com.bennyhuo.kotlin.coroutine.ch03.delay
+import com.bennyhuo.kotlin.coroutines.utils.log
 import javax.swing.JFrame
 
 /**
@@ -68,5 +69,12 @@ suspend fun testsuspend() {
 fun test2() {
     println("test2")
 }
+suspend fun test3() {
+    delay(1)
+    println("suspend test3")
+}
 
+suspend fun test4() {
+    delay(1)
+}
 

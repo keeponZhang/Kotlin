@@ -2,6 +2,8 @@ package cn.kotliner.coroutine.async
 
 import cn.kotliner.coroutine.basic.BaseContinuation
 import cn.kotliner.coroutine.ui.LOGO_URL
+import com.bennyhuo.kotlin.coroutines.launch
+import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -76,9 +78,9 @@ fun 我要开始协程啦TwoAsyncContext3_3(
 
 fun main(args: Array<String>) {
     //没有这个
-//    GlobalScope.launch {
-//        println("codesrun in coroutine scope")
-//
-//    }
+    GlobalScope.launch {
+        println("codesrun in coroutine scope")
+
+    }
 }
 
