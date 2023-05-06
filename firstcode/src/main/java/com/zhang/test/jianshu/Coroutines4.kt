@@ -22,5 +22,12 @@ suspend fun postItem4(item: Item) {
     }
     launch.join()
 }
+fun main() {
+    GlobalScope.launch {
+        async {
+            requestToken()
+        }.await()
+    }
+}
 
 

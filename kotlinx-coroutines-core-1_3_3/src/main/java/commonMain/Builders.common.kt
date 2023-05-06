@@ -250,7 +250,7 @@ private class DispatchedCoroutine<in T>(
 
     override fun afterResume(state: Any?) {
         if (tryResume()) return // completed before getResult invocation -- bail out
-        // Resume in a cancellable way because we have to switch back to the original dispatcher
+        // Resume in a cancellable way because we have to switch back to the original dispatcher,这里又会切一次线程
         uCont.intercepted().resumeCancellableWith(recoverResult(state, uCont))
     }
 

@@ -10,7 +10,7 @@ interface Dispatcher {
     fun dispatch(block: () -> Unit)
 }
 
-//DispatcherContext需要传入一个Dispatcher
+//DispatcherContext需要传入一个Dispatcher,interceptContinuation的continuation是BaseContinuationImpl
 open class DispatcherContext(private val dispatcher: Dispatcher) : AbstractCoroutineContextElement(
         ContinuationInterceptor
 ), ContinuationInterceptor {
@@ -18,7 +18,7 @@ open class DispatcherContext(private val dispatcher: Dispatcher) : AbstractCorou
             DispatchedContinuation(continuation, dispatcher)
 }
 
-//持有Continuation和Dispatcher，回调的时候用dispatcher切换
+//持有Continuation和Dispatcher，回调的时候用dispatcher切换，delegate是BaseContinuationImpl
 private class DispatchedContinuation<T>(val delegate: Continuation<T>, val dispatcher: Dispatcher) :
         Continuation<T> {
     override val context = delegate.context

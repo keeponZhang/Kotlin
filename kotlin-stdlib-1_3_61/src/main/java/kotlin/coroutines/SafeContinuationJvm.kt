@@ -32,7 +32,7 @@ internal actual constructor(
             SafeContinuation::class.java, Any::class.java as Class<Any?>, "result"
         )
     }
-
+    //恢复时会把结果传进来，然后一级一级传上去
     public actual override fun resumeWith(result: Result<T>) {
         while (true) { // lock-free loop
             val cur = this.result // atomic read

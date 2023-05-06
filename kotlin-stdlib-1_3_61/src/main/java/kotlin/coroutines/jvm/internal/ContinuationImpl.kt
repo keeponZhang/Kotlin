@@ -18,7 +18,7 @@ internal abstract class BaseContinuationImpl(
     // it has a public getter (since even untrusted code is allowed to inspect its call stack).
     public val completion: Continuation<Any?>?
 ) : Continuation<Any?>, CoroutineStackFrame, Serializable {
-    // This implementation is final. This fact is used to unroll resumeWith recursion.这里是final的
+    // This implementation is final. This fact is used to unroll resumeWith recursion.这里是final的，挂起恢复的时候调用的是这个方法
     public final override fun resumeWith(result: Result<Any?>) {
         // This loop unrolls recursion in current.resumeWith(param) to make saner and shorter stack traces on resume
         var current = this
