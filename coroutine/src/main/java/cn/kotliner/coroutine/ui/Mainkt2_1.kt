@@ -2,9 +2,10 @@ package cn.kotliner.coroutine.ui.Mainkt2.kt
 
 import cn.kotliner.coroutine.async.Coroutines2.kt.我要开始加载图片啦不切换线程异步2_1
 import cn.kotliner.coroutine.async.我要开始协程啦BaseContinuation
-import com.bennyhuo.kotlin.coroutines.utils.log
 import cn.kotliner.coroutine.ui.LOGO_URL
 import cn.kotliner.coroutine.ui.MainWindow
+import com.bennyhuo.kotlin.coroutine.ch03.delay
+import com.bennyhuo.kotlin.coroutines.utils.log
 import javax.swing.JFrame
 
 /**
@@ -46,8 +47,8 @@ fun main(args: Array<String>) {
             //不用try catch，内部有try catch，异常后会回调失败的方法
 //            throw RuntimeException("keepon")
             //获取后还是在线程池看
-            test2()
-            testsuspend()
+            //test2()
+            //testsuspend()
             try {
                 val imageData = 我要开始加载图片啦不切换线程异步2_1(LOGO_URL)
                 log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
@@ -68,5 +69,12 @@ suspend fun testsuspend() {
 fun test2() {
     println("test2")
 }
+suspend fun test3() {
+    delay(1)
+    println("suspend test3")
+}
 
+suspend fun test4() {
+    delay(1)
+}
 

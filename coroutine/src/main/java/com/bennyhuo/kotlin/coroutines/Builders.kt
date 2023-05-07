@@ -50,6 +50,7 @@ fun CoroutineScope.launch(
     val newCoroutineContext = newCoroutineContext(context)
     val completion = StandardCoroutine(newCoroutineContext)
 //    这里receiver是实现了CoroutineScope的CoroutineContext
+//   作为参数传进block里面，第一个参数作为receiver是作为CoroutineScope
     block.startCoroutine(completion, completion)
     return completion
 }

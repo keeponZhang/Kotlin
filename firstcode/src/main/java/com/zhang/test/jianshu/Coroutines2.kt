@@ -11,8 +11,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
-
+//https://www.jianshu.com/p/2659bbe0df16
 suspend fun requestToken(): Token {
+    log("requestToken ${Thread.currentThread().name}")
+    delay(100)
     return Token()
 }   // 挂起函数
 
@@ -24,6 +26,7 @@ fun processPost(post: Post) {
     log("handlePost")
 }
 
+
 fun postItem(item: Item) {
     GlobalScope.launch {
         val token = requestToken()
@@ -31,12 +34,13 @@ fun postItem(item: Item) {
         processPost(post)
     }
 }
-
 fun postItem2(item: Item) {
     GlobalScope.launch {
         // async { requestToken() } 新建一个协程，可能在另一个线程运行
         // 但是 await() 是挂起函数，当前协程执行逻辑卡在第一个分支，第一种状态，当 async 的协程执行完后恢复当前协程，才会切换到下一个分支
-        val token = async { requestToken() }.await()
+        val token = async {
+            requestToken()
+        }.await()
         // 在第二个分支状态中，又新建一个协程，使用 await 挂起函数将之后代码作为 Continuation 放倒下一个分支状态，直到 async 协程执行完
         val post = async { createPost(token, item) }.await()
         // 最后一个分支状态，直接在当前协程处理
