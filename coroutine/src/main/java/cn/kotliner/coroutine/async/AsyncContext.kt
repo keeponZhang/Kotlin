@@ -24,11 +24,11 @@ class AsyncContext : AbstractCoroutineContextElement(ContinuationInterceptor),
             //每一步篡改后的continuation，element要篡改的对象
             continuation, element ->
             println("AsyncContext 调用啦 continuation = " + continuation + " element = " + element)
-            //注意element != this 不等于自己
+            //注意element != this 不等于自己,给其他element篡改的机会
             if (element != this && element is ContinuationInterceptor) {
                 log("准备调用element.interceptContinuation")
-//                element.interceptContinuation(continuation)
-                continuation
+               element.interceptContinuation(continuation)
+                // continuation
             } else {
                 continuation
             }

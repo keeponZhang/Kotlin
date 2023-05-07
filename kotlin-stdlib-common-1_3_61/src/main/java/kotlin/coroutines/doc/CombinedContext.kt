@@ -1,5 +1,5 @@
 //package kotlin.coroutines.doc
-//
+//https://juejin.cn/post/7028764461276069902
 //class CombinedContext(val left: CoroutineContext, val element: Element) : CoroutineContext {
 //CombinedContext的get操作的逻辑是：
 //1、先看element是否是匹配，如果匹配，那么element就是需要找的元素，返回element，否则说明要找的元素在left中，

@@ -13,6 +13,8 @@ import kotlin.coroutines.startCoroutine
  * Created by benny on 5/29/17.
  */
 // suspend () -> Unit 会实例化成SuspendLambda
+//lamda是继承Function1，被suspend修饰的会继承CoroutineImpl
+// ContinuationKt.startCoroutine(block, (Continuation)(new BaseContinuation((CoroutineContext)EmptyCoroutineContext.INSTANCE)));
 fun 我要开始协程啦BaseContinuation(block: suspend () -> Unit) {
     log("--------------")
     block.startCoroutine(BaseContinuation(EmptyCoroutineContext))

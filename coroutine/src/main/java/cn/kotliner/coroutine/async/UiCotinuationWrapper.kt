@@ -1,7 +1,9 @@
 package cn.kotliner.coroutine.async
 
 import com.bennyhuo.kotlin.coroutines.utils.log
+import javax.swing.SwingUtilities
 import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 /**
  * Created by benny on 5/29/17.
@@ -14,6 +16,10 @@ class UiCotinuationWrapper<T>(val continuation: Continuation<T>) : Continuation<
     override val context = continuation.context
     override fun resumeWith(result: Result<T>) {
         log("UiCotinuationWrapper resumeWithException " + continuation)
+        SwingUtilities.invokeLater {
+            log("UiCotinuationWrapper resumeWithException 切换线程后 " + continuation)
+            continuation.resumeWith(result)
+        }
     }
 //    override val context = EmptyCoroutineContext
 }

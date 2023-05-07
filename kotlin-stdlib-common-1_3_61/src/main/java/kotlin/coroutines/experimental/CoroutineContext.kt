@@ -7,7 +7,7 @@ package kotlin.coroutines.experimental
 
 /**
  * Persistent context for the coroutine. It is an indexed set of [Element] instances.
- * An indexed set is a mix between a set and a map.
+ * https://mp.weixin.qq.com/s/qCCOHPIRxTf6apaTV_Lfmw
  * Every element in this set has a unique [Key]. Keys are compared _by reference_.
  */
 @SinceKotlin("1.1")
@@ -58,7 +58,7 @@ public interface CoroutineContext {
     public fun minusKey(key: Key<*>): CoroutineContext
 
     /**
-     * An element of the [CoroutineContext]. An element of the coroutine context is a singleton context by itself.
+     * An element of the [CoroutineContext]. An element of the coroutine context is a singleton context by itself.注释:Element有一个长远变量key，类型是Key
      */
     public interface Element : CoroutineContext {
         /**
@@ -73,7 +73,7 @@ public interface CoroutineContext {
         public override fun <R> fold(initial: R, operation: (R, Element) -> R): R =
             operation(initial, this)
 
-        public override fun minusKey(key: Key<*>): CoroutineContext =
+        public override fun minusKey(key: Key<*>): CoroutineContext = //如果 Key与当前 element的Key相等，返回EmptyCoroutineContext，否则相当于没减成功，返回当前element
             if (this.key === key) EmptyCoroutineContext else this
     }
 
@@ -83,3 +83,32 @@ public interface CoroutineContext {
      */
     public interface Key<E : Element>
 }
+
+internal class CombinedContextDoc(val left: CoroutineContext, val element: CoroutineContext.Element) : CoroutineContext {
+    override fun <E : CoroutineContext.Element> get(key: CoroutineContext.Key<E>): E? {
+        var cur = this
+        while (true) {
+            cur.element[key]?.let { return it }
+            val next = cur.left
+            if (next is CombinedContextDoc) {
+                cur = next
+            } else {
+                return next[key]
+            }
+        }
+    }
+
+    public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R =
+        operation(left.fold(initial, operation), element)
+
+    public override fun minusKey(key: CoroutineContext.Key<*>): CoroutineContext {
+        element[key]?.let { return left }
+        val newLeft = left.minusKey(key)
+        return when {
+            newLeft === left -> this
+            newLeft === EmptyCoroutineContext -> element
+            else -> CombinedContext(newLeft, element)
+        }
+    }
+}
+

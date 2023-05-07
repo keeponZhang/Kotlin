@@ -8,8 +8,8 @@ import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 
 /**
- * User-specified name of coroutine. This name is used in debugging mode.
- * See [newCoroutineContext][CoroutineScope.newCoroutineContext] for the description of coroutine debugging facilities.
+ * User-specified name of coroutine. This name is used in debugging mode. zh
+ *注释：AbstractCoroutineContextElement(CoroutineName)相当于AbstractCoroutineContextElement(CoroutineName.Key)
  */
 public data class CoroutineName(
     /**
