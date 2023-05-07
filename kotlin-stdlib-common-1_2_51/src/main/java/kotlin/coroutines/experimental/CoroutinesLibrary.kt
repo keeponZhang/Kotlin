@@ -32,7 +32,7 @@ public fun <R, T> (suspend R.() -> T).startCoroutine(
  * The [completion] continuation is invoked when coroutine completes with result or exception.
  */
 @SinceKotlin("1.1")
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST") //(suspend () -> T).startCoroutine其实就是扩展函数
 public fun <T> (suspend () -> T).startCoroutine(
     completion: Continuation<T>
 ) {//获取Continuation，一般来说，没有拦截器的话，是CoroutineImpl，resume调用doResume方法，就进到了lambda表达式里了
