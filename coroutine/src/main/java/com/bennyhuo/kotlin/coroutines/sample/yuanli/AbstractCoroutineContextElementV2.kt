@@ -9,6 +9,7 @@ import com.bennyhuo.kotlin.coroutines.utils.log
 
 /**
  * Base class for [CoroutineContext.Element] implementations.
+ * AbstractCoroutineContextElementV2这个很重要，传入的key基本是伴生对象
  */
 @SinceKotlin("1.3")
 public abstract class AbstractCoroutineContextElementV2(

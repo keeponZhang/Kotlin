@@ -50,7 +50,7 @@ public class My6CoroutineName(
 
 public class My3CoroutineName(
         val name: String
-) : AbstractCoroutineContextElementV2(My3CoroutineName) {
+) : AbstractCoroutineContextElementV2(My3CoroutineName.Key) {
     public companion object Key : CoroutineContextV2.KeyV2<My3CoroutineName>
 
     override fun getString(): String {
