@@ -4,6 +4,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 internal class CombinedContext(val left: CoroutineContext, val element: CoroutineContext.Element) : CoroutineContext {
+    var name: String = ""
     override fun <E : CoroutineContext.Element> get(key: CoroutineContext.Key<E>): E? {
         var cur = this
         while (true) {
@@ -18,9 +19,11 @@ internal class CombinedContext(val left: CoroutineContext, val element: Coroutin
     }
 
     public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R {
-        println("fold---- left=$left element=$element")
+        println("1fold name=$name---- ${(left as? CombinedContext)?.name} ")
+        //到最左边的是，Combined1 left的时候会调用下operation
         val leftFoldResult = left.fold(initial, operation)
         val result = operation(leftFoldResult, element)
+        println("3fold name=$name ")
         return result
     }
 
@@ -65,7 +68,7 @@ internal class CombinedContext(val left: CoroutineContext, val element: Coroutin
 
     override fun toString(): String =
         "[" + fold("") { acc, element ->
-            println("acc=$acc    element=$element")
+            println("2回调 name=$name acc=$acc")
             if (acc.isEmpty()) element.toString() else acc + ", " + element
         } + "]"
 }

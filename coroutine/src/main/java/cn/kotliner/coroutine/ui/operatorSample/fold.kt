@@ -21,11 +21,13 @@ fun test2() {
             "Combined1 element"
         )
     )
+    combinedContext1.name = "c1"
     val combinedContext2 = CombinedContext(
         combinedContext1, CoroutineName(
             "Combined2 element"
         )
     )
+    combinedContext2.name = "c2"
 
     // combinedContext2.fold("") { acc, element ->
     //     println("acc=" + acc + " element=" + element)
@@ -38,6 +40,7 @@ fun test2() {
             "Combined3element"
         )
     )
+    combinedContext3.name = "c3"
     println("xiaozhan combinedContext3 $combinedContext3")
 }
 
