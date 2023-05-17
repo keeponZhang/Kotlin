@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.swing.JFrame
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * createBy	keepon
@@ -70,6 +70,7 @@ fun main(args: Array<String>) {
 //suspend的函数默认会多生成一个参数Continuation，并把外层的Continuation传入
 suspend fun testsuspend() {
     println("suspend test")
+    delay(1)
 }
 
 fun test2() {
