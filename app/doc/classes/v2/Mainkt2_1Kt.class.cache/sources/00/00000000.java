@@ -49,7 +49,7 @@ public final class Mainkt2_1 {
     public static final Object getPicSyn(@NotNull String url, @NotNull Continuation<? super byte[]> continuation) {
         Continuation c$iv = CoroutineIntrinsics.normalizeContinuation(continuation);
         Continuation safeContinuation = new SafeContinuation(c$iv);
-        LogKt.log("耗时操作，下载图片原始0" + safeContinuation);
+        LogKt.log("耗时操作，下载图片原始0 safeContinuation=" + safeContinuation);
         try {
             final Continuation continuation2 = safeContinuation;
             HttpService.INSTANCE.getService().getLogo(url).enqueue(new Callback<ResponseBody>() { // from class: cn.kotliner.coroutine.ui.mainkt2.Mainkt2_1Kt$getPicSyn$2$1

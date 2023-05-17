@@ -32,7 +32,7 @@ public fun <R, T> (suspend R.() -> T).startCoroutine(
  * The [completion] continuation is invoked when coroutine completes with result or exception.
  */
 @SinceKotlin("1.1")
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST") //(suspend () -> T).startCoroutine其实就是扩展函数
 public fun <T> (suspend () -> T).startCoroutine(
     completion: Continuation<T>
 ) {//获取Continuation，一般来说，没有拦截器的话，是CoroutineImpl，resume调用doResume方法，就进到了lambda表达式里了
@@ -107,6 +107,7 @@ public suspend inline val coroutineContext: CoroutineContext
 @kotlin.internal.InlineOnly
 internal inline fun processBareContinuationResume(completion: Continuation<*>, block: () -> Any?) {
     try {
+        //其实这里并没有阻塞！！！！！！！！！！，block调用了一次，即使返回了COROUTINE_SUSPENDED，并不会阻塞当前线程
         val result = block()
 //       注释：一般调用后，函数挂起，返回的就是COROUTINE_SUSPENDED，就是阻塞式挂起
         if (result !== COROUTINE_SUSPENDED) {

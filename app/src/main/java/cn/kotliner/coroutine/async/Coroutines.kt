@@ -9,6 +9,8 @@ import kotlin.coroutines.experimental.startCoroutine
 /**
  * Created by benny on 5/29/17.
  */
+//lamda是继承Function1，被suspend修饰的会继承CoroutineImpl
+// ContinuationKt.startCoroutine(block, (Continuation)(new BaseContinuation((CoroutineContext)EmptyCoroutineContext.INSTANCE)));
 fun 我要开始协程啦BaseContinuation(block: suspend () -> Unit) {
     block.startCoroutine(BaseContinuation())
 }

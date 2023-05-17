@@ -53,8 +53,8 @@ fun main(args: Array<String>) {
             //不用try catch，内部有try catch，异常后会回调失败的方法
 //            throw RuntimeException("keepon")
             //获取后还是在线程池看
-            test2()
-            testsuspend()
+            // test2()
+            // testsuspend()
             try {
                 val imageData = getPicSyn(LOGO_URL)
                 log("拿到图片")  //这个运行在哪个线程，是由上面是否切换线程决定的
@@ -93,14 +93,14 @@ suspend fun getPicSyn(url: String) = suspendCoroutine<ByteArray> { continuation 
                 call: Call<ResponseBody>?, response: Response<ResponseBody>?
             ) {
                 log("返回结果")
-                if (response != null) {
-                    if (response.isSuccessful) {
-                        //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
-                        response.body()?.byteStream()?.readBytes()?.let(continuation::resume)
-                    } else {
-                        continuation.resumeWithException(HttpException(response.code()))
-                    }
-                }
+                // if (response != null) {
+                //     if (response.isSuccessful) {
+                //         //把读到的ByteArray结果传给continuation::resume，通过resume把byteArray传出去
+                //         response.body()?.byteStream()?.readBytes()?.let(continuation::resume)
+                //     } else {
+                //         continuation.resumeWithException(HttpException(response.code()))
+                //     }
+                // }
             }
         })
     } catch (e: Exception) {
