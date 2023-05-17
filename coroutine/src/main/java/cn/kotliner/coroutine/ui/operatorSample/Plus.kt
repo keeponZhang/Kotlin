@@ -1,9 +1,9 @@
 package cn.kotliner.coroutine.ui.operatorSample
 
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.EmptyCoroutineContext
+import cn.kotliner.coroutine.ui.operatorSample.custom.CoroutineName
+import cn.kotliner.coroutine.ui.operatorSample.custom.Dispatchers
+import cn.kotliner.coroutine.ui.operatorSample.custom.EmptyCoroutineContext
+import cn.kotliner.coroutine.ui.operatorSample.custom.Job
 
 
 /**
@@ -12,12 +12,12 @@ import kotlin.coroutines.EmptyCoroutineContext
  * Description:
  */
 fun main() {
-    // plusCase1()
-    // plusCase2()
+    //plusCase1()
+    //plusCase2()
     // plusCase3()
     // plusCase4()
-    // plusCase5()
-    minusCase5()
+    plusCase5()
+    //minusCase5()
 }
 
 fun plusCase1() {
@@ -55,12 +55,12 @@ fun plusCase4() {
 fun plusCase5() {
     //case4 当前的CoroutineContext只有ContinuationInterceptor，
     val case4 = Dispatchers.Main + Job()
-    println("xiaozhan case4 $case4")
+    //println("xiaozhan case4 $case4")
     //case5 当前的CoroutineContext有ContinuationInterceptor和其他
 
     val case5 = case4 + CoroutineName("c5")
-    println("xiaozhan case5 $case5")
-    case5.minusKey(Job)
+    //println("xiaozhan case5 $case5")
+    //case5.minusKey(Job)
 
     // 结果: Job <- CoroutineName("c5") <- Dispatchers.Main。Dispatchers.Main 在链表头部，其它的采用头插法。
 }

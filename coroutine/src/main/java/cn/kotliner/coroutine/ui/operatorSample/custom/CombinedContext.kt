@@ -1,10 +1,11 @@
-package cn.kotliner.coroutine.ui.operatorSample
+package cn.kotliner.coroutine.ui.operatorSample.custom
 
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
-internal class CombinedContext(val left: CoroutineContext, val element: CoroutineContext.Element) : CoroutineContext {
-    var name: String = ""
+open class CombinedContext(
+    val left: CoroutineContext,
+    val element: CoroutineContext.Element,
+    override var name: String = ""
+) : CoroutineContext {
     override fun <E : CoroutineContext.Element> get(key: CoroutineContext.Key<E>): E? {
         var cur = this
         while (true) {
@@ -18,19 +19,6 @@ internal class CombinedContext(val left: CoroutineContext, val element: Coroutin
         }
     }
 
-    public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R {
-        println("1fold name=$name---- ${(left as? CombinedContext)?.name} ")
-        //到最左边的是，Combined1 left的时候会调用下operation
-        val leftFoldResult = left.fold(initial, operation)
-        val result = operation(leftFoldResult, element)
-        println("3fold name=$name ")
-        return result
-    }
-
-
-    // Element:
-    // public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R =
-    //     operation(initial, this)
 
     public override fun minusKey(key: CoroutineContext.Key<*>): CoroutineContext {
         element[key]?.let { return left }
@@ -66,9 +54,23 @@ internal class CombinedContext(val left: CoroutineContext, val element: Coroutin
 
     override fun hashCode(): Int = left.hashCode() + element.hashCode()
 
+
+    // Element:
+    // public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R =
+    //     operation(initial, this)
+    public override fun <R> fold(initial: R, operation: (R, CoroutineContext.Element) -> R): R {
+        //到最左边的是，Combined1 left的时候会调用下operation,坐左边的left一定也是个element
+        val leftFoldResult = left.fold(initial, operation)
+        println("1fold name=$name  leftFoldResult=$leftFoldResult")
+        val result = operation(leftFoldResult, element)
+        println("3fold name=$name ")
+        return result
+    }
+
+    //element的fold，initial会透传，element传当前元素
     override fun toString(): String =
         "[" + fold("") { acc, element ->
-            println("2回调 name=$name acc=$acc")
+            println("2回调 name=$name acc=${acc} element=${element.name}")
             if (acc.isEmpty()) element.toString() else acc + ", " + element
         } + "]"
 }

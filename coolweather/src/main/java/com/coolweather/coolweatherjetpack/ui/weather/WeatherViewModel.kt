@@ -66,11 +66,20 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
     }
 
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
-            viewModelScope.launch {
-                try {
-                    block()
-                } catch (e: Throwable) {
-                    error(e)
-                }
+        viewModelScope.launch {
+            try {
+                block()
+            } catch (e: Throwable) {
+                error(e)
             }
+        }
+
+    private fun launchV2(block: suspend () -> Any, error: suspend (Throwable) -> Unit): Any =
+        viewModelScope.launch {
+            try {
+                block()
+            } catch (e: Throwable) {
+                error(e)
+            }
+        }
 }
