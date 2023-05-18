@@ -17,23 +17,18 @@ import kotlin.coroutines.startCoroutine
 
 /**
  * Abstract base class for implementation of coroutines in coroutine builders.
- *
  * This class implements completion [Continuation], [Job], and [CoroutineScope] interfaces.
  * It stores the result of continuation in the state of the job.
  * This coroutine waits for children coroutines to finish before completing and
  * fails through an intermediate _failing_ state.
- *
  * The following methods are available for override:
- *
  * * [onStart] is invoked when the coroutine was created in non-active state and is being [started][Job.start].
  * * [onCancelling] is invoked as soon as the coroutine starts being cancelled for any reason (or completes).
  * * [onCompleted] is invoked when the coroutine completes with a value.
  * * [onCancelled] in invoked when the coroutine completes with an exception (cancelled).
- *
  * @param parentContext the context of the parent coroutine.
  * @param active when `true` (by default), the coroutine is created in the _active_ state, otherwise it is created in the _new_ state.
  *               See [Job] for details.
- *
  * @suppress **This an internal API and should not be used from general code.**
  */
 @InternalCoroutinesApi

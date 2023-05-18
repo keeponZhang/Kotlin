@@ -7,6 +7,7 @@ package cn.kotliner.coroutine.ui.operatorSample.custom
 
 import cn.kotliner.coroutine.ui.operatorSample.custom.CoroutineContext.Element
 import cn.kotliner.coroutine.ui.operatorSample.custom.CoroutineContext.Key
+import com.bennyhuo.kotlin.coroutines.utils.log
 
 /**
  * Persistent context for the coroutine. It is an indexed set of [Element] instances.
@@ -74,7 +75,11 @@ public interface CoroutineContext {
     //case5 当前的CoroutineContext有ContinuationInterceptor和其他
     //val case5 = case4 + CoroutineName("c5"）
     //结果: Job <- CoroutineName("c5") <- Dispatchers.Main。Dispatchers.Main 在链表头部，其它的采用头插法。
-    //分析：
+    //分析：case4同例子4，case4 + CoroutineName("c5"）， context.fold(this) { acc, element
+    //CoroutineName("c5").fold(case4)--->acc=case4,element=CoroutineName("c5"）
+
+
+    //例子6：minusKey调用了2次，acc跟removed有可能一样
     /**
      * Returns a context containing elements from this context, but without an element with
      * the specified [key].
@@ -102,12 +107,24 @@ public interface CoroutineContext {
             if (this.key == key) this as E else null
 
         public override fun <R> fold(initial: R, operation: (R, Element) -> R): R {
-            println("0 -----Element fold initial=$initial element=${this.name}")
+            if (initial is CoroutineContext) {
+                println("0 -----Element fold initial=${initial.name} element=${this.name}")
+            }
             return operation(initial, this)
         }
 
 
-        public override fun minusKey(key: Key<*>): CoroutineContext =
-            if (this.key == key) EmptyCoroutineContext else this
+        public override fun minusKey(key: Key<*>): CoroutineContext {
+            return if (this.key == key) {
+                log("Element 存在相同的元素，删除后返回EmptyCoroutineContext")
+                EmptyCoroutineContext
+            } else {
+                log("Element 不存在相同的元素，返回this")
+
+                this
+
+            }
+        }
+
     }
 }
