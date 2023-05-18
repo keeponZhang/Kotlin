@@ -2,7 +2,7 @@ package com.bennyhuo.kotlin.coroutines.sample.sample5
 
 import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.delay
-import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
+import com.bennyhuo.kotlin.coroutines.exception.coroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
 
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
@@ -13,7 +13,7 @@ import java.lang.ArithmeticException
 
 //响应取消的是响应调用的协程,启动一个协程需要两个Continuation,一个是完成时用的，一个是返回的
 suspend fun main() {
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
     }

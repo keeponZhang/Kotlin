@@ -36,6 +36,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     init {
         state.set(CoroutineState.InComplete())
 //        爹取消了，自己也要取消，不管是不是协同还是主从
+//        parentJob.newState.notifyCancellation()时会回调到这里（这里返回的是CancellationHandlerDisposable），
+//        如果parentCancelDisposable.dispose调用后，就会在state里面去掉回调监听，父job取消的时候不会受到回调
         parentCancelDisposable = parentJob?.invokeOnCancelListener {
             log("parentJob init cancel")
             cancel()

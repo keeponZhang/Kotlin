@@ -2,16 +2,13 @@ package com.bennyhuo.kotlin.coroutines.sample
 
 import com.bennyhuo.kotlin.coroutines.Job
 import com.bennyhuo.kotlin.coroutines.delay
-import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
+import com.bennyhuo.kotlin.coroutines.exception.coroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.launch
 import com.bennyhuo.kotlin.coroutines.launch01
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
 import com.bennyhuo.kotlin.coroutines.utils.log
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -68,7 +65,7 @@ private suspend fun test11() {
 }
 
 private suspend fun test20() {
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
     }
@@ -89,7 +86,7 @@ private suspend fun test20() {
 }
 
 private suspend fun test21() {
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
     }
@@ -107,7 +104,7 @@ private suspend fun test21() {
 }
 
 private suspend fun test22() {
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], throwable)
     }
