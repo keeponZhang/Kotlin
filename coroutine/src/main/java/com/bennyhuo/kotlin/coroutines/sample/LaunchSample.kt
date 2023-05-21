@@ -1,10 +1,7 @@
 package com.bennyhuo.kotlin.coroutines.sample
 
-import com.bennyhuo.kotlin.coroutines.Job
-import com.bennyhuo.kotlin.coroutines.delay
+import com.bennyhuo.kotlin.coroutines.*
 import com.bennyhuo.kotlin.coroutines.exception.coroutineExceptionHandler
-import com.bennyhuo.kotlin.coroutines.launch
-import com.bennyhuo.kotlin.coroutines.launch01
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 import com.bennyhuo.kotlin.coroutines.scope.coroutineScope
 import com.bennyhuo.kotlin.coroutines.scope.supervisorScope
@@ -16,20 +13,45 @@ import kotlin.coroutines.suspendCoroutine
 //响应取消的是响应调用的协程，最一开始的$continuation是编译器传进来的
 //block: suspend ()会生成一个BaseContinuationImpl，调用startCoroutine会调用create生成另一个BaseContinuationImpl，然后调用invokeSuspend
 suspend fun main() {
+    test0()
+    test0_1()
     test1()
-//    log("end main----------")
-//    test11()
-//    test20()
-//    test21()
-//    test22()
+    test2()
+    test3()
+    test4()
+    test5()
+}
 
+suspend fun test0() {
+    val job = GlobalScope.launchV0 {
+        log("我是invokeSuspend")
+        log("1")
+        val result = hello()
+        log("继续往下执行2", result)
+        result.toString()
+    }
+    log(job.isActive)
+    job.join()
+    log("end----------")
+}
 
+suspend fun test0_1() {
+    val job = GlobalScope.launchV1 {
+        log("我是invokeSuspend")
+        log("1")
+        val result = hello()
+        log("继续往下执行2", result)
+        result.toString()
+    }
+    log(job.isActive)
+    job.join()
+    log("end----------")
 }
 
 
 //挂起函数需要传一个Continution，所以挂起函数需要在协程或者挂起函数中调用
 suspend fun test1() {
-    val job = GlobalScope.launch01 {
+    val job = GlobalScope.launchV2 {
         log("我是invokeSuspend")
         log("1")
         val result = hello()
@@ -41,16 +63,11 @@ suspend fun test1() {
     log("end----------")
     log("end----------")
     log("end----------")
-//    test11()
-//    test20()
-//    test21()
-//    test22()
 }
 
 
 //挂起函数需要传一个Continution，所以挂起函数需要在协程或者挂起函数中调用
-
-private suspend fun test11() {
+private suspend fun test2() {
     val job = GlobalScope.launch {
         log(1)
         val result = hello()
@@ -64,7 +81,7 @@ private suspend fun test11() {
     job.join()
 }
 
-private suspend fun test20() {
+private suspend fun test3() {
     val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
@@ -85,7 +102,7 @@ private suspend fun test20() {
     job.join()
 }
 
-private suspend fun test21() {
+private suspend fun test4() {
     val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
@@ -103,7 +120,7 @@ private suspend fun test21() {
     job.join()
 }
 
-private suspend fun test22() {
+private suspend fun test5() {
     val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], throwable)

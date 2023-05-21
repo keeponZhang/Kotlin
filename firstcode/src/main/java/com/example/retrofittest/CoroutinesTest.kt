@@ -141,6 +141,7 @@ private fun test5() {
 
 private fun test6() {
     val job = Job()
+    //
     val scope = CoroutineScope(job)
     //launch的是拥有协程作用域的
     scope.launch {

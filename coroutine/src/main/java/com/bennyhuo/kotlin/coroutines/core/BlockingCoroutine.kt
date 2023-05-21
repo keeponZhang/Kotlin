@@ -22,6 +22,8 @@ class BlockingCoroutine<T>(context: CoroutineContext, private val eventQueue: Li
 //        take没有会阻塞
         while(!isCompleted){
             eventQueue.take().invoke()
+            //这个执行继续，表示block被执行几次，就是resumewith被执行几次
+            log("------------------joinBlocking-----------------")
         }
         return (state.get() as CoroutineState.Complete<T>).let {
             it.value ?: throw it.exception!!

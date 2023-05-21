@@ -28,6 +28,7 @@ private class DispatchedContinuation<T>(val delegate: Continuation<T>, val dispa
     }
 
     override fun resumeWith(result: Result<T>) {
+        log("准备切换线程,delegate=$delegate")
         dispatcher.dispatch {
             log("切换线程,delegate=$delegate")
             delegate.resumeWith(result)

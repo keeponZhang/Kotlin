@@ -1,4 +1,4 @@
-package com.bennyhuo.kotlin.coroutines.sample.sample5
+package com.bennyhuo.kotlin.coroutines.sample.sample7
 
 import com.bennyhuo.kotlin.coroutines.delay
 import com.bennyhuo.kotlin.coroutines.launch

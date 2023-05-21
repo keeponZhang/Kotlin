@@ -17,6 +17,9 @@ interface Job : CoroutineContext.Element {
     val isActive: Boolean
 
     val isCompleted: Boolean
+
+//    下面3个办法都是用到监听和移除监听
+
 //    可以在job添加一些回调，当结束的时候可以回调告诉你
     fun invokeOnCompletionListener(onComplete: OnComplete): Disposable
 //  成功和失败都会返回Disposable

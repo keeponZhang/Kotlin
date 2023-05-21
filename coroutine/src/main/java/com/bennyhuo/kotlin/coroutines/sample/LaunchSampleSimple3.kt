@@ -1,7 +1,7 @@
-package com.bennyhuo.kotlin.coroutines.sample
+package com.bennyhuo.kotlin.coroutines.sample.sample3
 
 
-import com.bennyhuo.kotlin.coroutines.launch01
+import com.bennyhuo.kotlin.coroutines.launchV2
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
 
 import com.bennyhuo.kotlin.coroutines.utils.log
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 //响应取消的是响应调用的协程,启动一个协程需要两个Continuation,一个是完成时用的，一个是返回的
 suspend fun main() {
     log("begin----------")
-    val job = GlobalScope.launch01 {
+    val job = GlobalScope.launchV2 {
         log("LaunchSampleSimple3 我是invokeSuspend")
         log("1")
         val result = withContext(Dispatchers.Default) {

@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.startCoroutine
 import kotlin.coroutines.suspendCoroutine
 
-interface CoroutineScope {
+interface  CoroutineScope {
     val scopeContext: CoroutineContext
 }
 

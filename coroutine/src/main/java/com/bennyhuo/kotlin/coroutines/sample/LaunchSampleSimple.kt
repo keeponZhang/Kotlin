@@ -10,11 +10,6 @@ import com.bennyhuo.kotlin.coroutines.utils.log
 
 //响应取消的是响应调用的协程
 suspend fun main() {
-
-    test20()
-}
-
-private suspend fun test20() {
     val exceptionHandler = coroutineExceptionHandler { coroutineContext, throwable ->
 //拿到的就是StandardCoroutine
         log(coroutineContext[Job], "处理异常", throwable)
@@ -34,4 +29,5 @@ private suspend fun test20() {
     log(job.isActive)
     job.join()
 }
+
 

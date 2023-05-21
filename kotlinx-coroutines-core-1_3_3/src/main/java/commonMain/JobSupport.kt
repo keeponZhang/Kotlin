@@ -445,7 +445,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
 
     @Suppress("OverridingDeprecatedMember")
     public final override fun invokeOnCompletion(handler: CompletionHandler): DisposableHandle =
-        invokeOnCompletion(onCancelling = false, invokeImmediately = true, handler = handler)
+        invokeOnCompletion(onCancelling = false, invokeImmediately = true, handler = handler) //onCancelling参数用于判断是否监听取消事件否则监听完成事件
     //调用重载函数 onCancelling 取消的时候是否回调,invokeImmediately 已经结束的job是否回调
     public final override fun invokeOnCompletion(
         onCancelling: Boolean,
@@ -1469,7 +1469,7 @@ internal class ChildHandleNode(
     parent: JobSupport,
     @JvmField val childJob: ChildJob
 ) : JobCancellingNode<JobSupport>(parent), ChildHandle {
-    override fun invoke(cause: Throwable?) = childJob.parentCancelled(job)
+    override fun invoke(cause: Throwable?) = childJob.parentCancelled(job) //通知父job取消了
     override fun childCancelled(cause: Throwable): Boolean = job.childCancelled(cause)
     override fun toString(): String = "ChildHandle[$childJob]"
 }
