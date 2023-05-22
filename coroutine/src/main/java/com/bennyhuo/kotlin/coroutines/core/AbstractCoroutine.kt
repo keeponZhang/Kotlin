@@ -36,6 +36,8 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     init {
         state.set(CoroutineState.InComplete())
 //        爹取消了，自己也要取消，不管是不是协同还是主从
+//        parentJob.newState.notifyCancellation()时会回调到这里（这里返回的是CancellationHandlerDisposable），
+//        如果parentCancelDisposable.dispose调用后，就会在state里面去掉回调监听，父job取消的时候不会受到回调
         parentCancelDisposable = parentJob?.invokeOnCancelListener {
             log("parentJob init cancel")
             cancel()
@@ -48,11 +50,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
     override val isCompleted: Boolean
         get() = state.get() is CoroutineState.Complete<*>
 
-    override fun invokeOnCompletionListener(onComplete: OnComplete): Disposable {
-        return doOnCompleted {
-            onComplete()
-        }
-    }
+
 
     //    就是移除完成和取消的监听(需要作状态转移)
     override fun remove(disposable: Disposable) {
@@ -111,42 +109,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         log("执行完,接着会调用getResult")
     }
 
-    //如果已经完成，就回调block，不然就放在state里面，完成后会调用，可能join的时候已经完成或者join的时候还没完成（此时需要设置回调）
-//    对返回的Disposable会处理（其实就是从state里移除，会回调到该类的remove）
-    protected fun doOnCompleted(block: (Result<T>) -> Unit): Disposable {
-//        注意，这里disposable会保存到CoroutineState里面
-        val disposable = CompletionHandlerDisposable(this, block)
-//       这里面并没有改变状态，只是可能设置回调
-        val newState = state.updateAndGet { prev ->
-            when (prev) {
-                is CoroutineState.InComplete -> {
-//                   传入 disposable其实就是设置回调
-                    CoroutineState.InComplete().from(prev).with(disposable)
-                }
-                is CoroutineState.Cancelling -> {
-                    CoroutineState.Cancelling().from(prev).with(disposable)
-                }
-                is CoroutineState.Complete<*> -> {
-                    prev
-                }
-            }
-        }
-        log("newState=$newState")
-//如果成功就直接回调了，没有的话就要看CompletionHandlerDisposable什么时候调用dispose了
-//  没有成功的话会通过resumeWith->  notifyCompletion    -》找出CompletionHandlerDisposable，调用onComplete
-        (newState as? CoroutineState.Complete<T>)?.let {
-//            完成后回调给block传入参数
-            block(
-                    when {
-                        it.value != null -> Result.success(it.value)
-                        it.exception != null -> Result.failure(it.exception)
-                        else -> throw IllegalStateException("Won't happen!")
-                    }
-            )
-        }
 
-        return disposable
-    }
 
     //失败还是异常都会回调这里
     override fun resumeWith(result: Result<T>) {
@@ -207,7 +170,50 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
 //    然后问问直接能不能处理，类似一层层往上
         return tryHandleException(e)
     }
+    //doOnCompleted是有回调方法是有参数的，Result
+    override fun invokeOnCompletionListener(onComplete: OnComplete): Disposable {
+        //doOnCompleted是另一个方法，参数为block: (Result<T>) -> Unit，参数为block，block被回调的时候，会调用onComplete
+        //真正回调是调用state里面notifyCompletion方法，所以doOnCompleted就是做这个事情的
+        return doOnCompleted {
+            onComplete()
+        }
+    }
+    //如果已经完成，就回调block，不然就放在state里面，完成后会调用，可能join的时候已经完成或者join的时候还没完成（此时需要设置回调）
+//    对返回的Disposable会处理（其实就是从state里移除，会回调到该类的remove）
+    protected fun doOnCompleted(block: (Result<T>) -> Unit): Disposable {
+//        注意，这里disposable会保存到CoroutineState里面
+        val disposable = CompletionHandlerDisposable(this, block)
+//       这里面并没有改变状态，只是可能设置回调
+        val newState = state.updateAndGet { prev ->
+            when (prev) {
+                is CoroutineState.InComplete -> {
+//                   传入 disposable其实就是设置回调
+                    CoroutineState.InComplete().from(prev).with(disposable)
+                }
+                is CoroutineState.Cancelling -> {
+                    CoroutineState.Cancelling().from(prev).with(disposable)
+                }
+                is CoroutineState.Complete<*> -> {
+                    prev
+                }
+            }
+        }
+        log("newState=$newState")
+//如果成功就直接回调了，没有的话就要看CompletionHandlerDisposable什么时候调用dispose了
+//  没有成功的话会通过resumeWith->  notifyCompletion    -》找出CompletionHandlerDisposable，调用onComplete
+        (newState as? CoroutineState.Complete<T>)?.let {
+//            完成后回调给block传入参数
+            block(
+                when {
+                    it.value != null -> Result.success(it.value)
+                    it.exception != null -> Result.failure(it.exception)
+                    else -> throw IllegalStateException("Won't happen!")
+                }
+            )
+        }
 
+        return disposable
+    }
     override fun invokeOnCancelListener(onCancel: OnCancel): Disposable {
         val disposable = CancellationHandlerDisposable(this, onCancel)
 //        dispose会被保存到CoroutineState，后面对于dispose的时候会用到
@@ -223,6 +229,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
             }
         }
         //如果已经是cancel，就执行onCancel；否则的话是有人调用了CoroutineState.notifyCancellation从而触发到onCancel被调用
+        //不能在上面那里去回到，那里会回调多次
         (newState as? CoroutineState.Cancelling)?.let {
             log("newState is CoroutineState.Cancelling,此时已经是取消状态了，执行取消")
             onCancel()
@@ -246,7 +253,7 @@ abstract class AbstractCoroutine<T>(context: CoroutineContext) :
         if (newState is CoroutineState.Cancelling) {
 //            这里很重要，会触发到onCancel代码块的回调
             log(
-                    "此时已经是取消状态，newState.notifyCancellation()"
+                    "此时已 经是取消状态，newState.notifyCancellation()"
 
             )
             newState.notifyCancellation()

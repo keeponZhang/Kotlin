@@ -1,4 +1,4 @@
-package com.bennyhuo.kotlin.coroutines.sample.sample5
+package com.bennyhuo.kotlin.coroutines.sample.sample11
 
 import com.bennyhuo.kotlin.coroutines.launch
 import com.bennyhuo.kotlin.coroutines.scope.GlobalScope
@@ -34,9 +34,9 @@ suspend fun main() {
 }
 
 suspend fun getNetworkData(): Any? {
-//    coroutineScope {
-//        log("日志3:$scopeContext")
-//    }
+   coroutineScope {
+       log("日志3:$scopeContext")
+   }
     log("日志3_2")
     return 2
 }

@@ -49,18 +49,18 @@ fun postItem2(item: Item) {
 }
 
 suspend fun main(args: Array<String>) {
-    // 创建一个单线程的协程调度器，下面两个协程都运行在这同一线程上
-//    val coroutineDispatcher = newSingleThreadContext("ctx")
-    // 启动协程 1
-    val launch = GlobalScope.launch {
-        log("the first coroutine 1")
-        delay(200)
-        log("the first coroutine 2")
-    }
-    launch.join()
-    println("-----------")
+//     // 创建一个单线程的协程调度器，下面两个协程都运行在这同一线程上
+// //    val coroutineDispatcher = newSingleThreadContext("ctx")
+//     // 启动协程 1
+//     val launch = GlobalScope.launch {
+//         log("the first coroutine 1")
+//         delay(200)
+//         log("the first coroutine 2")
+//     }
+//     launch.join()
+//     println("-----------")
 //    test()
-//    test2()
+   test2()
 }
 
 fun test2() = runBlocking {

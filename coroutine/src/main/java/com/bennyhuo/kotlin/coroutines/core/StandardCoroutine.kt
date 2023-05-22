@@ -1,6 +1,5 @@
 package com.bennyhuo.kotlin.coroutines.core
 
-import android.util.Log
 import com.bennyhuo.kotlin.coroutines.exception.CoroutineExceptionHandler
 import com.bennyhuo.kotlin.coroutines.utils.log
 import kotlin.coroutines.CoroutineContext
