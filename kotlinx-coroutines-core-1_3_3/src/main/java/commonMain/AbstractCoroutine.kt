@@ -62,7 +62,7 @@ public abstract class AbstractCoroutine<in T>(
      * @suppress **This is unstable API and it is subject to change.**
      */
     internal fun initParentJob() {
-        initParentJobInternal(parentContext[Job])
+        initParentJobInternal(parentContext[Job])//注意，这里job传的是parentContext[Job]
     }
 
     /**
@@ -155,8 +155,7 @@ public abstract class AbstractCoroutine<in T>(
      */
     public fun <R> start(start: CoroutineStart, receiver: R, block: suspend R.() -> T) {
         initParentJob()
-        //start()这样是调用CoroutineStart的invoke方法
-//        start.invoke<Any, Any>(block, receiver, this as Continuation<*>)
+//        start.invoke<Any, Any>(block, receiver, this as Continuation<*>)  //start()这样是调用CoroutineStart的invoke方法
         start(block, receiver, this)
     }
 }

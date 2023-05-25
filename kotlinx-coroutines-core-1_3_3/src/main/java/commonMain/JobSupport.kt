@@ -224,8 +224,8 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
             else -> CompletedExceptionally(finalException)
         }
         // Now handle the final exception
-        if (finalException != null) {
-            val handled = cancelParent(finalException) || handleJobException(finalException)
+        if (finalException != null) { //因为异常不为空会走到这
+            val handled = cancelParent(finalException) || handleJobException(finalException) //核心代码就一行
             if (handled) (finalState as CompletedExceptionally).makeHandled()
         }
         // Process state updates for the final state before the state of the Job is actually set to the final state
@@ -893,13 +893,13 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
             notifyRootCause = finishing.rootCause.takeIf { !wasCancelling }
         }
         // process cancelling notification here -- it cancels all the children _before_ we start to to wait them (sic!!!)
-        notifyRootCause?.let { notifyCancelling(list, it) }
+        notifyRootCause?.let { notifyCancelling(list, it) } //该情景下，notifyRootCause 的值为 exception
         // now wait for children
         val child = firstChild(state)
         if (child != null && tryWaitForChild(finishing, child, proposedUpdate))
             return COMPLETING_WAITING_CHILDREN
         // otherwise -- we have not children left (all were already cancelled?)
-        return finalizeFinishingState(finishing, proposedUpdate)
+        return finalizeFinishingState(finishing, proposedUpdate) //当所有子协程都完成时，才会 tryFinalizeFinishingState() 完成自己
     }
 
     private val Any?.exceptionOrNull: Throwable?
@@ -911,12 +911,12 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
     // return false when there is no more incomplete children to wait
     // ## IMPORTANT INVARIANT: Only one thread can be concurrently invoking this method.
     private tailrec fun tryWaitForChild(state: Finishing, child: ChildHandleNode, proposedUpdate: Any?): Boolean {
-        val handle = child.childJob.invokeOnCompletion(
+        val handle = child.childJob.invokeOnCompletion(  //添加 ChildCompletion 节点到子协程的 state.list 末尾，当子协程完成时会调用 ChildCompletion.invoke()
             invokeImmediately = false,
             handler = ChildCompletion(this, state, child, proposedUpdate).asHandler
         )
         if (handle !== NonDisposableHandle) return true // child is not complete and we've started waiting for it
-        val nextChild = child.nextChild() ?: return false
+        val nextChild = child.nextChild() ?: return false  //// 循环设置所有其他子协程
         return tryWaitForChild(state, nextChild, proposedUpdate)
     }
 
@@ -1020,7 +1020,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
      * This method is invoked **exactly once** when the final exception of the job is determined
      * and before it becomes complete. At the moment of invocation the job and all its children are complete.
      */
-    protected open fun handleJobException(exception: Throwable): Boolean = false
+    protected open fun handleJobException(exception: Throwable): Boolean = false //默认是不抛出异常，StandaloneCoroutine会抛出异常
 
     /**
      * Override for completion actions that need to update some external object depending on job's state,
@@ -1148,7 +1148,7 @@ public open class JobSupport constructor(active: Boolean) : Job, ChildJob, Paren
         private val proposedUpdate: Any?
     ) : JobNode<Job>(child.childJob) {
         override fun invoke(cause: Throwable?) {
-            parent.continueCompleting(state, child, proposedUpdate)
+            parent.continueCompleting(state, child, proposedUpdate) //如果child完成，会回调这个方法
         }
         override fun toString(): String =
             "ChildCompletion[$child, $proposedUpdate]"
@@ -1398,12 +1398,12 @@ private class ResumeAwaitOnCompletion<T>(
     job: JobSupport,
     private val continuation: CancellableContinuationImpl<T>
 ) : JobNode<JobSupport>(job) {
-    override fun invoke(cause: Throwable?) {
+    override fun invoke(cause: Throwable?) { //完成的时候会回调
         val state = job.state
         assert { state !is Incomplete }
         if (state is CompletedExceptionally) {
             // Resume with with the corresponding exception to preserve it
-            continuation.resumeWithException(state.cause)
+            continuation.resumeWithException(state.cause) //向外面抛出异常
         } else {
             // Resuming with value in a cancellable way (AwaitContinuation is configured for this mode).
             @Suppress("UNCHECKED_CAST")

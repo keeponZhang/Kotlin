@@ -6,7 +6,7 @@ package kotlinx.coroutines
 
 import kotlinx.coroutines.internal.*
 
-internal actual abstract class CompletionHandlerBase actual constructor() : LockFreeLinkedListNode(), CompletionHandler {
+internal actual abstract class CompletionHandlerBase actual constructor() : LockFreeLinkedListNode(), CompletionHandler { //可以实现lambda表达式，会转化为调用invoke
     actual abstract override fun invoke(cause: Throwable?)
 }
 

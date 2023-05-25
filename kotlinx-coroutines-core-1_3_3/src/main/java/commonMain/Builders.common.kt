@@ -47,11 +47,11 @@ public fun CoroutineScope.launch(
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend CoroutineScope.() -> Unit
 ): Job {
-    val newContext = newCoroutineContext(context)
+    val newContext = newCoroutineContext(context)   //上一个CoroutineScope的context和方法参数中的context相加，作为AbstractCoroutine的parentContext
     val coroutine = if (start.isLazy)
         LazyStandaloneCoroutine(newContext, block) else
         StandaloneCoroutine(newContext, active = true)
-    coroutine.start(start, coroutine, block)
+    coroutine.start(start, coroutine, block)  //coroutines是作为lambda（BaseContinuationImpl）的completion参数的
     return coroutine
 }
 
