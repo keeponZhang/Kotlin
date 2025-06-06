@@ -83,6 +83,7 @@ public enum class CoroutineStart {
      * * [LAZY] does nothing.
      *
      * @suppress **This an internal API and should not be used from general code.**
+     * 1.表示这是一个操作符重载函数。2.invoke这是 Kotlin 的特殊函数名，允许对象像函数一样被调用（即 obj() 的形式）
      */
     @InternalCoroutinesApi
     public operator fun <T> invoke(block: suspend () -> T, completion: Continuation<T>) =

@@ -12,7 +12,7 @@ fun main() = runBlocking {
     val job = launch(Dispatchers.Default) {
         var nextPrintTime = startTime
         var i = 0
-        while (i < 5) { // computation loop, just wastes CPU
+        while (i < 50) { // computation loop, just wastes CPU
             // print a message twice a second
             if (currentTimeMillis() >= nextPrintTime) {
                 println("job: I'm sleeping ${i++} ...")

@@ -21,6 +21,7 @@ public fun <T> (suspend () -> T).startCoroutineCancellable(completion: Continuat
 /**
  * Use this function to start coroutine in a cancellable way, so that it can be cancelled
  * while waiting to be dispatched.
+ * suspend (R) -> T 是因为之前调用了 suspend CoroutineScope.()->Unit
  */
 internal fun <R, T> (suspend (R) -> T).startCoroutineCancellable(receiver: R, completion: Continuation<T>) =
     runSafely(completion) {

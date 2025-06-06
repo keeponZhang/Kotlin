@@ -173,7 +173,7 @@ public object GlobalScope : CoroutineScope {
  */
 public suspend fun <R> coroutineScope(block: suspend CoroutineScope.() -> R): R =
     suspendCoroutineUninterceptedOrReturn { uCont ->
-        val coroutine = ScopeCoroutine(uCont.context, uCont)
+        val coroutine = ScopeCoroutine(uCont.context, uCont) //context完全用的是上一个的Context
         coroutine.startUndispatchedOrReturn(coroutine, block)
     }
 

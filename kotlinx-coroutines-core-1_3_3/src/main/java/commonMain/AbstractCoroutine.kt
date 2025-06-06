@@ -152,6 +152,7 @@ public abstract class AbstractCoroutine<in T>(
      * * [ATOMIC] uses [startCoroutine].
      * * [UNDISPATCHED] uses [startCoroutineUndispatched].
      * * [LAZY] does nothing.
+     * receiver 这个接收者要好好理解下
      */
     public fun <R> start(start: CoroutineStart, receiver: R, block: suspend R.() -> T) {
         initParentJob()

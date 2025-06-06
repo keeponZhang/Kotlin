@@ -13,7 +13,7 @@ import kotlin.jvm.internal.FunctionBase
 import kotlin.jvm.internal.Reflection
 
 @SinceKotlin("1.3")
-internal abstract class BaseContinuationImpl(
+abstract class BaseContinuationImpl(
     // This is `public val` so that it is private on JVM and cannot be modified by untrusted code, yet
     // it has a public getter (since even untrusted code is allowed to inspect its call stack).
     public val completion: Continuation<Any?>?
@@ -120,6 +120,10 @@ internal abstract class ContinuationImpl(
         }
         this.intercepted = CompletedContinuation // just in case
     }
+
+    override fun toString(): String {
+        return super.toString()
+    }
 }
 
 internal object CompletedContinuation : Continuation<Any?> {
@@ -162,7 +166,7 @@ internal abstract class SuspendLambda(
 
     public override fun toString(): String =
         if (completion == null)
-            Reflection.renderLambdaToString(this) // this is lambda
+            Reflection.renderLambdaToString(this) + "SuspendLambda" // this is lambda
         else
             super.toString() // this is continuation
 }
